@@ -10,7 +10,7 @@ Also, read the tutorial: [Installation Tutorial](https://github.com/Jspa2/Sphere
 - Networking
 - Cloud chat
 - Filesystem
-- Powerful text editor like Nano
+- Powerful text editor like nano
 - User management
 - Lock, logout, add and remove users
 - Shutdown & reboot
