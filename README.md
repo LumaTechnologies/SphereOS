@@ -1,7 +1,6 @@
 ![SphereOS logo](/Art/logo_light.png#gh-dark-mode-only)
 ![SphereOS logo](/Art/logo_dark.png#gh-light-mode-only)
 
-[![.NET](https://github.com/Jspa2/SphereOS/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Jspa2/SphereOS/actions/workflows/dotnet.yml)
 # SphereOS
 SphereOS is a simple and secure operating system made with Cosmos!
 #### Installation
