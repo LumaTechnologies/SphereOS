@@ -11,7 +11,7 @@ namespace ThumbOS
     public class TextEditor
     {
         // The path of the active file.
-        private string? path;
+        private string path;
 
         // If the user chose to quit.
         private bool quit = false;
@@ -378,11 +378,30 @@ namespace ThumbOS
         // Cut the current line.
         private void CutLine()
         {
-            if (lines.Count > 0 && lines[currentLine] != string.Empty)
+            if (lines[currentLine] != string.Empty)
             {
                 clipboard = lines[currentLine];
-                lines.RemoveAt(currentLine);
-                Render();
+                if (lines.Count == 1)
+                {
+                    lines[currentLine] = string.Empty;
+                    linePos = 0;
+
+                    updatedLinesStart = 0;
+                    updatedLinesEnd = 0;
+                }
+                else
+                {
+                    lines.RemoveAt(currentLine);
+
+                    if (currentLine >= lines.Count)
+                    {
+                        currentLine--;
+                    }
+
+                    updatedLinesStart = currentLine;
+                    updatedLinesEnd = lines.Count;
+                }
+                modified = true;
             }
             else
             {
@@ -565,6 +584,8 @@ namespace ThumbOS
                 Render();
                 HandleInput();
                 UpdateScrolling();
+
+                Cosmos.Core.Memory.Heap.Collect();
             }
 
             Console.BackgroundColor = ConsoleColor.Black;

@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS
+namespace ThumbOS.Commands.TimeTopic
 {
-    internal static class Clock
+    internal class Clock : Command
     {
-        private static string GetDate()
+        public Clock() : base("clock")
         {
-            return DateTime.Now.ToString("dddd, dd/MM/yyyy HH:mm:ss");
+            Description = "Show a live clock.";
+
+            Topic = "time";
         }
 
-        internal static void Main(string[] args)
+        internal override ReturnCode Execute(string[] args)
         {
             Util.Print(ConsoleColor.Gray, "[!]");
             Util.PrintLine(ConsoleColor.White, " Tip: Press ESC to exit the clock.");
@@ -43,7 +43,7 @@ namespace ThumbOS
                     }
                 }
 
-                string date = GetDate();
+                string date = DateTime.Now.ToString("dddd, dd/MM/yyyy HH:mm:ss");
 
                 if (lastDate != date)
                 {
@@ -59,6 +59,7 @@ namespace ThumbOS
             Console.CursorVisible = true;
             Console.SetCursorPosition(0, 0);
             Console.Clear();
+            return ReturnCode.Success;
         }
     }
 }

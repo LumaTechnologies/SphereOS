@@ -9,6 +9,7 @@ using Cosmos.System.Network.IPv4;
 using Cosmos.System.Network.IPv4.UDP.DHCP;
 using Cosmos.System.Network.IPv4.UDP.DNS;
 using System.IO;
+using ThumbOS.Commands;
 
 namespace ThumbOS
 {
@@ -16,24 +17,23 @@ namespace ThumbOS
     {
         public const string Version = "0.1.0";
 
-        private User currentUser = null;
+        internal static User CurrentUser = null;
 
-        private Address dnsAddress = new Address(8, 8, 8, 8);
+        internal static string WorkingDir = @"0:\";
 
-        private Sys.FileSystem.CosmosVFS fs;
-
-        private string workingDir = @"0:\";
+        internal static readonly Address DnsAddress = new Address(8, 8, 8, 8);
 
         protected override void BeforeRun()
         {
             Console.Clear();
 
-            Util.PrintTask("Initialising system...");
-            UserManager.AddUser("admin", "password");
+            Util.PrintTask("Initialising commands...");
+            CommandManager.RegisterCommands();
 
-            Util.PrintTask("Initialising file system...");
-            fs = new Sys.FileSystem.CosmosVFS();
-            Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
+            Util.PrintTask("Initialising system...");
+            UserManager.AddUser("admin", "password", admin: true);
+
+            FsManager.Initialise();
 
             Util.PrintTask("Starting ThumbOS network... (DHCP mode)");
             try
@@ -44,7 +44,6 @@ namespace ThumbOS
                 }
                 using var dhcp = new DHCPClient();
                 dhcp.SendDiscoverPacket();
-                //dhcp.Close();
             }
             catch (Exception e) 
             {
@@ -72,6 +71,7 @@ namespace ThumbOS
                 catch (Exception e)
                 {
                     Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Clear();
                     Console.SetCursorPosition(0, 0);
                     Util.PrintLine(ConsoleColor.Red, "Something went wrong while running CloudChat.");
@@ -80,7 +80,7 @@ namespace ThumbOS
                 }
                 return;
             }
-            if (currentUser == null)
+            if (CurrentUser == null)
             {
                 Util.Print(ConsoleColor.Cyan, "Username: ");
                 var username = Console.ReadLine().Trim();
@@ -91,7 +91,7 @@ namespace ThumbOS
                     var password = Util.ReadPassword();
                     if (user.Authenticate(password))
                     {
-                        currentUser = user;
+                        CurrentUser = user;
                         Console.WriteLine();
                         Util.PrintLine(ConsoleColor.Green, $"Welcome to ThumbOS!");
                     }
@@ -109,162 +109,35 @@ namespace ThumbOS
             }
             else
             {
-                Util.Print(ConsoleColor.Cyan, currentUser.Username);
-                Util.Print(ConsoleColor.Gray, @$"@thumbos [{workingDir}]> ");
+                Util.Print(ConsoleColor.Cyan, CurrentUser.Username);
+                Util.Print(ConsoleColor.Gray, @$"@thumbos [{WorkingDir}]> ");
+
                 var input = Console.ReadLine();
+
                 if (input.Trim() == string.Empty)
                     return;
+
                 var args = input.Trim().Split();
-                var command = args[0];
-                try
+                var commandName = args[0];
+
+                Command command = CommandManager.GetCommand(commandName);
+                if (command != null)
                 {
-                    switch (command)
+                    try
                     {
-                        case "about":
-                            Util.Print(ConsoleColor.Magenta, "ThumbOS");
-                            Util.PrintLine(ConsoleColor.Gray, $" - version {Version}");
-                            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
-                            break;
-                        case "help":
-                            Help.Main(args);
-                            break;
-                        case "date":
-                            Util.PrintLine(ConsoleColor.White, DateTime.Now.ToString("dddd, dd/MM/yyyy HH:mm:ss"));
-                            break;
-                        case "logout":
-                            Util.PrintLine(ConsoleColor.Green, "Goodbye!");
-                            currentUser = null;
-                            break;
-                        case "shutdown":
-                            Util.PrintLine(ConsoleColor.Green, "Goodbye!");
-                            Util.PrintTask("Shutting down...");
-                            Sys.Power.Shutdown();
-                            break;
-                        case "reboot":
-                            Util.PrintLine(ConsoleColor.Green, "Goodbye!");
-                            Util.PrintTask("Rebooting...");
-                            Sys.Power.Reboot();
-                            break;
-                        case "resolve":
-                            if (args.Length < 2)
-                            {
-                                Util.PrintLine(ConsoleColor.Red, "Invalid usage. Please provide a domain.");
-                                return;
-                            }
-                            var domain = args[1];
-                            Util.PrintTask($"Resolving {domain}...");
-                            using (var dns = new DnsClient())
-                            {
-                                dns.Connect(dnsAddress);
-                                dns.SendAsk(domain);
-                                Address destination = dns.Receive();
-                                if (destination != null)
-                                {
-                                    Util.PrintLine(ConsoleColor.Green, $"{domain} is located at: {destination.ToString()}");
-                                }
-                                else
-                                {
-                                    Util.PrintLine(ConsoleColor.Red, $"Unable to resolve {domain}.");
-                                }
-                            }
-                            break;
-                        case "sysinfo":
-                            Util.PrintLine(ConsoleColor.Green, $"System information as of {DateTime.Now.ToString("HH:mm")}");
-                            Util.Print(ConsoleColor.Cyan, PCI.Count);
-                            Util.PrintLine(ConsoleColor.White, " PCI devices");
-                            Util.PrintLine(ConsoleColor.Cyan, $"{Cosmos.Core.CPU.GetCPUBrandString()} ({Cosmos.Core.CPU.GetAmountOfRAM()} MB memory)");
-                            break;
-                        case "clear":
-                            Console.Clear();
-                            break;
-                        case "lock":
-                            bool authenticated = false;
-                            while (!authenticated)
-                            {
-                                Console.Clear();
-                                Util.Print(ConsoleColor.Gray, "[ThumbOS] ");
-                                Util.PrintLine(ConsoleColor.Cyan, "This PC is locked.");
-                                Util.PrintLine(ConsoleColor.Cyan, $"Enter the password for {currentUser.Username}: ");
-                                var password = Util.ReadPassword();
-                                authenticated = currentUser.Authenticate(password);
-                            }
-                            break;
-                        case "clock":
-                            Clock.Main(args);
-                            break;
-                        case "adduser":
-                            if (args.Length < 2)
-                            {
-                                Util.PrintLine(ConsoleColor.Red, "Invalid usage. Please provide a new username.");
-                                return;
-                            }
-                            var username = args[1].Trim();
-                            if (UserManager.GetUser(username) != null)
-                            {
-                                Util.PrintLine(ConsoleColor.Red, $"A user named {username} already exists.");
-                                return;
-                            }
-                            Util.Print(ConsoleColor.Cyan, $"New password for {username}: ");
-                            var newPassword = Util.ReadPassword();
-                            UserManager.AddUser(username, newPassword);
-                            Util.PrintLine(ConsoleColor.Green, $"Successfully created user {username}.");
-                            break;
-                        case "cloudchat":
-                            CloudChat.Init();
-                            break;
-                        case "cd":
-                            if (args.Length < 2)
-                            {
-                                Util.PrintLine(ConsoleColor.Red, "Invalid usage. Please provide the path to navigate to.");
-                                return;
-                            }
-                            workingDir = Path.Join(workingDir, args[1]);
-                            break;
-                        case "ls":
-                            foreach (var file in Directory.GetFiles(workingDir))
-                            {
-                                Util.Print(ConsoleColor.Cyan, Path.GetFileName(file) + " ");
-                            }
-                            foreach (var dir in Directory.GetDirectories(workingDir))
-                            {
-                                Util.Print(ConsoleColor.Green, Path.GetFileName(dir) + " ");
-                            }
-                            Console.WriteLine();
-                            break;
-                        case "fsinfo":
-                            var root = Directory.GetDirectoryRoot(workingDir);
-                            Util.PrintLine(ConsoleColor.Green, $"Volume information for {root}");
-                            Util.Print(ConsoleColor.Cyan, "Label: ");
-                            Util.PrintLine(ConsoleColor.White, fs.GetFileSystemLabel(root));
-                            Util.Print(ConsoleColor.Cyan, "Total size: ");
-                            Util.PrintLine(ConsoleColor.White, fs.GetTotalSize(root));
-                            Util.Print(ConsoleColor.Cyan, "Available free space: ");
-                            Util.PrintLine(ConsoleColor.White, fs.GetAvailableFreeSpace(root));
-                            Util.Print(ConsoleColor.Cyan, "File system: ");
-                            Util.PrintLine(ConsoleColor.White, fs.GetFileSystemType(root));
-                            break;
-                        case "edit":
-                            if (args.Length < 2)
-                            {
-                                Util.PrintLine(ConsoleColor.Red, "Invalid usage. Please provide the name of the file to edit.");
-                                return;
-                            }
-                            string editPath = Path.Join(workingDir, args[1]);
-                            TextEditor textEditor = new TextEditor(editPath);
-                            textEditor.Start();
-                            break;
-                        default:
-                            Util.PrintLine(ConsoleColor.Red, $"Unknown command '{command}'.");
-                            break;
+                        command.Execute(args);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
+                        Util.PrintLine(ConsoleColor.White, $"Please report this to the developers. Error information: {e.Message}");
                     }
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
-                    Console.SetCursorPosition(0, 0);
-                    Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{command}'.");
-                    Util.PrintLine(ConsoleColor.White, $"Please report this to the developers. Error information: {e.Message}");
+                    Util.PrintLine(ConsoleColor.Red, $"Unknown command '{commandName}'.");
                 }
             }
             Cosmos.Core.Memory.Heap.Collect();
