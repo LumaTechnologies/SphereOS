@@ -34,6 +34,11 @@ namespace SphereOS.Commands
         /// <summary>
         /// The user is unauthorised to execute this command.
         /// </summary>
-        Unauthorised
+        Unauthorised,
+
+        /// <summary>
+        /// The command was aborted.
+        /// </summary>
+        Aborted
     }
 }

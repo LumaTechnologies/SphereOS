@@ -23,10 +23,24 @@ namespace SphereOS.Commands.UsersTopic
                 while (!authenticated)
                 {
                     Console.Clear();
+
                     Util.Print(ConsoleColor.Gray, "[SphereOS] ");
-                    Util.PrintLine(ConsoleColor.Cyan, "This PC is locked.");
+                    Util.Print(ConsoleColor.Cyan, "This PC is locked.");
+                    Util.PrintLine(ConsoleColor.Gray, " (ESC to switch users)");
+
                     Util.PrintLine(ConsoleColor.Cyan, $"Enter the password for {Kernel.CurrentUser.Username}: ");
-                    var password = Util.ReadPassword();
+
+                    var password = Util.ReadPassword(cancelKey: Cosmos.System.ConsoleKeyEx.Escape);
+                    if (password == null)
+                    {
+                        Kernel.CurrentUser = null;
+
+                        Console.Clear();
+                        Console.SetCursorPosition(0, 0);
+
+                        return ReturnCode.Aborted;
+                    }
+
                     authenticated = Kernel.CurrentUser.Authenticate(password);
                 }
                 return ReturnCode.Success;

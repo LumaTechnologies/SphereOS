@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SphereOS
 {
+    /// <summary>
+    /// Utilities for the console.
+    /// </summary>
     internal static class Util
     {
         internal static void Print(ConsoleColor color, string text)
@@ -40,7 +43,12 @@ namespace SphereOS
             PrintLine(ConsoleColor.White, task);
         }
 
-        internal static string ReadPassword()
+        /// <summary>
+        /// Read a password from the console.
+        /// </summary>
+        /// <param name="cancelKey">An optional key that will cancel the function and return null.</param>
+        /// <returns>The password entered, or null if cancelKey was pressed.</returns>
+        internal static string ReadPassword(Cosmos.System.ConsoleKeyEx? cancelKey = null)
         {
             var chars = new List<char>(32);
             Cosmos.System.KeyEvent current;
@@ -48,6 +56,10 @@ namespace SphereOS
 
             while ((current = Cosmos.System.KeyboardManager.ReadKey()).Key != Cosmos.System.ConsoleKeyEx.Enter)
             {
+                if (current.Key == cancelKey)
+                {
+                    return null;
+                }
                 if (current.Key == Cosmos.System.ConsoleKeyEx.NumEnter)
                 {
                     break;
