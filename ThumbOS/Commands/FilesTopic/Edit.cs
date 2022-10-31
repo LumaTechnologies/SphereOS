@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.FilesTopic
+namespace sphereOS.Commands.FilesTopic
 {
     internal class Edit : Command
     {

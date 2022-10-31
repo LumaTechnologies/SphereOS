@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands
+namespace sphereOS.Commands
 {
     /// <summary>
     /// A command for the shell.

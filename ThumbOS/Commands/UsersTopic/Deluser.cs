@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.UsersTopic
+namespace sphereOS.Commands.UsersTopic
 {
     internal class Deluser : Command
     {

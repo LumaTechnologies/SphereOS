@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.UsersTopic
+namespace sphereOS.Commands.UsersTopic
 {
     internal class Logout : Command
     {
         public Logout() : base("logout")
         {
-            Description = "Log out of ThumbOS.";
+            Description = "Log out of sphereOS.";
 
             Topic = "users";
         }

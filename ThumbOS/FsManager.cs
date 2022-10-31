@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sys = Cosmos.System;
 
-namespace ThumbOS
+namespace sphereOS
 {
     internal static class FsManager
     {

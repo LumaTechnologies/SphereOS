@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.ConsoleTopic
+namespace sphereOS.Commands.ConsoleTopic
 {
     internal class Help : Command
     {
@@ -17,7 +17,7 @@ namespace ThumbOS.Commands.ConsoleTopic
 
         internal override ReturnCode Execute(string[] args)
         {
-            Util.PrintLine(ConsoleColor.Green, "ThumbOS Help");
+            Util.PrintLine(ConsoleColor.Green, "sphereOS Help");
             Util.Print(ConsoleColor.Cyan, "Select a help topic: ");
             Util.PrintLine(ConsoleColor.White, "console, files, network, power, time, users");
 

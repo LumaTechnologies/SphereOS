@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.UsersTopic
+namespace sphereOS.Commands.UsersTopic
 {
     internal class Lock : Command
     {
@@ -23,7 +23,7 @@ namespace ThumbOS.Commands.UsersTopic
                 while (!authenticated)
                 {
                     Console.Clear();
-                    Util.Print(ConsoleColor.Gray, "[ThumbOS] ");
+                    Util.Print(ConsoleColor.Gray, "[sphereOS] ");
                     Util.PrintLine(ConsoleColor.Cyan, "This PC is locked.");
                     Util.PrintLine(ConsoleColor.Cyan, $"Enter the password for {Kernel.CurrentUser.Username}: ");
                     var password = Util.ReadPassword();

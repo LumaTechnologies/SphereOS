@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ThumbOS.Commands.UsersTopic;
+using sphereOS.Commands.UsersTopic;
 
-namespace ThumbOS
+namespace sphereOS
 {
     internal static class UserManager
     {

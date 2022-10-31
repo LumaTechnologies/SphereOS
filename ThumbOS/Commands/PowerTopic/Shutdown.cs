@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ThumbOS.Commands;
+using sphereOS.Commands;
 using Sys = Cosmos.System;
 
-namespace ThumbOS.Commands.PowerTopic
+namespace sphereOS.Commands.PowerTopic
 {
     internal class Shutdown : Command
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.NetworkTopic
+namespace sphereOS.Commands.NetworkTopic
 {
     internal class Cloudchat : Command
     {

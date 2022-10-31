@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS
+namespace sphereOS
 {
     internal static class Util
     {
@@ -36,7 +36,7 @@ namespace ThumbOS
 
         internal static void PrintTask(string task)
         {
-            Print(ConsoleColor.Gray, "[ThumbOS] ");
+            Print(ConsoleColor.Gray, "[sphereOS] ");
             PrintLine(ConsoleColor.White, task);
         }
 

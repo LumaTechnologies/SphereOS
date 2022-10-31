@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.TimeTopic
+namespace sphereOS.Commands.TimeTopic
 {
     internal class Date : Command
     {

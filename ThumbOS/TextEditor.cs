@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys = Cosmos.System;
 
-namespace ThumbOS
+namespace sphereOS
 {
     public class TextEditor
     {

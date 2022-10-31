@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThumbOS.Commands.ConsoleTopic
+namespace sphereOS.Commands.ConsoleTopic
 {
     internal class Sysinfo : Command
     {

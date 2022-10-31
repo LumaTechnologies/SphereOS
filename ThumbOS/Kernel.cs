@@ -9,13 +9,13 @@ using Cosmos.System.Network.IPv4;
 using Cosmos.System.Network.IPv4.UDP.DHCP;
 using Cosmos.System.Network.IPv4.UDP.DNS;
 using System.IO;
-using ThumbOS.Commands;
+using sphereOS.Commands;
 
-namespace ThumbOS
+namespace sphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.1.0";
+        public const string Version = "0.1.0 Preview";
 
         internal static User CurrentUser = null;
 
@@ -35,7 +35,7 @@ namespace ThumbOS
 
             FsManager.Initialise();
 
-            Util.PrintTask("Starting ThumbOS network... (DHCP mode)");
+            Util.PrintTask("Starting sphereOS network... (DHCP mode)");
             try
             {
                 if (Cosmos.HAL.NetworkDevice.Devices.Count == 0)
@@ -52,7 +52,7 @@ namespace ThumbOS
 
             Util.PrintTask("Starting shell...");
             Util.Print(ConsoleColor.Cyan, "Welcome to ");
-            Util.Print(ConsoleColor.Magenta, "ThumbOS");
+            Util.Print(ConsoleColor.Magenta, "sphereOS");
             Util.PrintLine(ConsoleColor.Gray, $" - version {Version}");
             Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
 
@@ -93,7 +93,7 @@ namespace ThumbOS
                     {
                         CurrentUser = user;
                         Console.WriteLine();
-                        Util.PrintLine(ConsoleColor.Green, $"Welcome to ThumbOS!");
+                        Util.PrintLine(ConsoleColor.Green, $"Welcome to sphereOS!");
                     }
                     else
                     {
@@ -110,7 +110,7 @@ namespace ThumbOS
             else
             {
                 Util.Print(ConsoleColor.Cyan, CurrentUser.Username);
-                Util.Print(ConsoleColor.Gray, @$"@thumbos [{WorkingDir}]> ");
+                Util.Print(ConsoleColor.Gray, @$"@sphereos [{WorkingDir}]> ");
 
                 var input = Console.ReadLine();
 
