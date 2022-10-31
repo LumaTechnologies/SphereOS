@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SphereOS", "ThumbOS\SphereOS.csproj", "{682D066D-63BE-4008-B2C1-52E94C39F5BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SphereOS", "SphereOS\SphereOS.csproj", "{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7579CC32-7EF7-401C-97E8-6F930E37B382}
+		SolutionGuid = {094B41F1-2C5B-4252-90F3-39789D28684D}
 	EndGlobalSection
 EndGlobal
