@@ -7,15 +7,15 @@ Check the latest release for ISO images.
 
 Also, read the tutorial: [Installation Tutorial](https://github.com/Jspa2/SphereOS/wiki/Installation)
 ## Features
-- ☁️ Networking
-- 💬 Cloud chat
-- 📂 Filesystem
-- 📝 Powerful text editor like Nano
-- 👥 User management
-- 🔐 Lock, logout, add and remove users
-- 🔁 Shutdown & reboot
-- 🕒 Live clock
-- ℹ View system & drive info
+- Networking
+- Cloud chat
+- Filesystem
+- Powerful text editor like Nano
+- User management
+- Lock, logout, add and remove users
+- Shutdown & reboot
+- Live clock
+- View system and drive info
 ## Screenshots
 ### Console
 ![Screenshot 1](/Art/screenshot_1.png)
