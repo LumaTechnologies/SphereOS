@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32916.344
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThumbOS", "ThumbOS\ThumbOS.csproj", "{682D066D-63BE-4008-B2C1-52E94C39F5BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{682D066D-63BE-4008-B2C1-52E94C39F5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7579CC32-7EF7-401C-97E8-6F930E37B382}
+	EndGlobalSection
+EndGlobal
