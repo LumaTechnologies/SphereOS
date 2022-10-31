@@ -22,8 +22,8 @@ jobs:
         dotnet-version: 6.0.x
     - name: Setup Cosmos
       run: |
-        apt install yasm mkisofs make binutils git && \
-          cd / && \
+        sudo apt-get install yasm mkisofs make binutils git && \
+          cd ~ && \
           mkdir cosmos && \
           cd cosmos && \
           git clone https://github.com/CosmosOS/Cosmos --depth 1 && \
@@ -32,7 +32,7 @@ jobs:
           git clone https://github.com/CosmosOS/Common --depth 1 && \
           cd Cosmos && \
           make all && \
-          make install && \
+          sudo make install && \
           make nuget-install
     - name: Restore dependencies
       run: dotnet restore
