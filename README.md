@@ -17,6 +17,11 @@ Check the latest release for ISO images.
 - Shutdown & reboot
 - Live clock
 - View system and drive info
+## Roadmap
+- [ ] Scripting language (SphereScript)
+> SphereScript will be like Python, with native support inside the editor!
+- [ ] Package manager (sphereget)
+> Share + Download SphereScript scripts.
 ## Screenshots
 ### Console
 ![Screenshot 1](/Art/screenshot_1.png)
