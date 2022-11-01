@@ -31,6 +31,12 @@ namespace SphereOS.Commands.UsersTopic
 
             var username = args[1].Trim();
             
+            if (Kernel.CurrentUser.Username == username)
+            {
+                Util.PrintLine(ConsoleColor.Red, "Cannot delete the current user.");
+                return ReturnCode.Failure;
+            }
+
             if (UserManager.DeleteUser(username))
             {
                 Util.PrintLine(ConsoleColor.Green, $"Successfully deleted user {username}.");

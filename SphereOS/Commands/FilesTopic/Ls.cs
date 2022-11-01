@@ -18,13 +18,13 @@ namespace SphereOS.Commands.FilesTopic
 
         internal override ReturnCode Execute(string[] args)
         {
-            foreach (var file in Directory.GetFiles(Kernel.WorkingDir))
-            {
-                Util.Print(ConsoleColor.Cyan, Path.GetFileName(file) + " ");
-            }
             foreach (var dir in Directory.GetDirectories(Kernel.WorkingDir))
             {
                 Util.Print(ConsoleColor.Green, Path.GetFileName(dir) + " ");
+            }
+            foreach (var file in Directory.GetFiles(Kernel.WorkingDir))
+            {
+                Util.Print(ConsoleColor.Cyan, Path.GetFileName(file) + " ");
             }
             Console.WriteLine();
             return ReturnCode.Success;

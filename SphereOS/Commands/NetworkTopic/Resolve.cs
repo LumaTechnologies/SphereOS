@@ -17,6 +17,8 @@ namespace SphereOS.Commands.NetworkTopic
             Topic = "network";
         }
 
+        private static Address DnsAddress = new Address(8, 8, 8, 8);
+
         internal override ReturnCode Execute(string[] args)
         {
             if (args.Length != 2)
@@ -28,19 +30,21 @@ namespace SphereOS.Commands.NetworkTopic
             var domain = args[1];
 
             Util.PrintTask($"Resolving {domain}...");
+
             using (var dns = new DnsClient())
             {
-                dns.Connect(Kernel.DnsAddress);
+                dns.Connect(DnsAddress);
                 dns.SendAsk(domain);
 
                 Address destination = dns.Receive();
                 if (destination != null)
                 {
-                    Util.PrintLine(ConsoleColor.Green, $"{domain} is located at: {destination}");
+                    Util.PrintLine(ConsoleColor.Green, $"{domain} is located at: {destination.ToString()}");
                 }
                 else
                 {
                     Util.PrintLine(ConsoleColor.Red, $"Unable to resolve {domain}.");
+                    return ReturnCode.Failure;
                 }
             }
 

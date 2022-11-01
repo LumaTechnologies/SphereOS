@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,24 @@ namespace SphereOS.Commands.UsersTopic
             Description = "Set or remove a user as an admin.";
 
             Topic = "users";
+        }
+
+        /// <summary>
+        /// Check if any admins would be left on the system after removing a user as admin.
+        /// </summary>
+        /// <param name="removingUser">The user to be removed as an admin.</param>
+        /// <returns>Whether there would be admins left on the system.</returns>
+        private bool ValidateAdminRemoval(User removingUser)
+        {
+            foreach (User user in UserManager.Users)
+            {
+                if (user == removingUser)
+                    continue;
+
+                if (user.Admin)
+                    return true;
+            }
+            return false;
         }
 
         internal override ReturnCode Execute(string[] args)
@@ -41,6 +60,11 @@ namespace SphereOS.Commands.UsersTopic
                         user.Admin = true;
                         break;
                     case "false":
+                        if (!ValidateAdminRemoval(user))
+                        {
+                            Util.PrintLine(ConsoleColor.Red, "There must be at least one admin user.");
+                            return ReturnCode.Invalid;
+                        }
                         user.Admin = false;
                         break;
                     default:

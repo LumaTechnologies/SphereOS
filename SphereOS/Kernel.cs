@@ -15,13 +15,11 @@ namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.1.0 Preview";
+        public const string Version = "0.1.1 Preview";
 
         internal static User CurrentUser = null;
 
         internal static string WorkingDir = @"0:\";
-
-        internal static readonly Address DnsAddress = new Address(8, 8, 8, 8);
 
         protected override void BeforeRun()
         {

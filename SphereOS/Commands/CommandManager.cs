@@ -58,6 +58,7 @@ namespace SphereOS.Commands
             RegisterCommand(new FilesTopic.Ls());
             RegisterCommand(new FilesTopic.Fsinfo());
             RegisterCommand(new FilesTopic.Edit());
+            RegisterCommand(new FilesTopic.Cat());
 
             /* Network */
             RegisterCommand(new NetworkTopic.Resolve());
