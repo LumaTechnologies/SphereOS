@@ -6,7 +6,7 @@ SphereOS is a simple and secure operating system made with Cosmos!
 #### Installation
 Check the latest release for ISO images.
 
-Also, read the tutorial: [Installation Tutorial](https://github.com/Jspa2/SphereOS/wiki/Installation)
+**How to install in a VM:** [Installation](https://github.com/Jspa2/SphereOS/wiki/Installation)
 ## Features
 - Networking
 - Cloud chat
