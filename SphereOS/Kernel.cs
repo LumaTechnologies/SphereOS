@@ -15,7 +15,7 @@ namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.1.2 Preview";
+        public const string Version = "0.1.2 Developer Build";
 
         internal static User CurrentUser = null;
 
