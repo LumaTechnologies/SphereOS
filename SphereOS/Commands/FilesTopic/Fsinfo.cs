@@ -30,7 +30,7 @@ namespace SphereOS.Commands.FilesTopic
             long usedSpace = totalSize - freeSpace;
 
             Util.Print(ConsoleColor.Cyan, "Total size: ");
-            Util.PrintLine(ConsoleColor.White, totalSize);
+            Util.PrintLine(ConsoleColor.White, $"{totalSize} MB");
 
             Util.Print(ConsoleColor.Cyan, "Available free space: ");
             Util.PrintLine(ConsoleColor.White, $"{freeSpace} MB");

@@ -24,17 +24,20 @@ namespace SphereOS.Commands.ConsoleTopic
 
         private void Display(List<(string Title, string Value)> items)
         {
-            (int Left, int Top) startingPos = Console.GetCursorPosition();
+            string[] asciiSplit = asciiArt.Split('\n');
+
             int longestAsciiLine = 0;
-            foreach (var line in asciiArt.Split('\n'))
+            int asciiLines = asciiSplit.Length;
+            foreach (var line in asciiSplit)
             {
                 longestAsciiLine = Math.Max(longestAsciiLine, line.Length);
             }
 
-            (int Left, int Top) infoStartingPos = (longestAsciiLine + infoOffset.Left, startingPos.Top + infoOffset.Top);
-
             Util.PrintLine(ConsoleColor.White, asciiArt);
+
             (int Left, int Top) endingPos = Console.GetCursorPosition();
+            (int Left, int Top) startingPos = (endingPos.Left, endingPos.Top - asciiLines);
+            (int Left, int Top) infoStartingPos = (longestAsciiLine + infoOffset.Left, startingPos.Top + infoOffset.Top);
 
             var y = infoStartingPos.Top;
             Console.SetCursorPosition(infoStartingPos.Left, y);
