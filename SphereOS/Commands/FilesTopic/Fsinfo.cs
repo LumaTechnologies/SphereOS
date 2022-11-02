@@ -25,11 +25,18 @@ namespace SphereOS.Commands.FilesTopic
             Util.Print(ConsoleColor.Cyan, "Label: ");
             Util.PrintLine(ConsoleColor.White, FsManager.Fs.GetFileSystemLabel(root));
 
+            long totalSize = FsManager.Fs.GetTotalSize(root) / 1024 / 1024;
+            long freeSpace = FsManager.Fs.GetAvailableFreeSpace(root) / 1024 / 1024;
+            long usedSpace = totalSize - freeSpace;
+
             Util.Print(ConsoleColor.Cyan, "Total size: ");
-            Util.PrintLine(ConsoleColor.White, FsManager.Fs.GetTotalSize(root));
+            Util.PrintLine(ConsoleColor.White, totalSize);
 
             Util.Print(ConsoleColor.Cyan, "Available free space: ");
-            Util.PrintLine(ConsoleColor.White, FsManager.Fs.GetAvailableFreeSpace(root));
+            Util.PrintLine(ConsoleColor.White, $"{freeSpace} MB");
+
+            Util.Print(ConsoleColor.Cyan, "Used space: ");
+            Util.PrintLine(ConsoleColor.White, $"{usedSpace} MB");
 
             Util.Print(ConsoleColor.Cyan, "File system: ");
             Util.PrintLine(ConsoleColor.White, FsManager.Fs.GetFileSystemType(root));

@@ -15,7 +15,7 @@ namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.1.1 Preview";
+        public const string Version = "0.1.2 Preview";
 
         internal static User CurrentUser = null;
 
@@ -49,13 +49,18 @@ namespace SphereOS
             }
 
             Util.PrintTask("Starting shell...");
+            WelcomeMessage();
+        }
+
+        private void WelcomeMessage()
+        {
             Util.Print(ConsoleColor.Cyan, "Welcome to ");
             Util.Print(ConsoleColor.Magenta, "SphereOS");
             Util.PrintLine(ConsoleColor.Gray, $" - version {Version}");
             Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
 
             Util.Print(ConsoleColor.Yellow, "New in this version: ");
-            Util.PrintLine(ConsoleColor.White, "CloudChat! Run cloudchat to start.");
+            Util.PrintLine(ConsoleColor.White, "New sysinfo command!");
         }
 
         protected override void Run()

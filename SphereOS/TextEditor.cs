@@ -21,7 +21,7 @@ namespace SphereOS
 
         // The contents of the clipboard.
         private string clipboard = string.Empty;
-        
+
         // The lines in the file.
         private List<string> lines = new List<string>();
 
@@ -58,7 +58,7 @@ namespace SphereOS
         public TextEditor(string path)
         {
             this.path = path;
-            
+
             if (path != null)
             {
                 if (File.Exists(path))
@@ -90,10 +90,10 @@ namespace SphereOS
             {
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.White;
-                
+
                 for (int i = (int)updatedLinesStart; i <= updatedLinesEnd; i++)
                 {
-                    int y = (i - scrollY) + TITLEBAR_HEIGHT;
+                    int y = i - scrollY + TITLEBAR_HEIGHT;
                     if (y < TITLEBAR_HEIGHT || y >= Console.WindowHeight - SHORTCUT_BAR_HEIGHT) continue;
 
                     Console.SetCursorPosition(0, y);
@@ -105,7 +105,7 @@ namespace SphereOS
                     }
                     else
                     {
-                        string line = lines[i].Substring(scrollX, Math.Min(Console.WindowWidth, lines[i].Length - scrollX)); 
+                        string line = lines[i].Substring(scrollX, Math.Min(Console.WindowWidth, lines[i].Length - scrollX));
                         // Print the line, and pad it with spaces to clear the rest of the line.
                         // if you get an indexoutofrangeexception it's likely this (REMOVE THIS COMMENT)
                         Console.Write(line + new string(' ', Console.WindowWidth - line.Length));
@@ -116,7 +116,7 @@ namespace SphereOS
                 updatedLinesStart = null;
                 updatedLinesEnd = null;
             }
-            
+
             //Console.CursorVisible = true;
             Console.SetCursorPosition(linePos - scrollX, currentLine + TITLEBAR_HEIGHT - scrollY);
         }
@@ -136,13 +136,13 @@ namespace SphereOS
             }
             updatedLinesStart = currentLine;
             updatedLinesEnd = lines.Count - 1;
-            
+
             currentLine += 1;
             linePos = 0;
 
             modified = true;
         }
-        
+
         // Insert text at the cursor.
         private void Insert(string text)
         {
@@ -150,7 +150,7 @@ namespace SphereOS
             {
                 lines[currentLine] = lines[currentLine].Insert(linePos, text[i].ToString());
                 linePos++;
-                
+
                 updatedLinesStart = currentLine;
                 updatedLinesEnd = currentLine;
             }
@@ -176,7 +176,7 @@ namespace SphereOS
             {
                 lines[currentLine] = lines[currentLine].Remove(linePos - 1, 1);
                 linePos--;
-                
+
                 updatedLinesStart = currentLine;
                 updatedLinesEnd = currentLine;
             }
@@ -296,7 +296,7 @@ namespace SphereOS
 
             Console.SetCursorPosition(1, y);
             Console.Write(question);
-            
+
             Console.SetCursorPosition(question.Length + 1, y);
         }
 
@@ -324,7 +324,7 @@ namespace SphereOS
                     return;
                 }
             }
-            
+
             if (showFeedback)
             {
                 RenderUI();
@@ -498,7 +498,7 @@ namespace SphereOS
         private void UpdateScrolling()
         {
             bool scrollChanged = false;
-            
+
             if (currentLine < scrollY)
             {
                 scrollY = currentLine;
