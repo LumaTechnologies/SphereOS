@@ -6,7 +6,7 @@ SphereOS is a simple and secure operating system made with Cosmos!
 #### Installation
 Check the latest release for ISO images.
 
-Also, read the tutorial: [Installation Tutorial](https://github.com/Jspa2/SphereOS/wiki/Installation)
+**How to install in a VM:** [Installation](https://github.com/Jspa2/SphereOS/wiki/Installation)
 ## Features
 - Networking
 - Cloud chat
@@ -17,6 +17,11 @@ Also, read the tutorial: [Installation Tutorial](https://github.com/Jspa2/Sphere
 - Shutdown & reboot
 - Live clock
 - View system and drive info
+## Roadmap
+- [ ] Scripting language (SphereScript)
+> SphereScript will be like Python, with native support inside the editor!
+- [ ] Package manager (sphereget)
+> Share + Download SphereScript scripts!
 ## Screenshots
 ### Console
 ![Screenshot 1](/Art/screenshot_1.png)
