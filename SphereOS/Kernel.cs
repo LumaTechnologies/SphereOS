@@ -10,12 +10,13 @@ using Cosmos.System.Network.IPv4.UDP.DHCP;
 using Cosmos.System.Network.IPv4.UDP.DNS;
 using System.IO;
 using SphereOS.Commands;
+using SphereOS.Paint;
 
 namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.1.2 Developer Build";
+        public const string Version = "0.1.2 Preview";
 
         internal static User CurrentUser = null;
 
@@ -112,6 +113,8 @@ namespace SphereOS
             }
             else
             {
+                CurrentUser.FlushMessages();
+
                 Util.Print(ConsoleColor.Cyan, CurrentUser.Username);
                 Util.Print(ConsoleColor.Gray, @$"@SphereOS [{WorkingDir}]> ");
 

@@ -21,7 +21,26 @@
         <DebugEnabled>False</DebugEnabled>
         <CompileVBEMultiboot>False</CompileVBEMultiboot>
         <CompressionType>Gzip</CompressionType>
+        <TraceMode>All</TraceMode>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Paint\Images\brush.bmp" />
+      <None Remove="Paint\Images\cursor.bmp" />
+      <None Remove="Paint\Images\exit.bmp" />
+      <None Remove="Paint\Images\pencil.bmp" />
+      <None Remove="Paint\Images\save.bmp" />
+      <None Remove="Paint\Images\selected.bmp" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Paint\Images\brush.bmp" />
+      <EmbeddedResource Include="Paint\Images\cursor.bmp" />
+      <EmbeddedResource Include="Paint\Images\exit.bmp" />
+      <EmbeddedResource Include="Paint\Images\pencil.bmp" />
+      <EmbeddedResource Include="Paint\Images\save.bmp" />
+      <EmbeddedResource Include="Paint\Images\selected.bmp" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />

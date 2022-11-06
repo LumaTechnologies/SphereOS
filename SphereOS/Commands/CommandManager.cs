@@ -59,10 +59,13 @@ namespace SphereOS.Commands
             RegisterCommand(new FilesTopic.Fsinfo());
             RegisterCommand(new FilesTopic.Edit());
             RegisterCommand(new FilesTopic.Cat());
+            RegisterCommand(new FilesTopic.Del());
+            RegisterCommand(new FilesTopic.Paint());
 
             /* Network */
             RegisterCommand(new NetworkTopic.Resolve());
             RegisterCommand(new NetworkTopic.Cloudchat());
+            //RegisterCommand(new NetworkTopic.Httpserver());
 
             /* Power */
             RegisterCommand(new PowerTopic.Shutdown());
@@ -79,6 +82,7 @@ namespace SphereOS.Commands
             RegisterCommand(new UsersTopic.Deluser());
             RegisterCommand(new UsersTopic.Lsuser());
             RegisterCommand(new UsersTopic.Admin());
+            RegisterCommand(new UsersTopic.Broadcast());
         }
     }
 }

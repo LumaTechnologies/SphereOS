@@ -40,6 +40,23 @@ namespace SphereOS
         private string Password { get; set; }
 
         /// <summary>
+        /// Unread messages to this user.
+        /// </summary>
+        internal List<Message> Messages { get; set; } = new List<Message>();
+
+        internal void FlushMessages()
+        {
+            foreach (var message in Messages)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Message from {message.From.Username} at {message.Sent.ToString("HH:mm")}");
+                Console.WriteLine(message.Body);
+                Console.WriteLine();
+            }
+            Messages.Clear();
+        }
+
+        /// <summary>
         /// Check if a password is valid.
         /// </summary>
         /// <param name="password">The password to check against.</param>
