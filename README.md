@@ -27,3 +27,5 @@ Check the latest release for ISO images.
 ![Screenshot 1](/Art/screenshot_1.png)
 ### Text Editor
 ![Screenshot 2](/Art/screenshot_2.png)
+### Paint
+![Screenshot 2](/Art/screenshot_3.png)
