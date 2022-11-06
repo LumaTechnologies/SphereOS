@@ -10,6 +10,7 @@ Check the latest release for ISO images.
 ## Features
 - Networking
 - Cloud chat
+- Paint
 - Filesystem
 - Powerful text editor like nano
 - User management
