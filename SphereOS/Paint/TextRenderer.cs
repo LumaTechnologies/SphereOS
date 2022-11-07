@@ -55,7 +55,15 @@ namespace SphereOS.Paint
                         int finalX = x + i;
                         int finalY = y + j;
 
-                        Color color = AlphaBlend(foreground, background, alpha);
+                        Color color;
+                        if (background == Color.Transparent)
+                        {
+                            color = AlphaBlend(foreground, Color.FromArgb((int)driver.GetPixel((uint)finalX, (uint)finalY)), alpha);
+                        }
+                        else
+                        {
+                            color = AlphaBlend(foreground, background, alpha);
+                        }
 
                         driver.SetPixel((uint)finalX, (uint)finalY, (uint)color.ToArgb());
                     }

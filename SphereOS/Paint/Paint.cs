@@ -36,7 +36,8 @@ namespace SphereOS.Paint
         private List<Tool> tools = new List<Tool>()
         {
             new Brush(),
-            new Pencil()
+            new Pencil(),
+            new Text()
         };
 
         private List<DefaultColor> defaultColors = new List<DefaultColor>()
@@ -63,9 +64,9 @@ namespace SphereOS.Paint
 
         private static class Theme
         {
-            internal static uint PageBackground = (uint)Color.FromArgb(33, 33, 33).ToArgb();
-            internal static uint Toolbar = (uint)Color.FromArgb(48, 48, 48).ToArgb();
-            internal static uint Status = (uint)Color.FromArgb(48, 48, 48).ToArgb();
+            internal static uint PageBackground = (uint)Color.FromArgb(33, 33, 37).ToArgb();
+            internal static uint Toolbar = (uint)Color.FromArgb(48, 48, 52).ToArgb();
+            internal static uint Status = (uint)Color.FromArgb(48, 48, 52).ToArgb();
         }
         
         private static class Images
@@ -106,7 +107,7 @@ namespace SphereOS.Paint
             }
         }
 
-        private int GetPointOffset(int x, int y)
+        internal int GetPointOffset(int x, int y)
         {
             int bytesPerPixel = (int)mode.ColorDepth / 8;
             int stride = (int)mode.ColorDepth / 8;
@@ -115,7 +116,7 @@ namespace SphereOS.Paint
             return (x * stride) + (y * pitch);
         }
 
-        private void DrawImage(Image aImage, int aX, int aY)
+        internal void DrawImage(Image aImage, int aX, int aY)
         {
             var xWidth = (int)aImage.Width;
             var xHeight = (int)aImage.Height;
@@ -126,7 +127,7 @@ namespace SphereOS.Paint
             }
         }
 
-        private void DrawImage(byte[] aImage, int aX, int aY, int aWidth, int aHeight)
+        internal void DrawImage(byte[] aImage, int aX, int aY, int aWidth, int aHeight)
         {
             for (int i = 0; i < aHeight; i++)
             {
@@ -142,7 +143,7 @@ namespace SphereOS.Paint
             }
         }
 
-        private Color AlphaBlend(Color to, Color from, byte alpha)
+        internal Color AlphaBlend(Color to, Color from, byte alpha)
         {
             byte R = (byte)((to.R * alpha + from.R * (255 - alpha)) >> 8);
             byte G = (byte)((to.G * alpha + from.G * (255 - alpha)) >> 8);
@@ -150,7 +151,7 @@ namespace SphereOS.Paint
             return Color.FromArgb(R, G, B);
         }
 
-        private void DrawImageAlpha(Image image, int x, int y)
+        internal void DrawImageAlpha(Image image, int x, int y)
         {
             var xWidth = (int)image.Width;
             var xHeight = (int)image.Height;
@@ -167,7 +168,7 @@ namespace SphereOS.Paint
             }
         }
 
-        private void DrawFilledRectangle(uint color, int x, int y, int width, int height)
+        internal void DrawFilledRectangle(uint color, int x, int y, int width, int height)
         {
             for (int i = y; i < y + height; i++)
             {
@@ -197,7 +198,7 @@ namespace SphereOS.Paint
                 var color = defaultColors[i];
                 if (SelectedColor == color.Color)
                 {
-                    DrawFilledRectangle((uint)Color.White.ToArgb(), color.ButtonX, color.ButtonY, color.ButtonWidth, color.ButtonHeight);
+                    DrawFilledRectangle((uint)Color.White.ToArgb(), color.ButtonX + 1, color.ButtonY + 1, color.ButtonWidth - 2, color.ButtonHeight - 2);
                 }
                 DrawFilledRectangle((uint)color.Color.ToArgb(), color.ButtonX + 2, color.ButtonY + 2, color.ButtonWidth - 4, color.ButtonHeight - 4);
             }
@@ -262,7 +263,9 @@ namespace SphereOS.Paint
                             && MouseManager.X < tool.ButtonX + tool.ButtonWidth
                             && MouseManager.Y < tool.ButtonY + tool.ButtonHeight)
                         {
+                            selectedTool.Deselected();
                             selectedTool = tool;
+                            tool.Selected();
                             statusText = tool.Name;
                         }
                     }
@@ -345,6 +348,7 @@ namespace SphereOS.Paint
                 driver.Clear(Theme.PageBackground);
 
                 DrawDocument(doc);
+                selectedTool.RenderOverlay(this, driver);
                 DrawStatus();
                 DrawToolbar();
                 DrawCursor();

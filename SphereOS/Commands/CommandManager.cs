@@ -65,6 +65,7 @@ namespace SphereOS.Commands
             /* Network */
             RegisterCommand(new NetworkTopic.Resolve());
             RegisterCommand(new NetworkTopic.Cloudchat());
+            RegisterCommand(new NetworkTopic.Ping());
             //RegisterCommand(new NetworkTopic.Httpserver());
 
             /* Power */

@@ -64,87 +64,43 @@ namespace SphereOS
             Util.PrintLine(ConsoleColor.White, "New sysinfo command!");
         }
 
-        protected override void Run()
+        private void PromptLogin()
         {
-            if (CloudChat.Running)
+            Util.Print(ConsoleColor.Cyan, "Username: ");
+            var username = Console.ReadLine().Trim();
+            User user = UserManager.GetUser(username);
+            if (user != null)
             {
-                try
+                Util.Print(ConsoleColor.Cyan, $"Password for {username}: ");
+                var password = Util.ReadPassword();
+                if (user.Authenticate(password))
                 {
-                    CloudChat.Loop();
-                }
-                catch (Exception e)
-                {
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Clear();
-                    Console.SetCursorPosition(0, 0);
-                    Util.PrintLine(ConsoleColor.Red, "Something went wrong while running CloudChat.");
-                    Util.PrintLine(ConsoleColor.White, $"Please report this to the developers. Error information: {e}");
-                    Cosmos.Core.CPU.Halt();
-                }
-                return;
-            }
-            if (CurrentUser == null)
-            {
-                Util.Print(ConsoleColor.Cyan, "Username: ");
-                var username = Console.ReadLine().Trim();
-                User user = UserManager.GetUser(username);
-                if (user != null)
-                {
-                    Util.Print(ConsoleColor.Cyan, $"Password for {username}: ");
-                    var password = Util.ReadPassword();
-                    if (user.Authenticate(password))
-                    {
-                        CurrentUser = user;
-                        Console.WriteLine();
-                        Util.PrintLine(ConsoleColor.Green, $"Welcome to SphereOS!");
-                    }
-                    else
-                    {
-                        Util.PrintLine(ConsoleColor.Red, "Incorrect password.");
-                        return;
-                    }
+                    CurrentUser = user;
+                    Console.WriteLine();
+                    Util.PrintLine(ConsoleColor.Green, $"Welcome to SphereOS!");
                 }
                 else
                 {
-                    Util.PrintLine(ConsoleColor.Red, "Unknown user.");
+                    Util.PrintLine(ConsoleColor.Red, "Incorrect password.");
                     return;
                 }
             }
             else
             {
-                CurrentUser.FlushMessages();
+                Util.PrintLine(ConsoleColor.Red, "Unknown user.");
+                return;
+            }
+        }
 
-                Util.Print(ConsoleColor.Cyan, CurrentUser.Username);
-                Util.Print(ConsoleColor.Gray, @$"@SphereOS [{WorkingDir}]> ");
-
-                var input = Console.ReadLine();
-
-                if (input.Trim() == string.Empty)
-                    return;
-
-                var args = input.Trim().Split();
-                var commandName = args[0];
-
-                Command command = CommandManager.GetCommand(commandName);
-                if (command != null)
-                {
-                    try
-                    {
-                        command.Execute(args);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
-                        Util.PrintLine(ConsoleColor.White, $"Please report this to the developers. Error information: {e.Message}");
-                    }
-                }
-                else
-                {
-                    Util.PrintLine(ConsoleColor.Red, $"Unknown command '{commandName}'.");
-                }
+        protected override void Run()
+        {
+            if (CurrentUser == null)
+            {
+                PromptLogin();
+            }
+            else
+            {
+                Shell.Execute();
             }
             Cosmos.Core.Memory.Heap.Collect();
         }

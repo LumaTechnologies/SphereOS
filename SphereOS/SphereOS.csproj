@@ -18,7 +18,7 @@
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
         <VMWareEdition>Workstation</VMWareEdition>
-        <DebugEnabled>False</DebugEnabled>
+        <DebugEnabled>True</DebugEnabled>
         <CompileVBEMultiboot>False</CompileVBEMultiboot>
         <CompressionType>Gzip</CompressionType>
         <TraceMode>All</TraceMode>
@@ -31,6 +31,7 @@
       <None Remove="Paint\Images\pencil.bmp" />
       <None Remove="Paint\Images\save.bmp" />
       <None Remove="Paint\Images\selected.bmp" />
+      <None Remove="Paint\Images\text.bmp" />
     </ItemGroup>
 
     <ItemGroup>
@@ -40,6 +41,7 @@
       <EmbeddedResource Include="Paint\Images\pencil.bmp" />
       <EmbeddedResource Include="Paint\Images\save.bmp" />
       <EmbeddedResource Include="Paint\Images\selected.bmp" />
+      <EmbeddedResource Include="Paint\Images\text.bmp" />
     </ItemGroup>
 
     <ItemGroup>

@@ -78,6 +78,21 @@ namespace SphereOS.Paint
             Image[i + 3] = color.A;
         }
 
+        internal Color GetPixel(int x, int y)
+        {
+            if (!IsInBounds(x, y)) return Color.Transparent;
+            int i = ((y * Width) + x) * 4;
+            return Color.FromArgb(Image[i + 3], Image[i + 2], Image[i + 1], Image[i]);
+        }
+
+        internal Color AlphaBlend(Color to, Color from, byte alpha)
+        {
+            byte R = (byte)((to.R * alpha + from.R * (255 - alpha)) >> 8);
+            byte G = (byte)((to.G * alpha + from.G * (255 - alpha)) >> 8);
+            byte B = (byte)((to.B * alpha + from.B * (255 - alpha)) >> 8);
+            return Color.FromArgb(R, G, B);
+        }
+
         internal void DrawLine(Color color, int dx, int dy, int x1, int y1)
         {
             if (dx == x1 && dy == y1)

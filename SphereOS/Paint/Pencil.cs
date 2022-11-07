@@ -58,5 +58,10 @@ namespace SphereOS.Paint
                 joinLine = false;
             }
         }
+
+        internal override void Deselected()
+        {
+            joinLine = false;
+        }
     }
 }

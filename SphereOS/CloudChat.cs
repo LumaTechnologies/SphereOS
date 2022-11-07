@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace SphereOS
 {
-    internal static class CloudChat
+    internal class CloudChat
     {
-        private static string input = "";
-        private static string userId;
-        private static EndPoint endpoint = new EndPoint(Address.Zero, 0);
-        internal static bool Running = false;
-        private static UdpClient xClient;
-        private static Random random = new Random();
-        private static int lastSecond = 0;
+        private string input = "";
+        private string userId;
+        private EndPoint endpoint = new EndPoint(Address.Zero, 0);
+        private bool Quit = false;
+        private UdpClient xClient;
+        private Random random = new Random();
+        private int lastSecond = 0;
 
-        private static void DrawTextBox()
+        private void DrawTextBox()
         {
             (int, int) oldPos = Console.GetCursorPosition();
             Console.SetCursorPosition(0, 0);
@@ -39,7 +39,7 @@ namespace SphereOS
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        internal static void Loop()
+        internal void Loop()
         {
             int second = DateTime.UtcNow.Second;
             if (lastSecond != second)
@@ -60,6 +60,11 @@ namespace SphereOS
                 }
                 else if (key.Key == Cosmos.System.ConsoleKeyEx.Enter)
                 {
+                    if (input.Trim() == "/exit")
+                    {
+                        Quit = true;
+                        return;
+                    }
                     if (input != "")
                     {
                         xClient.Send(Encoding.ASCII.GetBytes($"{userId}_message:{input}"));
@@ -92,7 +97,7 @@ namespace SphereOS
             }
         }
 
-        private static void GenerateUserId()
+        private void GenerateUserId()
         {
             var builder = new StringBuilder(16);
             for (int i = 0; i < 16; i++)
@@ -102,10 +107,9 @@ namespace SphereOS
             userId = builder.ToString();
         }
 
-        internal static void Init()
+        internal void Init()
         {
             input = "";
-            Running = true;
             GenerateUserId();
 
             Console.BackgroundColor = ConsoleColor.Blue;
@@ -123,6 +127,18 @@ namespace SphereOS
             Console.Clear();
             Console.SetCursorPosition(0, 1);
             DrawTextBox();
+
+            while (!Quit)
+            {
+                Loop();
+            }
+
+            xClient.Close();
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            Console.CursorVisible = true;
         }
     }
 }

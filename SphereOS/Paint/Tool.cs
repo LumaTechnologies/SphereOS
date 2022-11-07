@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cosmos.System;
+using Cosmos.HAL.Drivers.PCI.Video;
 
 namespace SphereOS.Paint
 {
@@ -30,5 +31,17 @@ namespace SphereOS.Paint
             int mouseY,
             Document doc,
             Paint paint);
+
+        internal virtual void RenderOverlay(Paint paint, VMWareSVGAII driver)
+        {
+        }
+
+        internal virtual void Selected()
+        {
+        }
+
+        internal virtual void Deselected()
+        {
+        }
     }
 }

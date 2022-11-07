@@ -19,7 +19,7 @@ namespace SphereOS.Commands.NetworkTopic
 
         internal override ReturnCode Execute(string[] args)
         {
-            CloudChat.Init();
+            new CloudChat().Init();
 
             return ReturnCode.Success;
         }
