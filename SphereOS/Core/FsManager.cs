@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sys = Cosmos.System;
 
-namespace SphereOS
+namespace SphereOS.Core
 {
     internal static class FsManager
     {

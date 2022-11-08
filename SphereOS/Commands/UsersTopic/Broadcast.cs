@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SphereOS.Users;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -43,6 +44,7 @@ namespace SphereOS.Commands.UsersTopic
             {
                 user.Messages.Add(new Message(from: Kernel.CurrentUser, body));
             }
+            UserManager.Flush();
 
             Util.PrintLine(ConsoleColor.Green, $"Sent {UserManager.Users.Count} message(s).");
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SphereOS.Users;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -23,6 +24,10 @@ namespace SphereOS.Commands.UsersTopic
                 if (user.Admin)
                 {
                     Util.Print(ConsoleColor.Cyan, " (admin)");
+                }
+                if (user.Messages.Count > 0)
+                {
+                    Util.Print(ConsoleColor.Gray, $" ({user.Messages.Count} unread message(s))");
                 }
                 Console.WriteLine();
             }

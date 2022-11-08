@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SphereOS
+namespace SphereOS.Users
 {
     internal class Message
     {
@@ -14,6 +14,13 @@ namespace SphereOS
             From = from;
             Body = body;
             Sent = DateTime.Now;
+        }
+
+        internal Message(User from, string body, DateTime sent)
+        {
+            From = from;
+            Body = body;
+            Sent = sent;
         }
 
         internal User From { get; set; }

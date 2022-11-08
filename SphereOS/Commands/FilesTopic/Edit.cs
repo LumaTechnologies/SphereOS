@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace SphereOS.Commands.FilesTopic
             }
 
             string editPath = Path.Join(Kernel.WorkingDir, args[1]);
+            
+            if (!FileSecurity.CanAccess(Kernel.CurrentUser, editPath))
+            {
+                Util.PrintLine(ConsoleColor.Red, "You do not have permission to access this file.");
+                return ReturnCode.Unauthorised;
+            }
 
             TextEditor textEditor = new TextEditor(editPath);
             textEditor.Start();

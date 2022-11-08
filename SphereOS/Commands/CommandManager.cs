@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,6 +53,7 @@ namespace SphereOS.Commands
             RegisterCommand(new ConsoleTopic.About());
             RegisterCommand(new ConsoleTopic.Help());
             RegisterCommand(new ConsoleTopic.Sysinfo());
+            RegisterCommand(new ConsoleTopic.Logs());
 
             /* Files */
             RegisterCommand(new FilesTopic.Cd());
@@ -84,6 +86,8 @@ namespace SphereOS.Commands
             RegisterCommand(new UsersTopic.Lsuser());
             RegisterCommand(new UsersTopic.Admin());
             RegisterCommand(new UsersTopic.Broadcast());
+
+            Log.Info("CommandManager", $"{commands.Count} commands were registered.");
         }
     }
 }

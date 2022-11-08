@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SphereOS
+namespace SphereOS.Users
 {
     /// <summary>
     /// A user.
@@ -17,7 +17,7 @@ namespace SphereOS
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <param name="admin">Whether the user is an admin.</param>
-        public User(string username, string password, bool admin)
+        internal User(string username, string password, bool admin)
         {
             Username = username;
             Password = password;
@@ -27,17 +27,17 @@ namespace SphereOS
         /// <summary>
         /// The username of the user.
         /// </summary>
-        public string Username { get; private set; }
+        internal string Username { get; private set; }
 
         /// <summary>
         /// Whether the user is an admin.
         /// </summary>
-        public bool Admin { get; set; } = false;
+        internal bool Admin { get; set; } = false;
 
         /// <summary>
         /// The password of the user.
         /// </summary>
-        private string Password { get; set; }
+        internal string Password { get; set; }
 
         /// <summary>
         /// Unread messages to this user.

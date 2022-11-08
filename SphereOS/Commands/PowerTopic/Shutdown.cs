@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SphereOS.Commands;
+using SphereOS.Users;
 using Sys = Cosmos.System;
 
 namespace SphereOS.Commands.PowerTopic
@@ -21,6 +22,7 @@ namespace SphereOS.Commands.PowerTopic
         {
             Util.PrintLine(ConsoleColor.Green, "Goodbye!");
             Util.PrintTask("Shutting down...");
+            UserManager.Flush();
             Sys.Power.Shutdown();
             return ReturnCode.Success;
         }

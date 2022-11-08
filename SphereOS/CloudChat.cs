@@ -95,6 +95,7 @@ namespace SphereOS
                         throw new Exception("Unknown server command!");
                 }
             }
+            Cosmos.Core.Memory.Heap.Collect();
         }
 
         private void GenerateUserId()

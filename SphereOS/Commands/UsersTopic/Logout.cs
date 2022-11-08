@@ -19,6 +19,7 @@ namespace SphereOS.Commands.UsersTopic
         {
             Util.PrintLine(ConsoleColor.Green, "Goodbye!");
             Kernel.CurrentUser = null;
+            Console.Clear();
             return ReturnCode.Success;
         }
     }

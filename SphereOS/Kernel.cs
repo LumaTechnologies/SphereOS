@@ -11,12 +11,15 @@ using Cosmos.System.Network.IPv4.UDP.DNS;
 using System.IO;
 using SphereOS.Commands;
 using SphereOS.Paint;
+using SphereOS.Core;
+using SphereOS.Users;
+using SphereOS.Logging;
 
 namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.1.2 Preview";
+        public const string Version = "0.1.3 Preview";
 
         internal static User CurrentUser = null;
 
@@ -24,15 +27,16 @@ namespace SphereOS
 
         protected override void BeforeRun()
         {
+            Log.Info("Kernel", "Starting SphereOS kernel.");
             Console.Clear();
 
             Util.PrintTask("Initialising commands...");
             CommandManager.RegisterCommands();
 
-            Util.PrintTask("Initialising system...");
-            UserManager.AddUser("admin", "password", admin: true);
-
             FsManager.Initialise();
+
+            Util.PrintTask("Initialising system...");
+            UserManager.Load();
 
             Util.PrintTask("Starting SphereOS network... (DHCP mode)");
             try
@@ -44,10 +48,13 @@ namespace SphereOS
                 using var dhcp = new DHCPClient();
                 dhcp.SendDiscoverPacket();
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
-                Util.PrintTask($"Could not start network: {e}");
+                Log.Warning("Kernel", $"Could not start network: {e.Message}");
+                Util.PrintTask($"Could not start network: {e.Message}");
             }
+
+            Log.Info("Kernel", "SphereOS kernel started.");
 
             Util.PrintTask("Starting shell...");
             WelcomeMessage();
@@ -61,7 +68,7 @@ namespace SphereOS
             Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
 
             Util.Print(ConsoleColor.Yellow, "New in this version: ");
-            Util.PrintLine(ConsoleColor.White, "New sysinfo command!");
+            Util.PrintLine(ConsoleColor.White, "New ping command and updated Paint!");
         }
 
         private void PromptLogin()
@@ -76,6 +83,7 @@ namespace SphereOS
                 if (user.Authenticate(password))
                 {
                     CurrentUser = user;
+                    Log.Info("Kernel", $"{user.Username} logged on.");
                     Console.WriteLine();
                     Util.PrintLine(ConsoleColor.Green, $"Welcome to SphereOS!");
                 }
@@ -102,6 +110,8 @@ namespace SphereOS
             {
                 Shell.Execute();
             }
+            ProcessManager.Run();
+            ProcessManager.Sweep();
             Cosmos.Core.Memory.Heap.Collect();
         }
     }

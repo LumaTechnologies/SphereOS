@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using SphereOS.Logging;
+using SphereOS.Users;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -57,7 +59,7 @@ namespace SphereOS.Commands.UsersTopic
                 switch (args[1])
                 {
                     case "true":
-                        user.Admin = true;
+                        UserManager.SetAdmin(username, true);
                         break;
                     case "false":
                         if (!ValidateAdminRemoval(user))
@@ -65,7 +67,7 @@ namespace SphereOS.Commands.UsersTopic
                             Util.PrintLine(ConsoleColor.Red, "There must be at least one admin user.");
                             return ReturnCode.Invalid;
                         }
-                        user.Admin = false;
+                        UserManager.SetAdmin(username, false);
                         break;
                     default:
                         Util.PrintLine(ConsoleColor.Red, "Invalid usage.\nUsage: admin <true/false> <username>");

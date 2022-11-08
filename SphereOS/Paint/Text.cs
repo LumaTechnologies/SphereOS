@@ -83,6 +83,7 @@ namespace SphereOS.Paint
                             }
                             break;
                         case ConsoleKeyEx.Escape or ConsoleKeyEx.Enter:
+                            RenderTextToDocument(paint.SelectedColor, doc);
                             text = string.Empty;
                             writing = false;
                             break;

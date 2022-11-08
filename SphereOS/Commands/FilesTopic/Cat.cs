@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace SphereOS.Commands.FilesTopic
             }
 
             string path = Path.Join(Kernel.WorkingDir, args[1]);
+
+            if (!FileSecurity.CanAccess(Kernel.CurrentUser, path))
+            {
+                Util.PrintLine(ConsoleColor.Red, "You do not have permission to access this file.");
+                return ReturnCode.Unauthorised;
+            }
 
             if (File.Exists(path))
             {
