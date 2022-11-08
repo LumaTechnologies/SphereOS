@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Crypto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace SphereOS.Users
         /// Create a user.
         /// </summary>
         /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
+        /// <param name="password">The hashed password.</param>
         /// <param name="admin">Whether the user is an admin.</param>
         internal User(string username, string password, bool admin)
         {
@@ -35,7 +36,7 @@ namespace SphereOS.Users
         internal bool Admin { get; set; } = false;
 
         /// <summary>
-        /// The password of the user.
+        /// The hashed password of the user.
         /// </summary>
         internal string Password { get; set; }
 
@@ -63,7 +64,7 @@ namespace SphereOS.Users
         /// <returns>Whether the password is valid.</returns>
         internal bool Authenticate(string password)
         {
-            return password == Password;
+            return UserManager.HashPasswordSha256(password) == Password;
         }
     }
 }

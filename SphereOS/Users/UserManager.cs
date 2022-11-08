@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SphereOS.Commands.UsersTopic;
+using SphereOS.Crypto;
 using SphereOS.Logging;
 using SphereOS.Text;
 
@@ -41,8 +42,8 @@ namespace SphereOS.Users
                                 string password = reader.ReadString("password", section);
                                 bool admin = reader.ReadBool("admin", section);
 
-                                User user = new User(username, password, admin);
-                                Users.Add(user);
+                                // Create the user without hashing the password, because it is already hashed on disk.
+                                AddUser(username, password, admin, hash: false);
 
                                 //Util.PrintTask($"DEBUG: UserMgr loadusr {username} {admin}");
                                 break;
@@ -75,13 +76,16 @@ namespace SphereOS.Users
             }
         }
 
-        internal static User AddUser(string username, string password, bool admin)
+        internal static User AddUser(string username, string password, bool admin, bool hash = true)
         {
             if (GetUser(username) != null)
                 throw new InvalidOperationException($"A user named {username} already exists!");
-            User user = new User(username, password, admin);
+
+            User user = new User(username, hash ? HashPasswordSha256(password) : password, admin);
             Users.Add(user);
+
             Flush();
+
             if (admin)
             {
                 Log.Info("UserManager", $"Admin user {username} was added.");
@@ -90,6 +94,7 @@ namespace SphereOS.Users
             {
                 Log.Info("UserManager", $"User {username} was added.");
             }
+
             return user;
         }
 
@@ -162,6 +167,14 @@ namespace SphereOS.Users
             {
                 Log.Warning("UserManager", $"Failed to flush user data: {e.Message}");
             }
+        }
+
+        internal static string HashPasswordSha256(string password)
+        {
+            Sha256 sha256 = new Sha256();
+            byte[] passwordBytesUnhashed = Encoding.Unicode.GetBytes(password);
+            sha256.AddData(passwordBytesUnhashed, 0, (uint)passwordBytesUnhashed.Length);
+            return Convert.ToBase64String(sha256.GetHash());
         }
     }
 }
