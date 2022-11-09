@@ -17,4 +17,4 @@ If a security vulnerability is found, a bulletin will be added here.
 **No current bulletins.**
 
 ## Report Vulnerability
-Please open an issue on the issues tab. If SphereOS is vulnerable over the network, **do not detail on how to exploit the vulnerability**, further instructions will be provided.
+Please go to the [Security Advisories](https://github.com/Jspa2/SphereOS/security/advisories) page and click 'Report a vulnerability'.
