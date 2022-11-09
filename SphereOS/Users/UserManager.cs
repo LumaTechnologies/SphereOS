@@ -19,8 +19,6 @@ namespace SphereOS.Users
 
         internal static void Load()
         {
-            
-
             if (File.Exists(userDataPath))
             {
                 try
@@ -73,11 +71,11 @@ namespace SphereOS.Users
             else
             {
                 Log.Info("UserManager", $"Default user admin was created.");
-                AddUser("admin", "password", admin: true);
+                AddUser("admin", "password", admin: true, flush: false);
             }
         }
 
-        internal static User AddUser(string username, string password, bool admin)
+        internal static User AddUser(string username, string password, bool admin, bool flush = true)
         {
             if (GetUser(username) != null)
                 throw new InvalidOperationException($"A user named {username} already exists!");
@@ -85,7 +83,10 @@ namespace SphereOS.Users
             User user = new User(username, HashPasswordSha256(password), admin);
             Users.Add(user);
 
-            Flush();
+            if (flush)
+            {
+                Flush();
+            }
 
             if (admin)
             {
@@ -155,9 +156,7 @@ namespace SphereOS.Users
                 {
                     foreach (Message message in user.Messages)
                     {
-                        byte[] messageIdBytes = new byte[16];
-                        random.NextBytes(messageIdBytes);
-                        builder.BeginSection($"Message.{Convert.ToBase64String(messageIdBytes)}");
+                        builder.BeginSection($"Message.{random.Next()}");
                         builder.AddKey("from", message.From.Username);
                         builder.AddKey("to", user.Username);
                         builder.AddKey("body", message.Body.ToString());

@@ -74,9 +74,9 @@ namespace SphereOS.Commands.ConsoleTopic
                 time.Add((DateTime.Now - process.Created).ToString());
             }
 
-            Util.PrintLine(ConsoleColor.Gray, $"{ProcessManager.Processes.Count} total processes");
-
             Util.PrintTable(columns, color: ConsoleColor.White, headerColour: ConsoleColor.Cyan);
+
+            Util.PrintLine(ConsoleColor.Gray, $"{ProcessManager.Processes.Count} total processes");
 
             return ReturnCode.Success;
         }
