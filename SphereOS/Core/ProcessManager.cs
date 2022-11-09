@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SphereOS.Core
 {
     internal static class ProcessManager
     {
-        private static List<Process> Processes { get; } = new List<Process>();
+        internal static List<Process> Processes = new List<Process>();
 
         private static ulong nextProcessId = 0;
 
@@ -27,23 +28,23 @@ namespace SphereOS.Core
 
         internal static void Sweep()
         {
-            foreach (var process in Processes)
+            for (int i = Processes.Count - 1; i >= 0; i--)
             {
-                if (!process.IsRunning)
+                if (!Processes[i].IsRunning)
                 {
-                    Processes.Remove(process);
+                    Processes.Remove(Processes[i]);
                 }
             }
         }
 
-        internal static void Run()
+        internal static void Yield()
         {
-            for (int i = 0; i < Processes.Count; i++)
+            for (int i = Processes.Count - 1; i >= 0; i--)
             {
                 Process process = Processes[i];
                 if (process.IsRunning)
                 {
-                    process.Run();
+                    process.TryRun();
                 }
             }
         }

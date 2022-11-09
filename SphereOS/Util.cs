@@ -145,5 +145,42 @@ namespace SphereOS
             char[] final = chars.ToArray();
             return new string(final);
         }
+
+        internal static void PrintTable(List<List<string>> columns, ConsoleColor color = ConsoleColor.White, ConsoleColor headerColour = ConsoleColor.White, int margin = 2)
+        {
+            int[] longestWidths = new int[columns.Count];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                for (int j = 0; j < columns[i].Count; j++)
+                {
+                    longestWidths[i] = Math.Max(longestWidths[i], columns[i][j].Length);
+                }
+            }
+            int rowCount = 0;
+            foreach (var column in columns)
+            {
+                rowCount = Math.Max(rowCount, column.Count);
+            }
+            string[] rows = new string[rowCount];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                for (int j = 0; j < columns[i].Count; j++)
+                {
+                    string cell = columns[i][j];
+                    rows[j] += cell + new string(' ', longestWidths[i] - cell.Length + margin);
+                }
+            }
+            for (int i = 0; i < rows.Length; i++)
+            {
+                if (i == 0)
+                {
+                    PrintLine(headerColour, rows[i]);
+                }
+                else
+                {
+                    PrintLine(color, rows[i]);
+                }
+            }
+        }
     }
 }

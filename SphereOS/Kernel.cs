@@ -27,37 +27,44 @@ namespace SphereOS
 
         protected override void BeforeRun()
         {
-            Log.Info("Kernel", "Starting SphereOS kernel.");
-            Console.Clear();
-
-            Util.PrintTask("Initialising commands...");
-            CommandManager.RegisterCommands();
-
-            FsManager.Initialise();
-
-            Util.PrintTask("Initialising system...");
-            UserManager.Load();
-
-            Util.PrintTask("Starting SphereOS network... (DHCP mode)");
             try
             {
-                if (Cosmos.HAL.NetworkDevice.Devices.Count == 0)
+                Log.Info("Kernel", "Starting SphereOS kernel.");
+                Console.Clear();
+
+                Util.PrintTask("Initialising commands...");
+                CommandManager.RegisterCommands();
+
+                FsManager.Initialise();
+
+                Util.PrintTask("Initialising system...");
+                UserManager.Load();
+
+                Util.PrintTask("Starting SphereOS network... (DHCP mode)");
+                try
                 {
-                    throw new Exception("No network devices are available.");
+                    if (Cosmos.HAL.NetworkDevice.Devices.Count == 0)
+                    {
+                        throw new Exception("No network devices are available.");
+                    }
+                    using var dhcp = new DHCPClient();
+                    dhcp.SendDiscoverPacket();
                 }
-                using var dhcp = new DHCPClient();
-                dhcp.SendDiscoverPacket();
+                catch (Exception e)
+                {
+                    Log.Warning("Kernel", $"Could not start network: {e.Message}");
+                    Util.PrintTask($"Could not start network: {e.Message}");
+                }
+
+                Log.Info("Kernel", "SphereOS kernel started.");
+
+                Util.PrintTask("Starting shell...");
+                WelcomeMessage();
             }
             catch (Exception e)
             {
-                Log.Warning("Kernel", $"Could not start network: {e.Message}");
-                Util.PrintTask($"Could not start network: {e.Message}");
+                CrashScreen.ShowCrashScreen(e);
             }
-
-            Log.Info("Kernel", "SphereOS kernel started.");
-
-            Util.PrintTask("Starting shell...");
-            WelcomeMessage();
         }
 
         private void WelcomeMessage()
@@ -75,6 +82,10 @@ namespace SphereOS
         {
             Util.Print(ConsoleColor.Cyan, "Username: ");
             var username = Console.ReadLine().Trim();
+            if (username == "debug")
+            {
+                throw new ArgumentException("username");
+            }
             User user = UserManager.GetUser(username);
             if (user != null)
             {
@@ -102,17 +113,24 @@ namespace SphereOS
 
         protected override void Run()
         {
-            if (CurrentUser == null)
+            try
             {
-                PromptLogin();
+                if (CurrentUser == null)
+                {
+                    PromptLogin();
+                }
+                else
+                {
+                    Shell.Execute();
+                }
+                ProcessManager.Yield();
+                ProcessManager.Sweep();
+                Cosmos.Core.Memory.Heap.Collect();
             }
-            else
+            catch (Exception e)
             {
-                Shell.Execute();
+                CrashScreen.ShowCrashScreen(e);
             }
-            ProcessManager.Run();
-            ProcessManager.Sweep();
-            Cosmos.Core.Memory.Heap.Collect();
         }
     }
 }

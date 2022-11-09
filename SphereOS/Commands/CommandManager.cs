@@ -54,6 +54,7 @@ namespace SphereOS.Commands
             RegisterCommand(new ConsoleTopic.Help());
             RegisterCommand(new ConsoleTopic.Sysinfo());
             RegisterCommand(new ConsoleTopic.Logs());
+            RegisterCommand(new ConsoleTopic.Lsproc());
 
             /* Files */
             RegisterCommand(new FilesTopic.Cd());

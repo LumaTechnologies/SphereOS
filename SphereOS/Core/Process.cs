@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SphereOS.Logging;
 using SphereOS.Users;
 
 namespace SphereOS.Core
@@ -13,6 +15,13 @@ namespace SphereOS.Core
         {
             Name = name;
             Type = type;
+        }
+
+        internal Process(string name, ProcessType type, Process parent)
+        {
+            Name = name;
+            Type = type;
+            Parent = parent;
         }
 
         internal ulong Id { get; set; }
@@ -29,7 +38,9 @@ namespace SphereOS.Core
 
         internal bool Swept { get; set; } = false;
 
-        internal User User { get; set; }
+        internal bool Critical { get; set; } = false;
+
+        internal Process Parent { get; set; }
 
         internal virtual void Start()
         {
@@ -37,6 +48,23 @@ namespace SphereOS.Core
         }
 
         internal abstract void Run();
+
+        internal void TryRun()
+        {
+            try
+            {
+                Run();
+            }
+            catch (Exception e)
+            {
+                IsRunning = false;
+                Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed: {e.ToString()}");
+                if (Critical)
+                {
+                    throw new Exception("Critical process crashed.", e);
+                }
+            }
+        }
 
         internal virtual void Stop()
         {
