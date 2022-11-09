@@ -107,7 +107,7 @@ namespace SphereOS.Core
             log += $"Users:{UserManager.Users.Count};";
             log += $"LogEvents:{Log.Logs.Count};";
             log += $"Cmds:{CommandManager.commands.Count};";
-            log += "PciDump:";
+            log += "[PciDump]";
             foreach (PCIDevice device in Cosmos.HAL.PCI.Devices)
             {
                 log += $"I:{device.DeviceID.ToString("X")};";

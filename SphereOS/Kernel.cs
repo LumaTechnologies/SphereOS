@@ -82,10 +82,6 @@ namespace SphereOS
         {
             Util.Print(ConsoleColor.Cyan, "Username: ");
             var username = Console.ReadLine().Trim();
-            if (username == "debug")
-            {
-                throw new ArgumentException("username");
-            }
             User user = UserManager.GetUser(username);
             if (user != null)
             {
