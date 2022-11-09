@@ -49,6 +49,18 @@ namespace SphereOS.Core
 
         internal abstract void Run();
 
+        internal virtual void Stop()
+        {
+            IsRunning = false;
+            foreach (Process process in ProcessManager.Processes)
+            {
+                if (process.Parent == this && process.IsRunning)
+                {
+                    process.TryStop();
+                }
+            }
+        }
+
         internal void TryRun()
         {
             try
@@ -57,18 +69,53 @@ namespace SphereOS.Core
             }
             catch (Exception e)
             {
-                IsRunning = false;
                 Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed: {e.ToString()}");
                 if (Critical)
                 {
-                    throw new Exception("Critical process crashed.", e);
+                    CrashScreen.ShowCrashScreen(new Exception("Critical process crashed.", e));
+                }
+                else
+                {
+                    TryStop();
                 }
             }
         }
 
-        internal virtual void Stop()
+        internal void TryStart()
         {
-            IsRunning = false;
+            try
+            {
+                Start();
+            }
+            catch (Exception e)
+            {
+                Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed while starting: {e.ToString()}");
+                if (Critical)
+                {
+                    CrashScreen.ShowCrashScreen(new Exception("Critical process crashed.", e));
+                }
+                else
+                {
+                    TryStop();
+                }
+            }
+        }
+
+        internal void TryStop()
+        {
+            try
+            {
+                Stop();
+            }
+            catch (Exception e)
+            {
+                IsRunning = false;
+                Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed while stopping: {e.ToString()}");
+                if (Critical)
+                {
+                    CrashScreen.ShowCrashScreen(new Exception("Critical process crashed.", e));
+                }
+            }
         }
     }
 }
