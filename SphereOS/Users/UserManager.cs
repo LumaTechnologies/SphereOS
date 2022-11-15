@@ -80,6 +80,15 @@ namespace SphereOS.Users
             if (GetUser(username) != null)
                 throw new InvalidOperationException($"A user named {username} already exists!");
 
+            if (username.IndexOf(' ') != -1)
+                throw new InvalidOperationException("Usernames must not contain spaces.");
+
+            if (username.IndexOf(':') != -1)
+                throw new InvalidOperationException("Usernames must not contain colons.");
+
+            if (username.IndexOf('/') == -1 || username.IndexOf('\\') == - 1)
+                throw new InvalidOperationException("Usernames must not contain path separators.");
+
             User user = new User(username, HashPasswordSha256(password), admin);
             Users.Add(user);
 
@@ -98,6 +107,15 @@ namespace SphereOS.Users
             }
 
             return user;
+        }
+
+        internal static void MakeHomeDir(User user)
+        {
+            if (!Directory.Exists(@"0:\users"))
+                Directory.CreateDirectory(@"0:\users");
+
+            if (!Directory.Exists($@"0:\users\{user.Username}"))
+                Directory.CreateDirectory($@"0:\users\{user.Username}");
         }
 
         internal static bool DeleteUser(string username)
@@ -152,15 +170,17 @@ namespace SphereOS.Users
                     builder.AddKey("admin", user.Admin);
                 }
                 Random random = new Random((int)DateTime.Now.Ticks);
+                int messageIndex = 1;
                 foreach (User user in Users)
                 {
                     foreach (Message message in user.Messages)
                     {
-                        builder.BeginSection($"Message.{random.Next()}");
+                        builder.BeginSection($"Message {messageIndex}");
                         builder.AddKey("from", message.From.Username);
                         builder.AddKey("to", user.Username);
                         builder.AddKey("body", message.Body.ToString());
                         builder.AddKey("sent", message.Sent.Ticks);
+                        messageIndex++;
                     }
                 }
                 File.WriteAllText(userDataPath, builder.ToString());

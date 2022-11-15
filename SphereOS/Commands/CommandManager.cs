@@ -64,6 +64,8 @@ namespace SphereOS.Commands
             RegisterCommand(new FilesTopic.Cat());
             RegisterCommand(new FilesTopic.Del());
             RegisterCommand(new FilesTopic.Paint());
+            //RegisterCommand(new FilesTopic.Perm());
+            //RegisterCommand(new FilesTopic.Setperm());
 
             /* Network */
             RegisterCommand(new NetworkTopic.Resolve());

@@ -31,12 +31,12 @@ namespace SphereOS
                 {
                     command.Execute(args);
                 }
-                catch (Exception e)
+                catch (Exception e) 
                 {
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.ForegroundColor = ConsoleColor.White;
                     Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
-                    Util.PrintLine(ConsoleColor.White, $"Please report this to the developers. Error information: {e.Message}");
+                    Util.PrintLine(ConsoleColor.White, $"Error information: {e.ToString()}");
                 }
             }
             else

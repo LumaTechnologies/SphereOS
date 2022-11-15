@@ -123,5 +123,19 @@ namespace SphereOS.Text
             }
             return sections;
         }
+
+        internal bool TryReadString(string key, out string value, string? section = null)
+        {
+            try
+            {
+                value = ReadString(key, section);
+                return true;
+            }
+            catch
+            {
+                value = null;
+                return false;
+            }
+        }
     }
 }
