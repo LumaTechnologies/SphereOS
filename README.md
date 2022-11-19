@@ -21,6 +21,8 @@ Check the latest release for ISO images.
 - View system and drive info
 - User homes
 - Processes
+- SHA-256 security
+- Messages
 ## Roadmap
 - [x] Scripting language (RiverScript)
 > [Read the RiverScript Documentation!](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
