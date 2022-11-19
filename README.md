@@ -10,6 +10,7 @@ Check the latest release for ISO images.
 ## Features
 - Networking
 - Cloud chat
+- [Scripting](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
 - Paint
 - Filesystem
 - Powerful text editor like nano
@@ -19,8 +20,8 @@ Check the latest release for ISO images.
 - Live clock
 - View system and drive info
 ## Roadmap
-- [ ] Scripting language (SphereScript)
-> SphereScript will be like Python, with native support inside the editor!
+- [x] Scripting language (RiverScript)
+> [Read the RiverScript Documentation!](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
 - [ ] Package manager (sphereget)
 > Share + Download SphereScript scripts!
 ## Screenshots
