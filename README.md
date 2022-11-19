@@ -19,6 +19,8 @@ Check the latest release for ISO images.
 - Shutdown & reboot
 - Live clock
 - View system and drive info
+- User homes
+- Processes
 ## Roadmap
 - [x] Scripting language (RiverScript)
 > [Read the RiverScript Documentation!](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
