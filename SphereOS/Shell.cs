@@ -1,9 +1,5 @@
 ﻿using SphereOS.Commands;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS
 {
@@ -31,7 +27,7 @@ namespace SphereOS
                 {
                     command.Execute(args);
                 }
-                catch (Exception e) 
+                catch (Exception e)
                 {
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.ForegroundColor = ConsoleColor.White;

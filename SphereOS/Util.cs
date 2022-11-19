@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS
 {
@@ -64,7 +61,7 @@ namespace SphereOS
                 {
                     break;
                 }
-                if (current.Key == Cosmos.System.ConsoleKeyEx.Backspace) 
+                if (current.Key == Cosmos.System.ConsoleKeyEx.Backspace)
                 {
                     if (currentCount > 0)
                     {

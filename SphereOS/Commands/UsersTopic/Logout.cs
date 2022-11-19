@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -18,7 +14,10 @@ namespace SphereOS.Commands.UsersTopic
         internal override ReturnCode Execute(string[] args)
         {
             Util.PrintLine(ConsoleColor.Green, "Goodbye!");
+
             Kernel.CurrentUser = null;
+            Kernel.WorkingDir = @"0:\";
+
             Console.Clear();
             return ReturnCode.Success;
         }

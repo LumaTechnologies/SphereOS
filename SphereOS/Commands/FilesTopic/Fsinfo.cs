@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SphereOS.Core;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SphereOS.Core;
 
 namespace SphereOS.Commands.FilesTopic
 {

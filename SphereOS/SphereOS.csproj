@@ -24,6 +24,16 @@
         <TraceMode>All</TraceMode>
     </PropertyGroup>
 
+    <PropertyGroup>
+      <DefineConstants>SPHEREOS</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Core\CorePlugs\ConsoleShim.cs" />
+      <Compile Remove="Core\VideoConsole\FontData.cs" />
+      <Compile Remove="Core\VideoConsole\VideoConsole.cs" />
+    </ItemGroup>
+
     <ItemGroup>
       <None Remove="Paint\Images\brush.bmp" />
       <None Remove="Paint\Images\cursor.bmp" />
@@ -42,6 +52,12 @@
       <EmbeddedResource Include="Paint\Images\save.bmp" />
       <EmbeddedResource Include="Paint\Images\selected.bmp" />
       <EmbeddedResource Include="Paint\Images\text.bmp" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Core\CorePlugs\ConsoleShim.cs" />
+      <None Include="Core\VideoConsole\FontData.cs" />
+      <None Include="Core\VideoConsole\VideoConsole.cs" />
     </ItemGroup>
 
     <ItemGroup>

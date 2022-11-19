@@ -1,11 +1,8 @@
 ﻿using Cosmos.System.Network.IPv4;
-using Cosmos.System.Network.IPv4.TCP;
 using Cosmos.System.Network.IPv4.UDP;
+using SphereOS.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS
 {
@@ -95,7 +92,7 @@ namespace SphereOS
                         throw new Exception("Unknown server command!");
                 }
             }
-            Cosmos.Core.Memory.Heap.Collect();
+            ProcessManager.Yield();
         }
 
         private void GenerateUserId()

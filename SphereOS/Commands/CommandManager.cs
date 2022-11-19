@@ -1,9 +1,5 @@
 ﻿using SphereOS.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands
 {
@@ -55,6 +51,7 @@ namespace SphereOS.Commands
             RegisterCommand(new ConsoleTopic.Sysinfo());
             RegisterCommand(new ConsoleTopic.Logs());
             RegisterCommand(new ConsoleTopic.Lsproc());
+            RegisterCommand(new ConsoleTopic.Rs());
 
             /* Files */
             RegisterCommand(new FilesTopic.Cd());
@@ -64,6 +61,9 @@ namespace SphereOS.Commands
             RegisterCommand(new FilesTopic.Cat());
             RegisterCommand(new FilesTopic.Del());
             RegisterCommand(new FilesTopic.Paint());
+            RegisterCommand(new FilesTopic.Mkdir());
+            RegisterCommand(new FilesTopic.Rmdir());
+            RegisterCommand(new FilesTopic.Mkhome());
             //RegisterCommand(new FilesTopic.Perm());
             //RegisterCommand(new FilesTopic.Setperm());
 

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SphereOS.Users;
+﻿using SphereOS.Users;
+using System;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -31,7 +27,7 @@ namespace SphereOS.Commands.UsersTopic
             }
 
             var username = args[1].Trim();
-            
+
             if (Kernel.CurrentUser.Username == username)
             {
                 Util.PrintLine(ConsoleColor.Red, "Cannot delete the current user.");

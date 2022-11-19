@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cosmos.Core.IOGroup;
-using Cosmos.System;
+﻿using Cosmos.System;
 using Cosmos.System.Graphics;
+using System;
 
 namespace SphereOS.Paint
 {

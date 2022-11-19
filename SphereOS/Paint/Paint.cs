@@ -1,13 +1,10 @@
-﻿using Cosmos.Core;
-using Cosmos.HAL.Drivers.PCI.Video;
+﻿using Cosmos.HAL.Drivers.PCI.Video;
+using Cosmos.System;
+using Cosmos.System.Graphics;
+using SphereOS.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cosmos.System.Graphics;
-using Cosmos.System;
 using System.IO;
 
 namespace SphereOS.Paint
@@ -68,7 +65,7 @@ namespace SphereOS.Paint
             internal static uint Toolbar = (uint)Color.FromArgb(48, 48, 52).ToArgb();
             internal static uint Status = (uint)Color.FromArgb(48, 48, 52).ToArgb();
         }
-        
+
         private static class Images
         {
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.cursor.bmp")]
@@ -355,7 +352,7 @@ namespace SphereOS.Paint
 
                 driver.DoubleBufferUpdate();
 
-                Cosmos.Core.Memory.Heap.Collect();
+                ProcessManager.Yield();
             }
 
             driver.Disable();

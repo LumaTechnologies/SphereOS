@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SphereOS.Core;
+using System;
 
 namespace SphereOS.Commands.TimeTopic
 {
@@ -53,7 +50,7 @@ namespace SphereOS.Commands.TimeTopic
                 }
 
                 lastDate = date;
-                Cosmos.Core.Memory.Heap.Collect();
+                ProcessManager.Yield();
             }
 
             Console.CursorVisible = true;

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SphereOS.Logging;
-using SphereOS.Users;
+﻿using SphereOS.Logging;
+using System;
 
 namespace SphereOS.Commands.ConsoleTopic
 {

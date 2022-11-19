@@ -1,9 +1,6 @@
 ﻿using SphereOS.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands.ConsoleTopic
 {
@@ -69,7 +66,7 @@ namespace SphereOS.Commands.ConsoleTopic
                 {
                     parent.Add(string.Empty);
                 }
-                
+
                 // Time
                 time.Add((DateTime.Now - process.Created).ToString());
             }

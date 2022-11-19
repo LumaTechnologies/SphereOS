@@ -1,11 +1,6 @@
-﻿using Cosmos.System.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cosmos.HAL.Drivers.PCI.Video;
 using Cosmos.System;
-using Cosmos.HAL.Drivers.PCI.Video;
+using Cosmos.System.Graphics;
 
 namespace SphereOS.Paint
 {

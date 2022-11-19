@@ -1,10 +1,7 @@
-﻿using System;
+﻿using SphereOS.Core;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using Sys = Cosmos.System;
 
 namespace SphereOS
 {
@@ -52,7 +49,8 @@ namespace SphereOS
             ("Ctrl+S", "Save"),
             ("Ctrl+I", "Info"),
             ("Ctrl+K", "Cut Line"),
-            ("Ctrl+V", "Paste")
+            ("Ctrl+V", "Paste"),
+            ("Ctrl+R", "Run")
         };
 
         public TextEditor(string path)
@@ -300,19 +298,27 @@ namespace SphereOS
             Console.SetCursorPosition(question.Length + 1, y);
         }
 
+        // Get the entire document as a string.
+        private string GetAllText()
+        {
+            string text = string.Empty;
+            foreach (string line in lines)
+            {
+                text += line + "\n";
+            }
+            // Strip the trailing newline.
+            text = text.Remove(text.Length - 1);
+
+            return text;
+        }
+
         // Save the file.
         private void Save(bool showFeedback)
         {
             if (modified)
             {
                 modified = false;
-                string text = string.Empty;
-                foreach (string line in lines)
-                {
-                    text += line + "\n";
-                }
-                // Strip the trailing newline.
-                text = text.Remove(text.Length - 1);
+                string text = GetAllText();
                 // Write the file.
                 try
                 {
@@ -422,6 +428,44 @@ namespace SphereOS
             }
         }
 
+        // Run RiverScript.
+        private void RunRs()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+
+            try
+            {
+                var interpreter = new RiverScript.VM.Interpreter();
+                RiverScript.StandardLibrary.StandardLibrary.LoadStandardLibrary(interpreter);
+
+                string source = GetAllText();
+                var script = new RiverScript.Script(source);
+                script.Lex();
+
+                interpreter.InterpretScript(script);
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error occurred while running script: {e.Message}");
+            }
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey(true);
+
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
+            RenderUI();
+            updatedLinesStart = 0;
+            updatedLinesEnd = lines.Count - 1;
+            Render();
+        }
+
         // Handle keyboard input.
         private bool HandleInput()
         {
@@ -445,6 +489,9 @@ namespace SphereOS
                             break;
                         case ConsoleKey.V:
                             Paste();
+                            break;
+                        case ConsoleKey.R:
+                            RunRs();
                             break;
                         case ConsoleKey.LeftArrow:
                             JumpToPreviousWord();
@@ -544,7 +591,7 @@ namespace SphereOS
                 // Accelerator.
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write($" {shortcut.Item1} ");
+                Console.Write($"{shortcut.Item1}");
 
                 // Description.
                 Console.BackgroundColor = ConsoleColor.Black;
@@ -560,7 +607,7 @@ namespace SphereOS
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 0);
-            string text = "  Text Editor 1.0";
+            string text = "  Text Editor 1.1";
             Console.WriteLine(text + new string(' ', Console.WindowWidth - text.Length));
 
             string displayName = path == null ? "New File" : Path.GetFileName(path);
@@ -585,7 +632,7 @@ namespace SphereOS
                 HandleInput();
                 UpdateScrolling();
 
-                Cosmos.Core.Memory.Heap.Collect();
+                ProcessManager.Yield();
             }
 
             Console.BackgroundColor = ConsoleColor.Black;

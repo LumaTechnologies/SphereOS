@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SphereOS.Core;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands.FilesTopic
 {
@@ -11,7 +8,7 @@ namespace SphereOS.Commands.FilesTopic
     {
         public Mkdir() : base("mkdir")
         {
-            Description = "Create a directory";
+            Description = "Create a directory.";
 
             Topic = "files";
         }
@@ -22,6 +19,12 @@ namespace SphereOS.Commands.FilesTopic
             {
                 Util.PrintLine(ConsoleColor.Red, "Invalid usage. Please provide the new directory name.");
                 return ReturnCode.Invalid;
+            }
+
+            if (!FileSecurity.CanAccess(Kernel.CurrentUser, Kernel.WorkingDir))
+            {
+                Util.PrintLine(ConsoleColor.Red, "You do not have permission to create a directory here.");
+                return ReturnCode.Unauthorised;
             }
 
             var newDir = Path.Combine(Kernel.WorkingDir, args[1]);

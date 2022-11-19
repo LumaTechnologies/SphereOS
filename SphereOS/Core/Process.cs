@@ -1,11 +1,6 @@
-﻿using System;
+﻿using SphereOS.Logging;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SphereOS.Logging;
-using SphereOS.Users;
 
 namespace SphereOS.Core
 {

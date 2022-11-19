@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -34,6 +30,7 @@ namespace SphereOS.Commands.UsersTopic
                     if (password == null)
                     {
                         Kernel.CurrentUser = null;
+                        Kernel.WorkingDir = @"0:\";
 
                         Console.Clear();
                         Console.SetCursorPosition(0, 0);
@@ -48,6 +45,8 @@ namespace SphereOS.Commands.UsersTopic
             catch
             {
                 Kernel.CurrentUser = null;
+                Kernel.WorkingDir = @"0:\";
+
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
                 Util.PrintLine(ConsoleColor.Red, "An error occurred in the lock screen. Please log back in.");

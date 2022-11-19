@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands.FilesTopic
 {
@@ -27,6 +23,10 @@ namespace SphereOS.Commands.FilesTopic
             if (args[1] == "..")
             {
                 Kernel.WorkingDir = Directory.GetParent(Kernel.WorkingDir).FullName;
+            }
+            else if (args[1] == "~")
+            {
+                Kernel.WorkingDir = $@"0:\users\{Kernel.CurrentUser.Username}";
             }
             else
             {

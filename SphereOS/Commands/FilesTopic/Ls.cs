@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SphereOS.Core;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands.FilesTopic
 {
@@ -18,6 +15,12 @@ namespace SphereOS.Commands.FilesTopic
 
         internal override ReturnCode Execute(string[] args)
         {
+            if (!FileSecurity.CanAccess(Kernel.CurrentUser, Kernel.WorkingDir))
+            {
+                Util.PrintLine(ConsoleColor.Red, "You do not have permission to access this directory.");
+                return ReturnCode.Unauthorised;
+            }
+
             foreach (var dir in Directory.GetDirectories(Kernel.WorkingDir))
             {
                 Util.Print(ConsoleColor.Green, Path.GetFileName(dir) + " ");
@@ -26,7 +29,9 @@ namespace SphereOS.Commands.FilesTopic
             {
                 Util.Print(ConsoleColor.Cyan, Path.GetFileName(file) + " ");
             }
+
             Console.WriteLine();
+
             return ReturnCode.Success;
         }
     }

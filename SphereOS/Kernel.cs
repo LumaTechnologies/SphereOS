@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Sys = Cosmos.System;
-using Cosmos.System.Network;
-using Cosmos.HAL;
-using Cosmos.System.Network.Config;
-using Cosmos.System.Network.IPv4;
-using Cosmos.System.Network.IPv4.UDP.DHCP;
-using Cosmos.System.Network.IPv4.UDP.DNS;
-using System.IO;
+﻿using Cosmos.System.Network.IPv4.UDP.DHCP;
 using SphereOS.Commands;
-using SphereOS.Paint;
 using SphereOS.Core;
-using SphereOS.Users;
 using SphereOS.Logging;
+using SphereOS.Users;
+using System;
+using Sys = Cosmos.System;
 
 namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.1.3 Preview";
+        public const string Version = "0.1.4 Preview";
 
         internal static User CurrentUser = null;
 
@@ -30,7 +21,10 @@ namespace SphereOS
             try
             {
                 Log.Info("Kernel", "Starting SphereOS kernel.");
+
                 Console.Clear();
+
+                ProcessManager.AddProcess(new Core.MemService()).TryStart();
 
                 Util.PrintTask("Initialising commands...");
                 CommandManager.RegisterCommands();
@@ -75,7 +69,7 @@ namespace SphereOS
             Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
 
             Util.Print(ConsoleColor.Yellow, "New in this version: ");
-            Util.PrintLine(ConsoleColor.White, "New ping command and updated Paint!");
+            Util.PrintLine(ConsoleColor.White, "New security, directory commands, and more!");
         }
 
         private void PromptLogin()
@@ -121,7 +115,6 @@ namespace SphereOS
                 }
                 ProcessManager.Yield();
                 ProcessManager.Sweep();
-                Cosmos.Core.Memory.Heap.Collect();
             }
             catch (Exception e)
             {

@@ -1,10 +1,6 @@
 ﻿using SphereOS.Core;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Commands.FilesTopic
 {
@@ -26,7 +22,7 @@ namespace SphereOS.Commands.FilesTopic
             }
 
             string editPath = Path.Join(Kernel.WorkingDir, args[1]);
-            
+
             if (!FileSecurity.CanAccess(Kernel.CurrentUser, editPath))
             {
                 Util.PrintLine(ConsoleColor.Red, "You do not have permission to access this file.");

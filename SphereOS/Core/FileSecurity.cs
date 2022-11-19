@@ -1,12 +1,4 @@
-﻿using SphereOS.Logging;
-using SphereOS.Users;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SphereOS.Users;
 
 namespace SphereOS.Core
 {
@@ -21,19 +13,27 @@ namespace SphereOS.Core
 
             string sanitised = PathSanitiser.SanitisePath(path);
 
-            if (Path.TrimEndingDirectorySeparator(sanitised).EndsWith(@"\policies.ini"))
-            {
-                return false;
-            }
+            /* if (Path.TrimEndingDirectorySeparator(sanitised).EndsWith(@"\policies.ini"))
+                return false; */
 
             if (sanitised == @"0:\users.ini")
+                return false;
+
+            if (sanitised == @"0:\users")
+                return false;
+
+            if (sanitised.StartsWith(@"0:\users\"))
             {
+                if (sanitised == $@"0:\users\{user.Username}")
+                    return true;
+
+                if (sanitised.StartsWith($@"0:\users\{user.Username}\"))
+                    return true;
+
                 return false;
             }
 
-            Policy policy = PolicyManager.GetPathPolicy(sanitised);
-
-            return policy.Authenticate(user);
+            return true;
         }
     }
 }

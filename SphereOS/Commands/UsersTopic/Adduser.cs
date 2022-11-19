@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SphereOS.Users;
+﻿using SphereOS.Users;
+using System;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -40,9 +36,19 @@ namespace SphereOS.Commands.UsersTopic
             Util.Print(ConsoleColor.Cyan, $"New password for {username}: ");
             var newPassword = Util.ReadPassword();
 
-            UserManager.AddUser(username, newPassword, admin: false);
+            User user = UserManager.AddUser(username, newPassword, admin: false);
 
             Util.PrintLine(ConsoleColor.Green, $"Successfully created user {username}.");
+
+            Util.Print(ConsoleColor.White, @$"Create a home directory for {username} in 0:\users\{username}? [y/N]: ");
+            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+                Console.WriteLine();
+
+                UserManager.CreateHomeDirectory(user);
+
+                Util.PrintLine(ConsoleColor.Green, "Home directory created.");
+            }
 
             return ReturnCode.Success;
         }

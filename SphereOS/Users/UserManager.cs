@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SphereOS.Commands.UsersTopic;
-using SphereOS.Crypto;
+﻿using SphereOS.Crypto;
 using SphereOS.Logging;
 using SphereOS.Text;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace SphereOS.Users
 {
@@ -24,14 +21,13 @@ namespace SphereOS.Users
                 try
                 {
                     string text = File.ReadAllText(userDataPath);
-                    Kernel.PrintDebug(text);
                     var reader = new IniReader(text);
                     foreach (string section in reader.GetSections())
                     {
                         int dotIndex = section.IndexOf('.');
                         if (dotIndex == -1)
                         {
-                            throw new FormatException("Unrecognised key in users.ini.");
+                            throw new Exception("Unrecognised key in users.ini.");
                         }
                         string type = section.Substring(0, dotIndex);
                         string key = section.Substring(dotIndex + 1);
@@ -86,7 +82,7 @@ namespace SphereOS.Users
             if (username.IndexOf(':') != -1)
                 throw new InvalidOperationException("Usernames must not contain colons.");
 
-            if (username.IndexOf('/') == -1 || username.IndexOf('\\') == - 1)
+            if (username.IndexOf('/') != -1 || username.IndexOf('\\') != -1)
                 throw new InvalidOperationException("Usernames must not contain path separators.");
 
             User user = new User(username, HashPasswordSha256(password), admin);
@@ -109,7 +105,7 @@ namespace SphereOS.Users
             return user;
         }
 
-        internal static void MakeHomeDir(User user)
+        internal static void CreateHomeDirectory(User user)
         {
             if (!Directory.Exists(@"0:\users"))
                 Directory.CreateDirectory(@"0:\users");
@@ -175,7 +171,7 @@ namespace SphereOS.Users
                 {
                     foreach (Message message in user.Messages)
                     {
-                        builder.BeginSection($"Message {messageIndex}");
+                        builder.BeginSection($"Message.{messageIndex}");
                         builder.AddKey("from", message.From.Username);
                         builder.AddKey("to", user.Username);
                         builder.AddKey("body", message.Body.ToString());
