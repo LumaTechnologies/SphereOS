@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using System.IO;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal class Document
     {

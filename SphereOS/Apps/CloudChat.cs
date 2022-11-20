@@ -1,10 +1,11 @@
 ﻿using Cosmos.System.Network.IPv4;
 using Cosmos.System.Network.IPv4.UDP;
 using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.Text;
 
-namespace SphereOS
+namespace SphereOS.Apps
 {
     internal class CloudChat
     {

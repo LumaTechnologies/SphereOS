@@ -22,7 +22,7 @@
 
 using System;
 
-namespace SphereOS.Crypto
+namespace SphereOS.Core.Crypto
 {
     internal class Sha256
     {
@@ -40,23 +40,23 @@ namespace SphereOS.Crypto
         private static uint ROTL(uint x, byte n)
         {
             if (n >= 32) throw new ArgumentException("n");
-            return (x << n) | (x >> (32 - n));
+            return x << n | x >> 32 - n;
         }
 
         private static uint ROTR(uint x, byte n)
         {
             if (n >= 32) throw new ArgumentException("n");
-            return (x >> n) | (x << (32 - n));
+            return x >> n | x << 32 - n;
         }
 
         private static uint Ch(uint x, uint y, uint z)
         {
-            return (x & y) ^ ((~x) & z);
+            return x & y ^ ~x & z;
         }
 
         private static uint Maj(uint x, uint y, uint z)
         {
-            return (x & y) ^ (x & z) ^ (y & z);
+            return x & y ^ x & z ^ y & z;
         }
 
         private static uint Sigma0(uint x)
@@ -71,12 +71,12 @@ namespace SphereOS.Crypto
 
         private static uint sigma0(uint x)
         {
-            return ROTR(x, 7) ^ ROTR(x, 18) ^ (x >> 3);
+            return ROTR(x, 7) ^ ROTR(x, 18) ^ x >> 3;
         }
 
         private static uint sigma1(uint x)
         {
-            return ROTR(x, 17) ^ ROTR(x, 19) ^ (x >> 10);
+            return ROTR(x, 17) ^ ROTR(x, 19) ^ x >> 10;
         }
 
 
@@ -225,7 +225,7 @@ namespace SphereOS.Crypto
         {
             for (uint i = 0, j = 0; i < dest.Length; ++i, j += 4)
             {
-                dest[i] = ((uint)src[j + 0] << 24) | ((uint)src[j + 1] << 16) | ((uint)src[j + 2] << 8) | ((uint)src[j + 3]);
+                dest[i] = (uint)src[j + 0] << 24 | (uint)src[j + 1] << 16 | (uint)src[j + 2] << 8 | src[j + 3];
             }
         }
 
@@ -239,7 +239,7 @@ namespace SphereOS.Crypto
                 dest[pos++] = (byte)(src[i] >> 24);
                 dest[pos++] = (byte)(src[i] >> 16);
                 dest[pos++] = (byte)(src[i] >> 8);
-                dest[pos++] = (byte)(src[i]);
+                dest[pos++] = (byte)src[i];
             }
 
             return dest;

@@ -3,11 +3,11 @@ using Cosmos.System;
 using Cosmos.System.Graphics;
 using System.Drawing;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal class Text : Tool
     {
-        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.text.bmp")]
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Apps.Paint.Images.text.bmp")]
         private static byte[] _icon;
 
         internal Text() : base("Text", new Bitmap(_icon))

@@ -1,6 +1,6 @@
 ﻿using Cosmos.System.Graphics;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal class Button
     {

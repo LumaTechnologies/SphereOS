@@ -1,4 +1,5 @@
 ﻿using System;
+using SphereOS.Shell;
 
 namespace SphereOS.Commands.ConsoleTopic
 {

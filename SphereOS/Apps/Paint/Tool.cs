@@ -2,7 +2,7 @@
 using Cosmos.System;
 using Cosmos.System.Graphics;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal abstract class Tool
     {

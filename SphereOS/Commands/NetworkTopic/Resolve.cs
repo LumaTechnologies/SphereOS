@@ -1,5 +1,6 @@
 ﻿using Cosmos.System.Network.IPv4;
 using Cosmos.System.Network.IPv4.UDP.DNS;
+using SphereOS.Shell;
 using System;
 
 namespace SphereOS.Commands.NetworkTopic

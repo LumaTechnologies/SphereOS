@@ -1,4 +1,5 @@
 ﻿using System;
+using SphereOS.Shell;
 
 namespace SphereOS.Logging
 {
@@ -34,6 +35,7 @@ namespace SphereOS.Logging
                     break;
                 default:
                     Util.Print(ConsoleColor.Gray, "[Unknown]");
+                    break;
             }
             Console.Write(" ");
             Util.Print(ConsoleColor.White, Date.ToString("HH:mm"));

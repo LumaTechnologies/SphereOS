@@ -1,11 +1,11 @@
 ﻿using Cosmos.System;
 using Cosmos.System.Graphics;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal class Pencil : Tool
     {
-        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.pencil.bmp")]
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Apps.Paint.Images.pencil.bmp")]
         private static byte[] _icon;
 
         internal Pencil() : base("Pencil", new Bitmap(_icon))

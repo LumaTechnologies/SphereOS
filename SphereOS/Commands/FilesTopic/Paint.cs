@@ -1,4 +1,5 @@
 ﻿using System;
+using SphereOS.Shell;
 
 namespace SphereOS.Commands.FilesTopic
 {
@@ -19,7 +20,7 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            string paintPath = Path.Join(Kernel.WorkingDir, args[1]);
+            string paintPath = Path.Join(Shell.Shell.WorkingDir, args[1]);
 
             if (Path.GetExtension(paintPath) != ".pnt")
             {
@@ -31,7 +32,7 @@ namespace SphereOS.Commands.FilesTopic
             Util.PrintLine(ConsoleColor.Gray, "Press a key to start SphereOS Paint.");
             Console.ReadKey();
 
-            SphereOS.Paint.Paint paint = new SphereOS.Paint.Paint();
+            Apps.Paint.Paint paint = new SphereOS.Apps.Paint.Paint();
             paint.Run();
 
             return ReturnCode.Success;

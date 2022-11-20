@@ -1,4 +1,4 @@
-﻿namespace SphereOS.Paint
+﻿namespace SphereOS.Apps.Paint
 {
     internal static class FontData
     {

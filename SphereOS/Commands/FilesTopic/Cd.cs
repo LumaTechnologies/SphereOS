@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using SphereOS.Shell;
 
 namespace SphereOS.Commands.FilesTopic
 {
@@ -22,18 +23,18 @@ namespace SphereOS.Commands.FilesTopic
 
             if (args[1] == "..")
             {
-                Kernel.WorkingDir = Directory.GetParent(Kernel.WorkingDir).FullName;
+                Shell.Shell.WorkingDir = Directory.GetParent(Shell.Shell.WorkingDir).FullName;
             }
             else if (args[1] == "~")
             {
-                Kernel.WorkingDir = $@"0:\users\{Kernel.CurrentUser.Username}";
+                Shell.Shell.WorkingDir = $@"0:\users\{Kernel.CurrentUser.Username}";
             }
             else
             {
-                var newDir = Path.Combine(Kernel.WorkingDir, args[1]);
+                var newDir = Path.Combine(Shell.Shell.WorkingDir, args[1]);
                 if (Directory.Exists(newDir))
                 {
-                    Kernel.WorkingDir = Path.GetFullPath(newDir);
+                    Shell.Shell.WorkingDir = Path.GetFullPath(newDir);
                 }
                 else
                 {

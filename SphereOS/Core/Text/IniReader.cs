@@ -17,9 +17,10 @@ namespace SphereOS.Text
         internal string ReadString(string key, string? section = null)
         {
             string _section = string.Empty;
-            foreach (var line in this.Lines)
+            foreach (string line in Lines)
             {
                 int equalIndex = line.IndexOf('=');
+
                 if (equalIndex == -1)
                 {
                     string trimmed = line.Trim();
@@ -36,13 +37,13 @@ namespace SphereOS.Text
                         }
                         else
                         {
-                            throw new FormatException();
+                            throw new Exception("Invalid INI syntax.");
                         }
                     }
                 }
                 if (equalIndex < 1)
                 {
-                    throw new System.FormatException(line);
+                    throw new Exception("Invalid INI syntax.");
                 }
                 string _key = line.Substring(0, equalIndex).Trim();
                 if (key == _key)

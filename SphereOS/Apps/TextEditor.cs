@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SphereOS
+namespace SphereOS.Apps
 {
     public class TextEditor
     {
@@ -604,10 +604,10 @@ namespace SphereOS
         private void RenderUI()
         {
             // Status bar.
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(0, 0);
-            string text = "  Text Editor 1.1";
+            string text = "  Text Editor 1.1.2";
             Console.WriteLine(text + new string(' ', Console.WindowWidth - text.Length));
 
             string displayName = path == null ? "New File" : Path.GetFileName(path);

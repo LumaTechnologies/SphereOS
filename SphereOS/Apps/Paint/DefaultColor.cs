@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal class DefaultColor
     {

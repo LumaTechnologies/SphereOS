@@ -3,7 +3,7 @@ using SphereOS;
 
 namespace RiverScript.StandardLibrary
 {
-    internal static class StandardLibrary
+    internal static partial class StandardLibrary
     {
         internal static void LoadStandardLibrary(Interpreter interpreter)
         {

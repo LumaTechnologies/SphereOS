@@ -1,4 +1,6 @@
-﻿using SphereOS.Core;
+﻿using SphereOS.Apps;
+using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.IO;
 
@@ -21,7 +23,7 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            string editPath = Path.Join(Kernel.WorkingDir, args[1]);
+            string editPath = Path.Join(Shell.Shell.WorkingDir, args[1]);
 
             if (!FileSecurity.CanAccess(Kernel.CurrentUser, editPath))
             {

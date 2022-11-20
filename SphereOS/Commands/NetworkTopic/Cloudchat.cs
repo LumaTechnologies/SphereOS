@@ -11,7 +11,7 @@
 
         internal override ReturnCode Execute(string[] args)
         {
-            new CloudChat().Init();
+            new Apps.CloudChat().Init();
 
             return ReturnCode.Success;
         }

@@ -1,7 +1,7 @@
 ﻿using Cosmos.HAL.Drivers.PCI.Video;
 using System.Drawing;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal static class TextRenderer
     {

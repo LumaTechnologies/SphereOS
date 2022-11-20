@@ -2,11 +2,11 @@
 using Cosmos.System.Graphics;
 using System;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal class Brush : Tool
     {
-        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.brush.bmp")]
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Apps.Paint.Images.brush.bmp")]
         private static byte[] _icon;
 
         internal Brush() : base("Brush", new Bitmap(_icon))

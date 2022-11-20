@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SphereOS
+namespace SphereOS.Shell
 {
     /// <summary>
     /// Utilities for the console.
@@ -50,8 +50,7 @@ namespace SphereOS
             var chars = new List<char>(32);
             Cosmos.System.KeyEvent current;
             int currentCount = 0;
-            current = Cosmos.System.KeyboardManager.ReadKey();
-            while (current.Key != Cosmos.System.ConsoleKeyEx.Enter)
+            while ((current = Cosmos.System.KeyboardManager.ReadKey()).Key != Cosmos.System.ConsoleKeyEx.Enter)
             {
                 if (current.Key == cancelKey)
                 {

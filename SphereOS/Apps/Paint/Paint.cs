@@ -2,12 +2,13 @@
 using Cosmos.System;
 using Cosmos.System.Graphics;
 using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
-namespace SphereOS.Paint
+namespace SphereOS.Apps.Paint
 {
     internal class Paint
     {
@@ -67,19 +68,19 @@ namespace SphereOS.Paint
 
         private static class Images
         {
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.cursor.bmp")]
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Apps.Paint.Images.cursor.bmp")]
             private static byte[] _cursor;
             internal static Bitmap Cursor = new Bitmap(_cursor);
 
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.selected.bmp")]
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Apps.Paint.Images.selected.bmp")]
             private static byte[] _selected;
             internal static Bitmap Selected = new Bitmap(_selected);
 
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.exit.bmp")]
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Apps.Paint.Images.exit.bmp")]
             private static byte[] _exit;
             internal static Bitmap Exit = new Bitmap(_exit);
 
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Paint.Images.save.bmp")]
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Apps.Paint.Images.save.bmp")]
             private static byte[] _save;
             internal static Bitmap Save = new Bitmap(_save);
         }

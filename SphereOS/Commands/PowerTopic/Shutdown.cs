@@ -1,4 +1,5 @@
-﻿using SphereOS.Users;
+﻿using SphereOS.Shell;
+using SphereOS.Users;
 using System;
 using Sys = Cosmos.System;
 
