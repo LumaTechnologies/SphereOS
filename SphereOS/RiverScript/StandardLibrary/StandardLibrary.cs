@@ -3,13 +3,14 @@ using SphereOS;
 
 namespace RiverScript.StandardLibrary
 {
-    internal static partial class StandardLibrary
+    internal static class StandardLibrary
     {
         internal static void LoadStandardLibrary(Interpreter interpreter)
         {
             // IO
             interpreter.DefineVariable("print", Stdlib_print, scope: null);
             interpreter.DefineVariable("read", Stdlib_read, scope: null);
+            //interpreter.DefineVariable("exec", Stdlib_exec, scope: null);
 
             // Types
             interpreter.DefineVariable("str", Stdlib_str, scope: null);

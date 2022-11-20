@@ -20,7 +20,7 @@ namespace RiverScript.Tokens
                 }
                 return new VMNumber(numA.Value / numB.Value);
             }
-            throw new ArithmeticException($"Cannot divide {a.ToString()} by {b.ToString()}.");
+            throw new Exception($"Cannot divide {a.ToString()} by {b.ToString()}.");
         }
     }
 }

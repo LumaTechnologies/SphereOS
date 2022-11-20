@@ -16,7 +16,7 @@ namespace RiverScript.Tokens
             {
                 return new VMNumber(numA.Value % numB.Value);
             }
-            throw new ArithmeticException($"Cannot find the remainder of {a.ToString()} and {b.ToString()}.");
+            throw new Exception($"Cannot find the remainder of {a.ToString()} and {b.ToString()}.");
         }
     }
 }

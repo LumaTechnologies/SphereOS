@@ -16,7 +16,7 @@ namespace RiverScript.Tokens
             {
                 return new VMRange(numA.Value, numB.Value);
             }
-            throw new ArithmeticException($"Cannot instantiate a new range from {a.ToString()} and {b.ToString()}.");
+            throw new Exception($"Cannot instantiate a new range from {a.ToString()} and {b.ToString()}.");
         }
     }
 }

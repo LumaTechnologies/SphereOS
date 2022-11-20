@@ -20,7 +20,7 @@ namespace RiverScript.Tokens
             {
                 return new VMString(strA.Value + strB.Value);
             }
-            throw new ArithmeticException($"Cannot add {a.ToString()} and {b.ToString()}.");
+            throw new Exception($"Cannot add {a.ToString()} and {b.ToString()}.");
         }
     }
 }

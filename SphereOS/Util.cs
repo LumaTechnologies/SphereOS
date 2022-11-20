@@ -50,8 +50,8 @@ namespace SphereOS
             var chars = new List<char>(32);
             Cosmos.System.KeyEvent current;
             int currentCount = 0;
-
-            while ((current = Cosmos.System.KeyboardManager.ReadKey()).Key != Cosmos.System.ConsoleKeyEx.Enter)
+            current = Cosmos.System.KeyboardManager.ReadKey();
+            while (current.Key != Cosmos.System.ConsoleKeyEx.Enter)
             {
                 if (current.Key == cancelKey)
                 {

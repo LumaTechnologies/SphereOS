@@ -11,11 +11,10 @@ namespace SphereOS.Paint
 {
     internal class Paint
     {
-        private VMWareSVGAII driver = new VMWareSVGAII();
-        private Mode mode = new Mode(1024, 768, ColorDepth.ColorDepth32);
+        private readonly VMWareSVGAII driver = new VMWareSVGAII();
+        private readonly Mode mode = new Mode(1024, 768, ColorDepth.ColorDepth32);
         private Document doc;
         private Button exitButton = new Button(Images.Exit);
-        //private Button saveButton = new Button(Images.Save);
         private string path;
         private bool exited = false;
         private const int toolbarHeight = 32;
@@ -30,14 +29,14 @@ namespace SphereOS.Paint
         {
         }
 
-        private List<Tool> tools = new List<Tool>()
+        private readonly List<Tool> tools = new List<Tool>
         {
             new Brush(),
             new Pencil(),
             new Text()
         };
 
-        private List<DefaultColor> defaultColors = new List<DefaultColor>()
+        private readonly List<DefaultColor> defaultColors = new List<DefaultColor>
         {
             new DefaultColor(Color.Black, "Black"),
             new DefaultColor(Color.White, "White"),
@@ -214,7 +213,6 @@ namespace SphereOS.Paint
                 tool.ButtonWidth = toolbarHeight;
                 tool.ButtonHeight = toolbarHeight;
                 x += toolbarHeight;
-                //Kernel.PrintDebug(x.ToString());
             }
             for (int i = 0; i < defaultColors.Count; i++)
             {
@@ -229,11 +227,6 @@ namespace SphereOS.Paint
             exitButton.ButtonHeight = (int)Images.Exit.Height;
             exitButton.ButtonX = mode.Columns - exitButton.ButtonWidth;
             exitButton.ButtonY = 0;
-
-            /*saveButton.ButtonWidth = (int)Images.Save.Width;
-            saveButton.ButtonHeight = (int)Images.Save.Height;
-            saveButton.ButtonX = exitButton.ButtonX - saveButton.ButtonWidth;
-            saveButton.ButtonY = 0;*/
         }
 
         private void ExitClicked()

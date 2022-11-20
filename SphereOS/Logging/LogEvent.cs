@@ -32,6 +32,8 @@ namespace SphereOS.Logging
                 case LogPriority.Error:
                     Util.Print(ConsoleColor.Red, "[Error]");
                     break;
+                default:
+                    Util.Print(ConsoleColor.Gray, "[Unknown]");
             }
             Console.Write(" ");
             Util.Print(ConsoleColor.White, Date.ToString("HH:mm"));

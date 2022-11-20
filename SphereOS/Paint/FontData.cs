@@ -5,7 +5,7 @@
         internal const int Width = 8;
         internal const int Height = 17;
 
-        internal static byte[][] Chars = new byte[][]
+        internal static readonly byte[][] Chars = new byte[][]
         {
             null,
 

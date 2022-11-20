@@ -153,7 +153,6 @@ namespace RiverScript
             stack = new();
             sequence = string.Empty;
 
-            char lastChar = '\0';
             bool inComment = false;
             for (int i = 0; i < source.Length; i++)
             {
@@ -162,6 +161,18 @@ namespace RiverScript
                 if (i < source.Length - 1)
                 {
                     nextChar = source[i + 1];
+                }
+
+                if (inComment)
+                {
+                    if (c == '\n' || c == '\r')
+                    {
+                        inComment = false;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
                 if (current is not Tokens.StringLiteral)
@@ -186,18 +197,6 @@ namespace RiverScript
                     }
                 }
 
-                if (inComment)
-                {
-                    if (c == '\n' || c == '\r')
-                    {
-                        inComment = false;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-
                 switch (c)
                 {
                     case '#' when current is not Tokens.StringLiteral:
@@ -212,11 +211,11 @@ namespace RiverScript
                         sequence += c;
                         EndSequence();
                         break;
-                    case '(':
+                    case '(' when current is not Tokens.StringLiteral:
                         EndSequence();
                         Nest(new Tokens.Parentheses());
                         break;
-                    case ')':
+                    case ')' when current is not Tokens.StringLiteral:
                         EndSequence();
                         if (current is Tokens.Parentheses)
                         {
@@ -227,11 +226,11 @@ namespace RiverScript
                             throw new Exception("Cannot close parentheses outside of parentheses.");
                         }
                         break;
-                    case '{':
+                    case '{' when current is not Tokens.StringLiteral:
                         EndSequence();
                         Nest(new Tokens.Block());
                         break;
-                    case '}':
+                    case '}' when current is not Tokens.StringLiteral:
                         EndSequence();
                         CloseAssignment();
                         if (current is Tokens.Block)
@@ -267,8 +266,6 @@ namespace RiverScript
                         sequence += c;
                         break;
                 }
-
-                lastChar = c;
             }
 
             EndSequence();

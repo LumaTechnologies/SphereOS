@@ -15,10 +15,10 @@ namespace SphereOS.Paint
 
         }
 
-        private bool writing = false;
+        private bool writing;
         private string text = string.Empty;
-        private int x = 0;
-        private int y = 0;
+        private int x;
+        private int y;
         private MouseState lastMouseState = MouseState.None;
         private Document document;
 

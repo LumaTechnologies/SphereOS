@@ -6,13 +6,13 @@ namespace SphereOS.Core
 {
     internal abstract class Process
     {
-        internal Process(string name, ProcessType type)
+        private protected Process(string name, ProcessType type)
         {
             Name = name;
             Type = type;
         }
 
-        internal Process(string name, ProcessType type, Process parent)
+        private protected Process(string name, ProcessType type, Process parent)
         {
             Name = name;
             Type = type;

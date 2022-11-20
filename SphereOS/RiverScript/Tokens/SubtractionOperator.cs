@@ -16,7 +16,7 @@ namespace RiverScript.Tokens
             {
                 return new VMNumber(-num.Value);
             }
-            throw new ArithmeticException($"Cannot subtract {x.ToString()}.");
+            throw new Exception($"Cannot subtract {x.ToString()}.");
         }
 
         internal override VMObject Operate(VMObject a, VMObject b)
@@ -25,7 +25,7 @@ namespace RiverScript.Tokens
             {
                 return new VMNumber(numA.Value - numB.Value);
             }
-            throw new ArithmeticException($"Cannot subtract {a.ToString()} and {b.ToString()}.");
+            throw new Exception($"Cannot subtract {a.ToString()} and {b.ToString()}.");
         }
     }
 }

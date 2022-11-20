@@ -14,9 +14,9 @@ namespace SphereOS.Paint
 
         }
 
-        private bool joinLine = false;
-        private int joinX = 0;
-        private int joinY = 0;
+        private bool joinLine;
+        private int joinX;
+        private int joinY;
 
         internal int Radius = 4;
 
