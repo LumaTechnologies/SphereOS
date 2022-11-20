@@ -1,6 +1,9 @@
 ![SphereOS logo](/Art/logo_light.png#gh-dark-mode-only)
 ![SphereOS logo](/Art/logo_dark.png#gh-light-mode-only)
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jspa2/sphereos/.NET)
+![GitHub all releases](https://img.shields.io/github/downloads/jspa2/sphereos/total)
+
 # SphereOS
 SphereOS is a simple and secure operating system made with Cosmos!
 #### Installation
@@ -27,7 +30,7 @@ Check the latest release for ISO images.
 - [x] Scripting language (RiverScript)
 > [Read the RiverScript Documentation!](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
 - [ ] Package manager (sphereget)
-> Share + Download SphereScript scripts!
+> Share + Download scripts!
 ## Screenshots
 ### Console
 ![Screenshot 1](/Art/screenshot_1.png)
