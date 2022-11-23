@@ -31,7 +31,7 @@ namespace SphereOS.Commands.UsersTopic
                     if (password == null)
                     {
                         Kernel.CurrentUser = null;
-                        Shell.Shell.WorkingDir = @"0:\";
+                        Shell.Shell.CurrentShell.WorkingDir = @"0:\";
 
                         Console.Clear();
                         Console.SetCursorPosition(0, 0);
@@ -46,7 +46,7 @@ namespace SphereOS.Commands.UsersTopic
             catch
             {
                 Kernel.CurrentUser = null;
-                Shell.Shell.WorkingDir = @"0:\";
+                Shell.Shell.CurrentShell.WorkingDir = @"0:\";
 
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);

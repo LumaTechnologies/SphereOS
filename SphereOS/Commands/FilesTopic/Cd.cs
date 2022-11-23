@@ -23,18 +23,18 @@ namespace SphereOS.Commands.FilesTopic
 
             if (args[1] == "..")
             {
-                Shell.Shell.WorkingDir = Directory.GetParent(Shell.Shell.WorkingDir).FullName;
+                Shell.Shell.CurrentShell.WorkingDir = Directory.GetParent(Shell.Shell.CurrentShell.WorkingDir).FullName;
             }
             else if (args[1] == "~")
             {
-                Shell.Shell.WorkingDir = $@"0:\users\{Kernel.CurrentUser.Username}";
+                Shell.Shell.CurrentShell.WorkingDir = $@"0:\users\{Kernel.CurrentUser.Username}";
             }
             else
             {
-                var newDir = Path.Combine(Shell.Shell.WorkingDir, args[1]);
+                var newDir = Path.Combine(Shell.Shell.CurrentShell.WorkingDir, args[1]);
                 if (Directory.Exists(newDir))
                 {
-                    Shell.Shell.WorkingDir = Path.GetFullPath(newDir);
+                    Shell.Shell.CurrentShell.WorkingDir = Path.GetFullPath(newDir);
                 }
                 else
                 {

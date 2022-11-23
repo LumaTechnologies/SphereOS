@@ -6,6 +6,7 @@
         <Platform>cosmos</Platform>
         <SupportsX86Intrinsics>false</SupportsX86Intrinsics>
         <SelfContained>True</SelfContained>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -18,14 +19,15 @@
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
         <VMWareEdition>Workstation</VMWareEdition>
-        <DebugEnabled>False</DebugEnabled>
+        <DebugEnabled>True</DebugEnabled>
         <CompileVBEMultiboot>False</CompileVBEMultiboot>
-        <CompressionType>Gzip</CompressionType>
+        <CompressionType>None</CompressionType>
         <TraceMode>All</TraceMode>
     </PropertyGroup>
 
     <PropertyGroup>
       <DefineConstants>SPHEREOS</DefineConstants>
+      <OptimizationLevel>2</OptimizationLevel>
     </PropertyGroup>
 
     <ItemGroup>
@@ -42,6 +44,22 @@
       <None Remove="Apps\Paint\Images\save.bmp" />
       <None Remove="Apps\Paint\Images\selected.bmp" />
       <None Remove="Apps\Paint\Images\text.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Clock.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Default.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Info.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Settings.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Tasks.bmp" />
+      <None Remove="Gui\Resources\Calculator\GridButton.bmp" />
+      <None Remove="Gui\Resources\Check.bmp" />
+      <None Remove="Gui\Resources\Clock\ClockBackground.bmp" />
+      <None Remove="Gui\Resources\Close.bmp" />
+      <None Remove="Gui\Resources\Cursor.bmp" />
+      <None Remove="Gui\Resources\Maximise.bmp" />
+      <None Remove="Gui\Resources\Minimise.bmp" />
+      <None Remove="Gui\Resources\Restore.bmp" />
+      <None Remove="Gui\Resources\Start.bmp" />
+      <None Remove="Gui\Resources\WaitCursor.bmp" />
+      <None Remove="Gui\Resources\Wallpaper.bmp" />
     </ItemGroup>
 
     <ItemGroup>
@@ -52,6 +70,22 @@
       <EmbeddedResource Include="Apps\Paint\Images\save.bmp" />
       <EmbeddedResource Include="Apps\Paint\Images\selected.bmp" />
       <EmbeddedResource Include="Apps\Paint\Images\text.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Clock.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Default.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Info.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Settings.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Tasks.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Calculator\GridButton.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Check.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Clock\ClockBackground.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Close.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Cursor.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Maximise.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Minimise.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Restore.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Start.bmp" />
+      <EmbeddedResource Include="Gui\Resources\WaitCursor.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Wallpaper.bmp" />
     </ItemGroup>
 
     <ItemGroup>

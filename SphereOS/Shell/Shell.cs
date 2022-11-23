@@ -1,13 +1,27 @@
 ﻿using SphereOS.Commands;
+using SphereOS.Core;
 using System;
 
 namespace SphereOS.Shell
 {
-    internal static class Shell
+    internal class Shell : Process
     {
-        internal static string WorkingDir = @"0:\";
+        internal Shell() : base("Shell", ProcessType.Application)
+        {
+            Critical = true;
+        }
 
-        internal static void WelcomeMessage()
+        internal static Shell CurrentShell
+        {
+            get
+            {
+                return ProcessManager.GetProcess<Shell>();
+            }
+        }
+
+        internal string WorkingDir = @"0:\";
+
+        internal void WelcomeMessage()
         {
             Util.Print(ConsoleColor.Cyan, "Welcome to ");
             Util.Print(ConsoleColor.Magenta, "SphereOS");
@@ -15,50 +29,64 @@ namespace SphereOS.Shell
             Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
 
             Util.Print(ConsoleColor.Yellow, "New in this version: ");
-            Util.PrintLine(ConsoleColor.White, "New security, scripting, and more!");
+            Util.PrintLine(ConsoleColor.White, "New GUI!");
         }
 
-        internal static void Execute()
+        #region Process
+        internal override void Start()
         {
-            if (Kernel.CurrentUser != null)
+            base.Start();
+            WelcomeMessage();
+
+            // Blocking.
+            while (true)
             {
-                Kernel.CurrentUser.FlushMessages();
-
-                Util.Print(ConsoleColor.Cyan, Kernel.CurrentUser.Username);
-                Util.Print(ConsoleColor.Gray, @$"@SphereOS [{WorkingDir}]> ");
-
-                var input = Console.ReadLine();
-
-                if (input.Trim() == string.Empty)
-                    return;
-
-                var args = input.Trim().Split();
-                var commandName = args[0];
-
-                Command command = CommandManager.GetCommand(commandName);
-                if (command != null)
+                if (Kernel.CurrentUser != null)
                 {
-                    try
+                    Kernel.CurrentUser.FlushMessages();
+
+                    Util.Print(ConsoleColor.Cyan, Kernel.CurrentUser.Username);
+                    Util.Print(ConsoleColor.Gray, @$"@SphereOS [{WorkingDir}]> ");
+
+                    var input = Console.ReadLine();
+
+                    if (input.Trim() == string.Empty)
+                        return;
+
+                    var args = input.Trim().Split();
+                    var commandName = args[0];
+
+                    Command command = CommandManager.GetCommand(commandName);
+                    if (command != null)
                     {
-                        command.Execute(args);
+                        try
+                        {
+                            command.Execute(args);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Black;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
+                            Util.PrintLine(ConsoleColor.White, $"Error information: {e.ToString()}");
+                        }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
-                        Util.PrintLine(ConsoleColor.White, $"Error information: {e.ToString()}");
+                        Util.PrintLine(ConsoleColor.Red, $"Unknown command '{commandName}'.");
                     }
                 }
                 else
                 {
-                    Util.PrintLine(ConsoleColor.Red, $"Unknown command '{commandName}'.");
+                    LoginPrompt.PromptLogin();
                 }
             }
-            else
-            {
-                LoginPrompt.PromptLogin();
-            }
         }
+
+        internal override void Run()
+        {
+            // Don't do anything here, we don't want the shell to run in the background.
+        }
+        #endregion
     }
 }

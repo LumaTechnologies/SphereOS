@@ -17,7 +17,7 @@ namespace SphereOS.Commands.UsersTopic
             Util.PrintLine(ConsoleColor.Green, "Goodbye!");
 
             Kernel.CurrentUser = null;
-            Shell.Shell.WorkingDir = @"0:\";
+            Shell.Shell.CurrentShell.WorkingDir = @"0:\";
 
             Console.Clear();
             return ReturnCode.Success;

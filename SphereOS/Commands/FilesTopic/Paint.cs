@@ -20,7 +20,7 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            string paintPath = Path.Join(Shell.Shell.WorkingDir, args[1]);
+            string paintPath = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
             if (Path.GetExtension(paintPath) != ".pnt")
             {

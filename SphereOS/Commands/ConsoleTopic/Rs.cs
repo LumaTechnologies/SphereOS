@@ -26,7 +26,7 @@ namespace SphereOS.Commands.ConsoleTopic
 
             if (args.Length == 2)
             {
-                string path = Path.Join(Shell.Shell.WorkingDir, args[1]);
+                string path = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
                 if (!FileSecurity.CanAccess(Kernel.CurrentUser, path))
                 {

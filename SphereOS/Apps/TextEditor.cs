@@ -604,10 +604,10 @@ namespace SphereOS.Apps
         private void RenderUI()
         {
             // Status bar.
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 0);
-            string text = "  Text Editor 1.1.2";
+            string text = "  Text Editor 1.1";
             Console.WriteLine(text + new string(' ', Console.WindowWidth - text.Length));
 
             string displayName = path == null ? "New File" : Path.GetFileName(path);

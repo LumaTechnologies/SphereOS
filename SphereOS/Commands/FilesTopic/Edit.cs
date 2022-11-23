@@ -23,7 +23,7 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            string editPath = Path.Join(Shell.Shell.WorkingDir, args[1]);
+            string editPath = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
             if (!FileSecurity.CanAccess(Kernel.CurrentUser, editPath))
             {
