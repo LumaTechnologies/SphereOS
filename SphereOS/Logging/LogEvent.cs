@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Shell;
+using System;
 
 namespace SphereOS.Logging
 {
@@ -31,6 +32,9 @@ namespace SphereOS.Logging
                     break;
                 case LogPriority.Error:
                     Util.Print(ConsoleColor.Red, "[Error]");
+                    break;
+                default:
+                    Util.Print(ConsoleColor.Gray, "[Unknown]");
                     break;
             }
             Console.Write(" ");

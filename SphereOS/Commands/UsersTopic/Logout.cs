@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Shell;
+using System;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -16,7 +17,7 @@ namespace SphereOS.Commands.UsersTopic
             Util.PrintLine(ConsoleColor.Green, "Goodbye!");
 
             Kernel.CurrentUser = null;
-            Kernel.WorkingDir = @"0:\";
+            Shell.Shell.CurrentShell.WorkingDir = @"0:\";
 
             Console.Clear();
             return ReturnCode.Success;

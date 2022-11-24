@@ -1,4 +1,5 @@
 ﻿using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.IO;
 
@@ -21,7 +22,7 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            string path = Path.Join(Kernel.WorkingDir, args[1]);
+            string path = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
             if (!FileSecurity.CanAccess(Kernel.CurrentUser, path))
             {

@@ -46,7 +46,7 @@ namespace SphereOS.Core
             Console.WriteLine("[i] Press any key to go back.");
             Console.WriteLine("Crash log:");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(log.ToString());
+            Console.Write(log);
 
             Console.ReadKey(true);
         }
@@ -126,6 +126,8 @@ namespace SphereOS.Core
                         break;
                     case ConsoleKey.V:
                         ShowCrashLog();
+                        break;
+                    default:
                         break;
                 }
                 Cosmos.Core.Memory.Heap.Collect();

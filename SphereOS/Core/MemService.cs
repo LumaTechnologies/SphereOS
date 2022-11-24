@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SphereOS.Core
+﻿namespace SphereOS.Core
 {
     internal class MemService : Process
     {
@@ -13,9 +7,16 @@ namespace SphereOS.Core
             Critical = true;
         }
 
+        int ticks = 0;
+
         internal override void Run()
         {
-            Cosmos.Core.Memory.Heap.Collect();
+            if (ticks % 10 == 0)
+            {
+                Cosmos.Core.Memory.Heap.Collect();
+                ProcessManager.Sweep();
+            }
+            ticks++;
         }
     }
 }

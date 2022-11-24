@@ -1,4 +1,5 @@
 ﻿using SphereOS.Logging;
+using SphereOS.Shell;
 using System;
 
 namespace SphereOS.Commands.ConsoleTopic

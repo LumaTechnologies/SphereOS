@@ -1,4 +1,4 @@
-﻿using SphereOS.Crypto;
+﻿using SphereOS.Core.Crypto;
 using SphereOS.Logging;
 using SphereOS.Text;
 using System;

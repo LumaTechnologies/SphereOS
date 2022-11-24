@@ -1,4 +1,5 @@
 ﻿using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.IO;
 
@@ -21,13 +22,13 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            if (!FileSecurity.CanAccess(Kernel.CurrentUser, Kernel.WorkingDir))
+            if (!FileSecurity.CanAccess(Kernel.CurrentUser, Shell.Shell.CurrentShell.WorkingDir))
             {
                 Util.PrintLine(ConsoleColor.Red, "You do not have permission to create a directory here.");
                 return ReturnCode.Unauthorised;
             }
 
-            var newDir = Path.Combine(Kernel.WorkingDir, args[1]);
+            var newDir = Path.Combine(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
             if (Directory.Exists(newDir))
             {

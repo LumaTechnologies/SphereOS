@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Shell;
+using System;
 using System.Collections.Generic;
 
 namespace SphereOS.Commands.ConsoleTopic

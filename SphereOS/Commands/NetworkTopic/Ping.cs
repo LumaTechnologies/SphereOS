@@ -1,5 +1,6 @@
 ﻿using Cosmos.System;
 using Cosmos.System.Network.IPv4;
+using SphereOS.Shell;
 using System;
 using Console = System.Console;
 using EndPoint = Cosmos.System.Network.IPv4.EndPoint;
@@ -80,7 +81,7 @@ namespace SphereOS.Commands.NetworkTopic
                         {
                             Util.PrintLine(ConsoleColor.Red, "Request timed out.");
                         }
-                        if (Cosmos.System.KeyboardManager.TryReadKey(out KeyEvent key))
+                        if (KeyboardManager.TryReadKey(out KeyEvent key))
                         {
                             if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKeyEx.C)
                             {
@@ -93,7 +94,7 @@ namespace SphereOS.Commands.NetworkTopic
 
                 Console.WriteLine();
                 Util.PrintLine(ConsoleColor.Cyan, $"Ping statistics for {address.ToString()}:");
-                int lossPercent = (int)(((float)(sent - received) / (float)sent) * 100);
+                int lossPercent = (int)((sent - received) / (float)sent * 100);
                 Util.PrintLine(ConsoleColor.White, $"    Packets: Sent = {sent}, Received = {received}, Lost = {sent - received} ({lossPercent}% loss)");
                 Console.WriteLine();
 

@@ -6,13 +6,13 @@ namespace SphereOS.Core
 {
     internal abstract class Process
     {
-        internal Process(string name, ProcessType type)
+        private protected Process(string name, ProcessType type)
         {
             Name = name;
             Type = type;
         }
 
-        internal Process(string name, ProcessType type, Process parent)
+        private protected Process(string name, ProcessType type, Process parent)
         {
             Name = name;
             Type = type;
@@ -64,13 +64,13 @@ namespace SphereOS.Core
             }
             catch (Exception e)
             {
-                Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed: {e.ToString()}");
                 if (Critical)
                 {
-                    CrashScreen.ShowCrashScreen(new Exception("Critical process crashed.", e));
+                    CrashScreen.ShowCrashScreen(new Exception($"Critical process \"{Name}\" ({Id}) crashed.", e));
                 }
                 else
                 {
+                    Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed: {e.ToString()}");
                     TryStop();
                 }
             }
@@ -84,13 +84,13 @@ namespace SphereOS.Core
             }
             catch (Exception e)
             {
-                Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed while starting: {e.ToString()}");
                 if (Critical)
                 {
-                    CrashScreen.ShowCrashScreen(new Exception("Critical process crashed.", e));
+                    CrashScreen.ShowCrashScreen(new Exception($"Critical process \"{Name}\" ({Id}) crashed while starting.", e));
                 }
                 else
                 {
+                    Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed while starting: {e.ToString()}");
                     TryStop();
                 }
             }
@@ -105,10 +105,13 @@ namespace SphereOS.Core
             catch (Exception e)
             {
                 IsRunning = false;
-                Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed while stopping: {e.ToString()}");
                 if (Critical)
                 {
-                    CrashScreen.ShowCrashScreen(new Exception("Critical process crashed.", e));
+                    CrashScreen.ShowCrashScreen(new Exception($"Critical process \"{Name}\" ({Id}) crashed while stopping: {e.ToString()}", e));
+                }
+                else
+                {
+                    Log.Error(Name, $"Process \"{Name}\" ({Id}) crashed while stopping: {e.ToString()}");
                 }
             }
         }

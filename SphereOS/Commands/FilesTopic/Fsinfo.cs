@@ -1,4 +1,5 @@
 ﻿using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.IO;
 
@@ -15,7 +16,7 @@ namespace SphereOS.Commands.FilesTopic
 
         internal override ReturnCode Execute(string[] args)
         {
-            var root = Directory.GetDirectoryRoot(Kernel.WorkingDir);
+            var root = Directory.GetDirectoryRoot(Shell.Shell.CurrentShell.WorkingDir);
 
             Util.PrintLine(ConsoleColor.Green, $"Volume information for {root}");
 

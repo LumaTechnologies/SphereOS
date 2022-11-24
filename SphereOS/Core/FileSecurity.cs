@@ -1,4 +1,5 @@
 ﻿using SphereOS.Users;
+using System;
 
 namespace SphereOS.Core
 {
@@ -6,15 +7,17 @@ namespace SphereOS.Core
     {
         internal static bool CanAccess(User user, string path)
         {
+            if (user == null)
+            {
+                throw new ArgumentException("user");
+            }
+
             if (user.Admin)
             {
                 return true;
             }
 
             string sanitised = PathSanitiser.SanitisePath(path);
-
-            /* if (Path.TrimEndingDirectorySeparator(sanitised).EndsWith(@"\policies.ini"))
-                return false; */
 
             if (sanitised == @"0:\users.ini")
                 return false;

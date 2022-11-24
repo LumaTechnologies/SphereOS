@@ -1,4 +1,7 @@
-﻿using SphereOS.Core;
+﻿using RiverScript;
+using RiverScript.VM;
+using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.IO;
 
@@ -23,7 +26,7 @@ namespace SphereOS.Commands.ConsoleTopic
 
             if (args.Length == 2)
             {
-                string path = Path.Join(Kernel.WorkingDir, args[1]);
+                string path = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
                 if (!FileSecurity.CanAccess(Kernel.CurrentUser, path))
                 {
@@ -41,9 +44,9 @@ namespace SphereOS.Commands.ConsoleTopic
 
                 try
                 {
-                    RiverScript.Script script = new RiverScript.Script(source);
+                    Script script = new RiverScript.Script(source);
                     script.Lex();
-                    RiverScript.VM.Interpreter interpreter = new RiverScript.VM.Interpreter();
+                    Interpreter interpreter = new RiverScript.VM.Interpreter();
                     RiverScript.StandardLibrary.StandardLibrary.LoadStandardLibrary(interpreter);
                     interpreter.InterpretScript(script);
                 }
