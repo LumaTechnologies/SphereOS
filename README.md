@@ -1,28 +1,24 @@
 ![SphereOS logo](/Art/logo_light.png#gh-dark-mode-only)
 ![SphereOS logo](/Art/logo_dark.png#gh-light-mode-only)
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jspa2/sphereos/.NET)
-![GitHub all releases](https://img.shields.io/github/downloads/jspa2/sphereos/total)
-
 # SphereOS
 SphereOS is a simple and secure operating system made with Cosmos!
-#### Installation
-Check the latest release for ISO images.
+### Installation
+**Guide:** [Install in a VM](https://github.com/Jspa2/SphereOS/wiki/Installation)
 
-**How to install in a VM:** [Installation](https://github.com/Jspa2/SphereOS/wiki/Installation)
+**Default Username -** admin
+
+**Default Password -** password
 ## Features
+- GUI system (500+ FPS, Notepad, Clock, Calculator, and more apps!)
 - Networking
-- Cloud chat
+- CloudChat
 - [Scripting](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
-- Paint
 - Filesystem
 - Powerful text editor like nano
 - User management
 - Lock, logout, add and remove users
 - Shutdown & reboot
-- Live clock
-- View system and drive info
-- User homes
 - Processes
 - SHA-256 security
 - Messages
@@ -32,9 +28,9 @@ Check the latest release for ISO images.
 - [ ] Package manager (sphereget)
 > Share + Download scripts!
 ## Screenshots
+### GUI
+![Screenshot 1](/Art/screenshot_5.png)
 ### Console
 ![Screenshot 1](/Art/screenshot_1.png)
 ### Text Editor
 ![Screenshot 2](/Art/screenshot_2.png)
-### Paint
-![Screenshot 2](/Art/screenshot_3.png)
