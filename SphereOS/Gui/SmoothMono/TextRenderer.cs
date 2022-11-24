@@ -1,12 +1,4 @@
-﻿using Cosmos.System.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace SphereOS.Gui.SmoothMono
 {
@@ -26,20 +18,24 @@ namespace SphereOS.Gui.SmoothMono
             );
         }
 
-        private static void DrawChar(char c, int color, int[] buffer, int bufferWidth, int x, int y)
+        private static void DrawChar(char c, int color, int[] buffer, int bufferWidth, int bufferHeight, int x, int y)
         {
             byte[] bytes = FontData.Chars[c];
             if (bytes != null)
             {
                 for (int i = 0; i < FontData.Width; i++)
                 {
+                    int finalX = x + i;
+                    if (finalX < 0 || finalX >= bufferWidth) continue;
+
                     for (int j = 0; j < FontData.Height; j++)
                     {
+                        int finalY = y + j;
+                        if (finalY < 0 || finalY >= bufferHeight) continue;
+
                         byte invAlpha = (byte)(255 - bytes[(j * FontData.Width) + i]);
                         if (invAlpha == 255) continue;
 
-                        int finalX = x + i;
-                        int finalY = y + j;
                         int k = ((finalY * bufferWidth) + finalX);
 
                         buffer[k] = (int)FastBlend((uint)color, (uint)buffer[k], invAlpha);
@@ -48,12 +44,12 @@ namespace SphereOS.Gui.SmoothMono
             }
         }
 
-        public static void DrawString(string str, Color color, int[] buffer, int bufferWidth, int x, int y)
+        public static void DrawString(string str, Color color, int[] buffer, int bufferWidth, int bufferHeight, int x, int y)
         {
             int charX = x;
             for (int i = 0; i < str.Length; i++)
             {
-                DrawChar(str[i], color.ToArgb(), buffer, bufferWidth, charX, y);
+                DrawChar(str[i], color.ToArgb(), buffer, bufferWidth, bufferHeight, charX, y);
                 charX += FontData.Width;
             }
         }

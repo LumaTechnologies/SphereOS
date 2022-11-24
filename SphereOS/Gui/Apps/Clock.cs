@@ -1,8 +1,8 @@
-﻿using SphereOS.Core;
+﻿using Cosmos.System.Graphics;
+using SphereOS.Core;
 using SphereOS.Gui.UILib;
 using System;
 using System.Drawing;
-using Cosmos.System.Graphics;
 
 namespace SphereOS.Gui.Apps
 {

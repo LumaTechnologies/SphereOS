@@ -1,9 +1,8 @@
 ﻿using Cosmos.Core;
+using Cosmos.System;
 using Cosmos.System.Graphics;
-using SphereOS.Commands.ConsoleTopic;
 using SphereOS.Core;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace SphereOS.Gui
@@ -12,6 +11,8 @@ namespace SphereOS.Gui
     {
         internal Window(Process process, int x, int y, int width, int height)
         {
+            WM = ProcessManager.GetProcess<WindowManager>();
+
             Process = process;
             X = x;
             Y = y;
@@ -23,6 +24,8 @@ namespace SphereOS.Gui
 
         internal Window(Process process, Window parent, int x, int y, int width, int height)
         {
+            WM = ProcessManager.GetProcess<WindowManager>();
+
             Process = process;
             _relativeTo = parent;
             X = x;
@@ -36,8 +39,10 @@ namespace SphereOS.Gui
         internal int[] Buffer { get; private set; }
 
         private Window _relativeTo = null;
-        
+
         internal Process Process { get; private set; }
+
+        protected WindowManager WM;
 
         private int x;
         private int y;
@@ -50,6 +55,7 @@ namespace SphereOS.Gui
         #region Events
         internal Action<int, int> OnDown;
         internal Action<int, int> OnClick;
+        internal Action<KeyEvent> KeyPressed;
         internal Action Resized;
         internal Action WM_AreaUncovered;
         #endregion
@@ -148,7 +154,7 @@ namespace SphereOS.Gui
         }
 
         // https://github.com/CosmosOS/Cosmos/blob/master/source/Cosmos.System2/Graphics/Canvas.cs
-        private void DrawHorizontalLine(int dx, int x1, int y1, Color color)
+        internal void DrawHorizontalLine(int dx, int x1, int y1, Color color)
         {
             int i;
 
@@ -169,7 +175,7 @@ namespace SphereOS.Gui
         }
 
         // https://github.com/CosmosOS/Cosmos/blob/master/source/Cosmos.System2/Graphics/Canvas.cs
-        private void DrawVerticalLine(int dy, int x1, int y1, Color color)
+        internal void DrawVerticalLine(int dy, int x1, int y1, Color color)
         {
             int i;
 
@@ -235,17 +241,18 @@ namespace SphereOS.Gui
 
         public void Clear(Color color)
         {
-            Cosmos.Core.MemoryOperations.Fill(Buffer, color.ToArgb());
+            MemoryOperations.Fill(Buffer, color.ToArgb());
         }
 
-        // To-do: Speed up.
+        // To-do: Optimise.
         public void DrawFilledRectangle(int x, int y, int width, int height, Color color)
         {
-            for (int i = 0; i < width; i++)
+            int argb = color.ToArgb();
+            for (int i = Math.Max(0, x); i < Math.Min(Width, x + width); i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = Math.Max(0, y); j < Math.Min(Height, y + height); j++)
                 {
-                    DrawPoint(x + i, y + j, color);
+                    Buffer[(j * Width) + i] = argb;
                 }
             }
         }
@@ -254,8 +261,8 @@ namespace SphereOS.Gui
         {
             DrawHorizontalLine(width, x, y, color);
             DrawHorizontalLine(width, x, y + height - 1, color);
-            DrawVerticalLine(height, x, y, color);
-            DrawVerticalLine(height, x + width - 1, y + 1, color);
+            DrawVerticalLine(height - 1, x, y + 1, color);
+            DrawVerticalLine(height - 1, x + width - 1, y + 1, color);
         }
 
         public void DrawPoint(int x, int y, Color color)
@@ -337,7 +344,7 @@ namespace SphereOS.Gui
         public void DrawString(string str, Color color, int x, int y)
         {
             //Asc16.DrawAsciiString(str, color, x, y, Buffer, width, height);
-            SmoothMono.TextRenderer.DrawString(str, color, Buffer, width, x, y);
+            SmoothMono.TextRenderer.DrawString(str, color, Buffer, width, height, x, y);
         }
 
         public unsafe void DrawImage(Bitmap bitmap, int x, int y)
@@ -393,7 +400,8 @@ namespace SphereOS.Gui
         }
         #endregion Graphics
 
-        public int X {
+        public int X
+        {
             get
             {
                 return x;
@@ -405,7 +413,7 @@ namespace SphereOS.Gui
                     x = value;
                     WM_AreaUncovered?.Invoke();
                 }
-            } 
+            }
         }
 
         public int Y

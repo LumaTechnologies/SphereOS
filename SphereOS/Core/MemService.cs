@@ -7,7 +7,7 @@
             Critical = true;
         }
 
-        int ticks = 0; 
+        int ticks = 0;
 
         internal override void Run()
         {

@@ -1,9 +1,5 @@
-﻿
-using Cosmos.System.Graphics;
-using SphereOS.Core;
+﻿using SphereOS.Core;
 using SphereOS.Gui.UILib;
-using SphereOS.Shell;
-using System;
 using System.Drawing;
 
 namespace SphereOS.Gui.ShellComponents
@@ -12,11 +8,27 @@ namespace SphereOS.Gui.ShellComponents
     {
         internal StartMenu() : base("StartMenu", ProcessType.Application) { }
 
+        internal static StartMenu CurrentStartMenu
+        {
+            get
+            {
+                StartMenu startMenu = ProcessManager.GetProcess<StartMenu>();
+                if (startMenu == null)
+                {
+                    startMenu = (StartMenu)ProcessManager.AddProcess(ProcessManager.GetProcess<WindowManager>(), new StartMenu());
+                    startMenu.Start();
+                }
+                return startMenu;
+            }
+        }
+
         Window window;
 
         WindowManager wm = ProcessManager.GetProcess<WindowManager>();
 
-        private Button shutdownButton;  
+        SettingsService settingsService = ProcessManager.GetProcess<SettingsService>();
+
+        private Button shutdownButton;
         private Button rebootButton;
         private Button exitButton;
 
@@ -30,18 +42,20 @@ namespace SphereOS.Gui.ShellComponents
         {
             isOpen = true;
 
-            window = new Window(this, (int)(wm.ScreenWidth / 2 - 384 / 2), 24, 384, 256);
-            window.Clear(Color.DarkGray);
-            window.DrawString($"Welcome", Color.Black, 12, 12);
+            bool leftHandStartButton = settingsService.LeftHandStartButton;
+
+            window = new Window(this, leftHandStartButton ? 0 : (int)(wm.ScreenWidth / 2 - 408 / 2), 24, 408, 272);
+            window.Clear(Color.FromArgb(56, 56, 71));
+            window.DrawString($"Welcome", Color.White, 12, 12);
             wm.AddWindow(window);
 
             int x = 12;
             int y = 40;
             foreach (App app in AppManager.Apps)
             {
-                Button appButton = new Button(window, x, y, 80, 80);
-                appButton.Background = Color.LightGray;
-                appButton.Foreground = Color.White;
+                Button appButton = new Button(window, x, y, 90, 90);
+                appButton.Background = app.ThemeColor;
+                appButton.Foreground = app.ThemeColor.GetForegroundColour();
                 appButton.Text = app.Name;
                 appButton.Image = app.Icon;
                 appButton.OnClick = (x, y) =>
@@ -51,10 +65,10 @@ namespace SphereOS.Gui.ShellComponents
                 };
                 wm.AddWindow(appButton);
                 x += appButton.Width + 8;
-                if (x >= window.Width - 80 - 12)
+                if (x > window.Width - 90)
                 {
                     x = 12;
-                    y += 80 + 8;
+                    y += 90 + 8;
                 }
             }
 
@@ -68,32 +82,31 @@ namespace SphereOS.Gui.ShellComponents
             rebootButton.OnClick = RebootClicked;
             wm.AddWindow(rebootButton);
 
-            exitButton = new Button(window, buttonsPadding * 3 + buttonsWidth * 2, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
+            /*exitButton = new Button(window, buttonsPadding * 3 + buttonsWidth * 2, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
             exitButton.Text = "Exit";
             exitButton.OnClick = ExitClicked;
-            wm.AddWindow(exitButton);
+            wm.AddWindow(exitButton);*/
 
             wm.Update(window);
         }
 
-        internal void ShutdownClicked(int x, int y)
+        private void ShutdownClicked(int x, int y)
         {
+            wm.TryStop();
             Power.Shutdown(reboot: false);
         }
 
-        internal void RebootClicked(int x, int y)
+        private void RebootClicked(int x, int y)
         {
+            wm.TryStop();
             Power.Shutdown(reboot: true);
         }
 
-        internal void ExitClicked(int x, int y)
+        /*private void ExitClicked(int x, int y)
         {
-            ProcessManager.GetProcess<WindowManager>().Stop();
-
-            ProcessManager.Sweep();
-
             ProcessManager.AddProcess(new Shell.Shell()).Start();
-        }
+            ProcessManager.GetProcess<WindowManager>().Stop();
+        }*/
 
         internal void HideStartMenu()
         {

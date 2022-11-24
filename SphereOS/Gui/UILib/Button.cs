@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Cosmos.System.Graphics;
+using System;
 using System.Drawing;
-using System.Threading.Tasks;
-using Cosmos.System.Graphics;
 
 namespace SphereOS.Gui.UILib
 {
@@ -11,6 +8,12 @@ namespace SphereOS.Gui.UILib
     {
         public Button(Window parent, int x, int y, int width, int height) : base(parent, x, y, width, height)
         {
+        }
+
+        internal enum ButtonImageLocation
+        {
+            AboveText,
+            Left
         }
 
         private string _text = "Button";
@@ -27,7 +30,21 @@ namespace SphereOS.Gui.UILib
             }
         }
 
-        private Color _background = Color.FromArgb(32,32,32);
+        private ButtonImageLocation _imageLocation = ButtonImageLocation.AboveText;
+        internal ButtonImageLocation ImageLocation
+        {
+            get
+            {
+                return _imageLocation;
+            }
+            set
+            {
+                _imageLocation = value;
+                Render();
+            }
+        }
+
+        private Color _background = Color.FromArgb(32, 32, 32);
         internal Color Background
         {
             get
@@ -89,8 +106,19 @@ namespace SphereOS.Gui.UILib
             DrawRectangle(0, 0, Width, Height, Border);
             if (_image != null)
             {
-                DrawImageAlpha(_image, (int)((Width / 2) - (_image.Width / 2)), (int)((Height / 2) - (_image.Height / 2)));
-                DrawString(Text, Foreground, (Width / 2) - (4 * Text.Length), Height - 16);
+                switch (_imageLocation)
+                {
+                    case ButtonImageLocation.Left:
+                        DrawImageAlpha(_image, (int)((Width / 2) - ((8 / 2) * Text.Length) - 8 - _image.Width), (int)((Height / 2) - (_image.Height / 2)));
+                        DrawString(Text, Foreground, (Width / 2) - ((8 / 2) * Text.Length), (Height / 2) - (16 / 2));
+                        break;
+                    case ButtonImageLocation.AboveText:
+                        DrawImageAlpha(_image, (int)((Width / 2) - (_image.Width / 2)), (int)((Height / 2) - (_image.Height / 2)));
+                        DrawString(Text, Foreground, (Width / 2) - (4 * Text.Length), Height - 16);
+                        break;
+                    default:
+                        throw new Exception("Unrecognised image location in button.");
+                }
             }
             else
             {

@@ -19,7 +19,9 @@ namespace SphereOS.Shell
             }
         }
 
-        internal string WorkingDir = @"0:\";
+        internal string WorkingDir { get; set; } = @"0:\";
+
+        internal bool CommandRunning { get; private set; } = false;
 
         internal void WelcomeMessage()
         {
@@ -37,55 +39,53 @@ namespace SphereOS.Shell
         {
             base.Start();
             WelcomeMessage();
-
-            // Blocking.
-            while (true)
-            {
-                if (Kernel.CurrentUser != null)
-                {
-                    Kernel.CurrentUser.FlushMessages();
-
-                    Util.Print(ConsoleColor.Cyan, Kernel.CurrentUser.Username);
-                    Util.Print(ConsoleColor.Gray, @$"@SphereOS [{WorkingDir}]> ");
-
-                    var input = Console.ReadLine();
-
-                    if (input.Trim() == string.Empty)
-                        return;
-
-                    var args = input.Trim().Split();
-                    var commandName = args[0];
-
-                    Command command = CommandManager.GetCommand(commandName);
-                    if (command != null)
-                    {
-                        try
-                        {
-                            command.Execute(args);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
-                            Util.PrintLine(ConsoleColor.White, $"Error information: {e.ToString()}");
-                        }
-                    }
-                    else
-                    {
-                        Util.PrintLine(ConsoleColor.Red, $"Unknown command '{commandName}'.");
-                    }
-                }
-                else
-                {
-                    LoginPrompt.PromptLogin();
-                }
-            }
         }
 
         internal override void Run()
         {
-            // Don't do anything here, we don't want the shell to run in the background.
+            if (CommandRunning) return;
+
+            if (Kernel.CurrentUser != null)
+            {
+                Kernel.CurrentUser.FlushMessages();
+
+                Util.Print(ConsoleColor.Cyan, Kernel.CurrentUser.Username);
+                Util.Print(ConsoleColor.Gray, @$"@SphereOS [{WorkingDir}]> ");
+
+                var input = Console.ReadLine();
+
+                if (input.Trim() == string.Empty)
+                    return;
+
+                var args = input.Trim().Split();
+                var commandName = args[0];
+
+                Command command = CommandManager.GetCommand(commandName);
+                if (command != null)
+                {
+                    CommandRunning = true;
+                    try
+                    {
+                        command.Execute(args);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
+                        Util.PrintLine(ConsoleColor.White, $"Error information: {e.ToString()}");
+                    }
+                    CommandRunning = false;
+                }
+                else
+                {
+                    Util.PrintLine(ConsoleColor.Red, $"Unknown command '{commandName}'.");
+                }
+            }
+            else
+            {
+                LoginPrompt.PromptLogin();
+            }
         }
         #endregion
     }

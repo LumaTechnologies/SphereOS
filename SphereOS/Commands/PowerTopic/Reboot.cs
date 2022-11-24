@@ -1,7 +1,6 @@
-﻿using SphereOS.Shell;
-using SphereOS.Core;
+﻿using SphereOS.Core;
+using SphereOS.Shell;
 using System;
-using Sys = Cosmos.System;
 
 namespace SphereOS.Commands.PowerTopic
 {
@@ -17,7 +16,7 @@ namespace SphereOS.Commands.PowerTopic
         internal override ReturnCode Execute(string[] args)
         {
             Util.PrintLine(ConsoleColor.Green, "Goodbye!");
-            Power.Shutdown(reboot: false);
+            Power.Shutdown(reboot: true);
             return ReturnCode.Success;
         }
     }

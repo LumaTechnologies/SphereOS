@@ -1,5 +1,5 @@
-﻿using System;
-using SphereOS.Shell;
+﻿using SphereOS.Shell;
+using System;
 
 namespace SphereOS.Commands.UsersTopic
 {

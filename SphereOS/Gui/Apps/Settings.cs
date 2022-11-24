@@ -14,6 +14,8 @@ namespace SphereOS.Gui.Apps
 
         WindowManager wm = ProcessManager.GetProcess<WindowManager>();
 
+        SettingsService settingsService = ProcessManager.GetProcess<SettingsService>();
+
         private void CategorySelected(int index)
         {
             switch (index)
@@ -31,8 +33,7 @@ namespace SphereOS.Gui.Apps
 
         private void LeftStartButtonChanged(bool @checked)
         {
-            ShellComponents.Taskbar taskbar = ProcessManager.GetProcess<ShellComponents.Taskbar>();
-            taskbar.SetLeftStartButton(@checked);
+            settingsService.LeftHandStartButton = @checked;
         }
 
         private void ShowAppearanceCategory()
@@ -48,6 +49,7 @@ namespace SphereOS.Gui.Apps
 
             CheckBox leftStartButton = new CheckBox(appearance, 12, 40, 244, 16);
             leftStartButton.Text = "Left-hand start button";
+            leftStartButton.Checked = settingsService.LeftHandStartButton;
             leftStartButton.CheckBoxChanged = LeftStartButtonChanged;
             wm.AddWindow(leftStartButton);
 

@@ -1,12 +1,12 @@
-﻿using Cosmos.System.Graphics.Fonts;
-using Cosmos.System.Graphics;
+﻿using Cosmos.System.Graphics;
+using Cosmos.System.Graphics.Fonts;
+using Cosmos.System.Network.IPv4.UDP.DHCP;
+using SphereOS.Commands;
 using SphereOS.Core;
 using SphereOS.Logging;
-using System;
-using Cosmos.System.Network.IPv4.UDP.DHCP;
 using SphereOS.Shell;
 using SphereOS.Users;
-using SphereOS.Commands;
+using System;
 
 namespace SphereOS.Boot
 {

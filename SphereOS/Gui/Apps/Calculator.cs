@@ -1,9 +1,8 @@
-﻿using SphereOS.Core;
+﻿using Cosmos.System.Graphics;
+using SphereOS.Core;
 using SphereOS.Gui.UILib;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using Cosmos.System.Graphics;
 
 namespace SphereOS.Gui.Apps
 {
@@ -28,6 +27,10 @@ namespace SphereOS.Gui.Apps
         private static byte[] gridButtonBytes;
         private static Bitmap gridButtonBitmap = new Bitmap(gridButtonBytes);
 
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Calculator.Display.bmp")]
+        private static byte[] displayBytes;
+        private static Bitmap displayBitmap = new Bitmap(displayBytes);
+
         private const int padding = 16;
         private const int gridButtonSize = 40;
         private const int resultHeight = 40;
@@ -35,8 +38,6 @@ namespace SphereOS.Gui.Apps
         private long num1 = 0;
         private long num2 = 0;
         private Operator op = Operator.None;
-
-        private TextBlock inputTextBlock;
 
         private void RenderGridButton(string text, int x, int y)
         {
@@ -127,8 +128,10 @@ namespace SphereOS.Gui.Apps
             }
         }
 
-        private void UpdateInputTextBlock()
+        private void RenderDisplay(bool updateWindow = true)
         {
+            window.DrawImage(displayBitmap, 0, 0);
+            string text;
             if (op != Operator.None)
             {
                 char opChar;
@@ -140,11 +143,16 @@ namespace SphereOS.Gui.Apps
                     Operator.Divide => '/',
                     _ => throw new Exception("Unrecognised operator.")
                 };
-                inputTextBlock.Text = num1.ToString().TrimEnd('.') + opChar + num2.ToString().TrimEnd('.');
+                text = num1.ToString().TrimEnd('.') + opChar + num2.ToString().TrimEnd('.');
             }
             else
             {
-                inputTextBlock.Text = num1.ToString().TrimEnd('.');
+                text = num1.ToString().TrimEnd('.');
+            }
+            window.DrawString(text, Color.Black, window.Width - 12 - (text.Length * 8), 12);
+            if (updateWindow)
+            {
+                wm.Update(window);
             }
         }
 
@@ -158,7 +166,7 @@ namespace SphereOS.Gui.Apps
             {
                 num1 = long.Parse(num1.ToString() + num);
             }
-            UpdateInputTextBlock();
+            RenderDisplay();
         }
 
         private void InputOp(Operator @operator)
@@ -169,7 +177,7 @@ namespace SphereOS.Gui.Apps
             }
             op = @operator;
             num2 = 0;
-            UpdateInputTextBlock();
+            RenderDisplay();
         }
 
         private void InputBksp()
@@ -192,7 +200,7 @@ namespace SphereOS.Gui.Apps
             {
                 num1 = num;
             }
-            UpdateInputTextBlock();
+            RenderDisplay();
         }
 
         private void InputEquals()
@@ -218,7 +226,7 @@ namespace SphereOS.Gui.Apps
             }
             num2 = 0;
             op = Operator.None;
-            UpdateInputTextBlock();
+            RenderDisplay();
         }
 
         private void RenderGridButtons()
@@ -255,12 +263,12 @@ namespace SphereOS.Gui.Apps
             window.OnClick = WindowClick;
             window.Closing = TryStop;
 
-            inputTextBlock = new TextBlock(window, padding / 2, padding / 2, window.Width - padding, resultHeight - padding);
+            /*inputTextBlock = new TextBlock(window, padding / 2, padding / 2, window.Width - padding, resultHeight - padding);
             inputTextBlock.Background = Color.Gray;
             inputTextBlock.Foreground = Color.White;
-            wm.AddWindow(inputTextBlock);
+            wm.AddWindow(inputTextBlock);*/
 
-            UpdateInputTextBlock();
+            RenderDisplay(updateWindow: false);
 
             RenderGridButtons();
 

@@ -1,7 +1,6 @@
 ﻿using RiverScript.VM;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RiverScript.StandardLibrary
 {

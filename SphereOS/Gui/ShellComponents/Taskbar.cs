@@ -25,7 +25,7 @@ namespace SphereOS.Gui.ShellComponents
 
         ImageBlock start;
 
-        internal void SetLeftStartButton(bool left)
+        internal void SetLeftHandStartButton(bool left)
         {
             if (left)
             {
@@ -53,13 +53,7 @@ namespace SphereOS.Gui.ShellComponents
 
         private void StartClicked(int x, int y)
         {
-            StartMenu startMenu = ProcessManager.GetProcess<StartMenu>();
-            if (startMenu == null)
-            {
-                startMenu = (StartMenu)ProcessManager.AddProcess(this, new StartMenu());
-                startMenu.Start();
-            }
-            startMenu.ToggleStartMenu();
+            StartMenu.CurrentStartMenu.ToggleStartMenu();
         }
 
         #region Process

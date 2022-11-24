@@ -19,21 +19,24 @@
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
         <VMWareEdition>Workstation</VMWareEdition>
-        <DebugEnabled>True</DebugEnabled>
+        <DebugEnabled>False</DebugEnabled>
         <CompileVBEMultiboot>False</CompileVBEMultiboot>
-        <CompressionType>None</CompressionType>
+        <CompressionType>Gzip</CompressionType>
         <TraceMode>All</TraceMode>
     </PropertyGroup>
 
     <PropertyGroup>
       <DefineConstants>SPHEREOS</DefineConstants>
       <OptimizationLevel>2</OptimizationLevel>
+      <RemoveBootDebugOutput>True</RemoveBootDebugOutput>
     </PropertyGroup>
 
     <ItemGroup>
       <Compile Remove="Core\CorePlugs\ConsoleShim.cs" />
       <Compile Remove="Core\VideoConsole\FontData.cs" />
       <Compile Remove="Core\VideoConsole\VideoConsole.cs" />
+      <Compile Remove="Gui\Apps\CodeStudio\CodeStudio.cs" />
+      <Compile Remove="Gui\Apps\CodeStudio\Ide.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -44,11 +47,14 @@
       <None Remove="Apps\Paint\Images\save.bmp" />
       <None Remove="Apps\Paint\Images\selected.bmp" />
       <None Remove="Apps\Paint\Images\text.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Calculator.bmp" />
       <None Remove="Gui\Resources\AppIcons\Clock.bmp" />
       <None Remove="Gui\Resources\AppIcons\Default.bmp" />
       <None Remove="Gui\Resources\AppIcons\Info.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Notepad.bmp" />
       <None Remove="Gui\Resources\AppIcons\Settings.bmp" />
       <None Remove="Gui\Resources\AppIcons\Tasks.bmp" />
+      <None Remove="Gui\Resources\Calculator\Display.bmp" />
       <None Remove="Gui\Resources\Calculator\GridButton.bmp" />
       <None Remove="Gui\Resources\Check.bmp" />
       <None Remove="Gui\Resources\Clock\ClockBackground.bmp" />
@@ -70,11 +76,14 @@
       <EmbeddedResource Include="Apps\Paint\Images\save.bmp" />
       <EmbeddedResource Include="Apps\Paint\Images\selected.bmp" />
       <EmbeddedResource Include="Apps\Paint\Images\text.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Calculator.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Clock.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Default.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Info.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Notepad.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Settings.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Tasks.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Calculator\Display.bmp" />
       <EmbeddedResource Include="Gui\Resources\Calculator\GridButton.bmp" />
       <EmbeddedResource Include="Gui\Resources\Check.bmp" />
       <EmbeddedResource Include="Gui\Resources\Clock\ClockBackground.bmp" />
@@ -92,6 +101,8 @@
       <None Include="Core\CorePlugs\ConsoleShim.cs" />
       <None Include="Core\VideoConsole\FontData.cs" />
       <None Include="Core\VideoConsole\VideoConsole.cs" />
+      <None Include="Gui\Apps\CodeStudio\CodeStudio.cs" />
+      <None Include="Gui\Apps\CodeStudio\Ide.cs" />
     </ItemGroup>
 
     <ItemGroup>

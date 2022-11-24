@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SphereOS.Shell;
+using System;
 using System.IO;
-using SphereOS.Shell;
 
 namespace SphereOS.Commands.FilesTopic
 {

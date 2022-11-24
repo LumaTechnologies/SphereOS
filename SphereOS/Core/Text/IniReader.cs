@@ -137,5 +137,19 @@ namespace SphereOS.Text
                 return false;
             }
         }
+
+        internal bool TryReadBool(string key, out bool value, string? section = null)
+        {
+            try
+            {
+                value = ReadBool(key, section);
+                return true;
+            }
+            catch
+            {
+                value = default;
+                return false;
+            }
+        }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Reflection;
-using Cosmos.HAL.Drivers.PCI.Video;
+﻿using Cosmos.HAL.Drivers.PCI.Video;
 using Cosmos.System;
 using Cosmos.System.Graphics;
 using SphereOS.Core;
+using SphereOS.Gui.ShellComponents;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using static Cosmos.HAL.Drivers.PCI.Video.VMWareSVGAII;
 
 namespace SphereOS.Gui
@@ -35,6 +35,8 @@ namespace SphereOS.Gui
 
         internal uint ScreenWidth { get; private set; }
         internal uint ScreenHeight { get; private set; }
+
+        internal Window Focus { get; set; }
 
         private uint bytesPerPixel { get; set; }
 
@@ -180,20 +182,34 @@ namespace SphereOS.Gui
         private void DispatchEvents()
         {
             Window window = GetWindowAtPos(MouseManager.X, MouseManager.Y);
-            if (window == null) return;
 
-            int relativeX = (int)(MouseManager.X - window.ScreenX);
-            int relativeY = (int)(MouseManager.Y - window.ScreenY);
-
-            if (MouseManager.MouseState == MouseState.Left && lastMouseState == MouseState.None)
+            if (window != null)
             {
-                lastMouseState = MouseManager.MouseState;
-                window.OnDown?.Invoke(relativeX, relativeY);
+                int relativeX = (int)(MouseManager.X - window.ScreenX);
+                int relativeY = (int)(MouseManager.Y - window.ScreenY);
+
+                if (MouseManager.MouseState == MouseState.Left && lastMouseState == MouseState.None)
+                {
+                    lastMouseState = MouseManager.MouseState;
+                    window.OnDown?.Invoke(relativeX, relativeY);
+                }
+                else if (MouseManager.MouseState == MouseState.None && lastMouseState == MouseState.Left)
+                {
+                    lastMouseState = MouseManager.MouseState;
+                    Focus = window;
+                    window.OnClick?.Invoke(relativeX, relativeY);
+                }
             }
-            else if (MouseManager.MouseState == MouseState.None && lastMouseState == MouseState.Left)
+
+            if (KeyboardManager.TryReadKey(out KeyEvent key))
             {
-                lastMouseState = MouseManager.MouseState;
-                window.OnClick?.Invoke(relativeX, relativeY);
+                // To-do: Move this out of WindowManager.
+                if (key.Key == ConsoleKeyEx.LWin || key.Key == ConsoleKeyEx.RWin)
+                {
+                    StartMenu.CurrentStartMenu.ToggleStartMenu();
+                    return;
+                }
+                Focus?.KeyPressed.Invoke(key);
             }
         }
 
@@ -232,7 +248,7 @@ namespace SphereOS.Gui
             SetupDriver();
             SetupMouse();
             SetupWallpaper();
-            
+
             fpsCounter = new Window(this, 0, (int)(ScreenHeight - 16), 64, 16);
             AddWindow(fpsCounter);
         }

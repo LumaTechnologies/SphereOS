@@ -1,13 +1,8 @@
-﻿using SphereOS.Core;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using Cosmos.System;
 using Cosmos.System.Graphics;
-using Cosmos.System;
+using SphereOS.Core;
+using System;
+using System.Drawing;
 
 namespace SphereOS.Gui.UILib
 {
@@ -85,7 +80,7 @@ namespace SphereOS.Gui.UILib
         private int originalY;
         private int originalWidth;
         private int originalHeight;
-        
+
         private void DecorationClicked(int x, int y)
         {
             if (x >= Width - titlebarHeight)
@@ -94,7 +89,7 @@ namespace SphereOS.Gui.UILib
                 Closing?.Invoke();
                 wm.RemoveWindow(this);
             }
-            else if (x >= Width - (titlebarHeight * 2))
+            else if (x >= Width - (titlebarHeight * 2) && _canResize)
             {
                 // Maximise / restore.
                 if (maximised)
@@ -134,7 +129,7 @@ namespace SphereOS.Gui.UILib
 
         private void DecorationDown(int x, int y)
         {
-            if (x >= Width - (titlebarHeight * 2) || maximised) return;
+            if (x >= Width - (titlebarHeight * (_canResize ? 2 : 1)) || maximised) return;
             uint startMouseX = MouseManager.X;
             uint startMouseY = MouseManager.Y;
             int startWindowX = X;

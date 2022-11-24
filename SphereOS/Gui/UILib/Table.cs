@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Cosmos.System.Graphics;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
-using System.Threading.Tasks;
-using Cosmos.System.Graphics;
 
 namespace SphereOS.Gui.UILib
 {
