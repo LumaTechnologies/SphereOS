@@ -10,7 +10,7 @@ SphereOS is a simple and secure operating system made with Cosmos!
 
 **Default Password -** password
 ## Features
-- GUI system (500+ FPS, Notepad, Clock, Calculator, and more apps!)
+- GUI system (Up to 1400 FPS, Notepad, Clock, Calculator, and more apps!)
 - Networking
 - CloudChat
 - [Scripting](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
