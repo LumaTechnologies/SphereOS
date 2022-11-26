@@ -37,6 +37,7 @@ namespace SphereOS.Gui.ShellComponents
         private const int buttonsPadding = 12;
         private const int buttonsWidth = 96;
         private const int buttonsHeight = 20;
+        private const int userHeight = 48;
 
         private bool isOpen = false;
 

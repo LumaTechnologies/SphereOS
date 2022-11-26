@@ -11,6 +11,13 @@ namespace SphereOS.Gui.UILib
         {
         }
 
+        internal void SetCalendar(int year, int month)
+        {
+            _year = year;
+            _month = month;
+            Render();
+        }
+
         private int _year = DateTime.Now.Year;
         internal int Year
         {
@@ -144,9 +151,8 @@ namespace SphereOS.Gui.UILib
             Clear(_background);
 
             DateTime now = DateTime.Now;
-            DateTime selectedDateTime = new DateTime(_year, _month, 1);
             int daysInMonth = DateTime.DaysInMonth(_year, _month);
-            int startingWeekday = GetWeekdayIndex(selectedDateTime.DayOfWeek);
+            int startingWeekday = GetWeekdayIndex(new DateTime(_year, _month, 1).DayOfWeek);
 
             int headerHeight = 68;
 
@@ -156,7 +162,7 @@ namespace SphereOS.Gui.UILib
             int cellHeight = availableSpace.Height / 5;
 
             /* Header */
-            string title = $"{monthsLong[selectedDateTime.Month - 1]} {selectedDateTime.Year}";
+            string title = $"{monthsLong[_month - 1]} {_year}";
             DrawString(title, _foreground, (Width / 2) - ((title.Length * 8) / 2), 12);
             for (int i = 0; i < 7; i++)
             {

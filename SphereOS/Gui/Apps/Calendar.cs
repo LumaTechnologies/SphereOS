@@ -19,17 +19,15 @@ namespace SphereOS.Gui.Apps
 
         Button prevButton;
 
-
         private void PrevClicked(int x, int y)
         {
             if (cal.Month == 1)
             {
-                cal.Month = 12;
-                cal.Year--;
+                cal.SetCalendar(cal.Year - 1, 12);
             }
             else
             {
-                cal.Month--;
+                cal.SetCalendar(cal.Year, cal.Month - 1);
             }
         }
 
@@ -37,12 +35,12 @@ namespace SphereOS.Gui.Apps
         {
             if (cal.Month == 12)
             {
-                cal.Month = 1;
-                cal.Year++;
+
+                cal.SetCalendar(cal.Year + 1, 1);
             }
             else
             {
-                cal.Month++;
+                cal.SetCalendar(cal.Year, cal.Month + 1);
             }
         }
 
@@ -70,7 +68,7 @@ namespace SphereOS.Gui.Apps
             cal.Year = now.Year;
             cal.Month = now.Month;
 
-            prevButton = new Button(window, 8, 8, 24, 24);
+            /*prevButton = new Button(window, 8, 8, 24, 24);
             prevButton.Text = "<";
             prevButton.OnClick = PrevClicked;
             wm.AddWindow(prevButton);
@@ -78,7 +76,7 @@ namespace SphereOS.Gui.Apps
             nextButton = new Button(window, 40, 8, 24, 24);
             nextButton.Text = ">";
             nextButton.OnClick = NextClicked;
-            wm.AddWindow(nextButton);
+            wm.AddWindow(nextButton);*/
 
             wm.Update(window);
         }

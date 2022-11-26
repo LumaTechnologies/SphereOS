@@ -29,7 +29,7 @@ namespace SphereOS.Gui
         private static byte[] waitCursorBytes;
         private static Bitmap waitCursorBitmap = new Bitmap(waitCursorBytes);*/
 
-        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Wallpaper.bmp")]
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Wallpaper_1280_800.bmp")]
         private static byte[] wallpaperBytes;
         private static Bitmap wallpaperBitmap = new Bitmap(wallpaperBytes);
 
@@ -236,10 +236,13 @@ namespace SphereOS.Gui
 
         private void SetupWallpaper()
         {
-            Window wallpaper = new Window(this, 0, 0, (int)ScreenWidth, (int)ScreenHeight);
-            wallpaperBitmap.rawData.CopyTo(wallpaper.Buffer, 0);
-            AddWindow(wallpaper);
-            Update(wallpaper);
+            Window wallpaperWindow = new Window(this, 0, 0, (int)ScreenWidth, (int)ScreenHeight);
+            AddWindow(wallpaperWindow);
+
+            Bitmap resized = wallpaperBitmap.Resize(ScreenWidth, ScreenHeight);
+
+            resized.rawData.CopyTo(wallpaperWindow.Buffer, 0);
+            Update(wallpaperWindow);
         }
 
         private void UpdateCursor()
@@ -259,8 +262,8 @@ namespace SphereOS.Gui
         {
             base.Start();
 
-            ScreenWidth = 1024;
-            ScreenHeight = 768;
+            ScreenWidth = 1280;
+            ScreenHeight = 800;
             bytesPerPixel = 4;
 
             SetupDriver();
