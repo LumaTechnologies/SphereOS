@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System;
 
 namespace SphereOS.Gui.UILib
 {
@@ -50,10 +51,72 @@ namespace SphereOS.Gui.UILib
             }
         }
 
+        private Alignment _horizontalAlignment = Alignment.Start;
+        internal Alignment HorizontalAlignment
+        {
+            get
+            {
+                return _horizontalAlignment;
+            }
+            set
+            {
+                _horizontalAlignment = value;
+                Render();
+            }
+        }
+
+        private Alignment _verticalAlignment = Alignment.Start;
+        internal Alignment VerticalAlignment
+        {
+            get
+            {
+                return _verticalAlignment;
+            }
+            set
+            {
+                _verticalAlignment = value;
+                Render();
+            }
+        }
+
         internal override void Render()
         {
             Clear(Background);
-            DrawString(Text, Foreground, 0, 0);
+
+            int textX;
+            int textY;
+
+            switch (HorizontalAlignment)
+            {
+                case Alignment.Start:
+                    textX = 0;
+                    break;
+                case Alignment.Middle:
+                    textX = (Width / 2) - (8 * Text.Length / 2);
+                    break;
+                case Alignment.End:
+                    textX = Width - (8 * Text.Length);
+                    break;
+                default:
+                    throw new Exception("Invalid horizontal alignment.");
+            }
+
+            switch (VerticalAlignment)
+            {
+                case Alignment.Start:
+                    textY = 0;
+                    break;
+                case Alignment.Middle:
+                    textY = (Height / 2) - (16 / 2);
+                    break;
+                case Alignment.End:
+                    textY = Height - 16;
+                    break;
+                default:
+                    throw new Exception("Invalid vertical alignment.");
+            }
+
+            DrawString(Text, Foreground, textX, textY);
 
             WM.Update(this);
         }

@@ -96,33 +96,32 @@ namespace SphereOS.Gui.UILib
                 {
                     maximised = false;
 
-                    X = originalX;
-                    Y = originalY;
-                    Width = originalWidth;
-                    Height = originalHeight;
+                    MoveAndResize(originalX, originalY, originalWidth, originalHeight, sendWMEvent: false);
 
-                    decorationWindow.Width = Width;
+                    decorationWindow.Resize(originalWidth, titlebarHeight, sendWMEvent: false);
+
+                    UserResized?.Invoke();
+                    WM_RefreshAll?.Invoke();
                 }
                 else
                 {
+                    maximised = true;
+
                     var taskbar = ProcessManager.GetProcess<ShellComponents.Taskbar>();
                     int taskbarHeight = taskbar.GetTaskbarHeight();
-
-                    maximised = true;
 
                     originalX = X;
                     originalY = Y;
                     originalWidth = Width;
                     originalHeight = Height;
 
-                    X = 0;
-                    Y = taskbarHeight + titlebarHeight;
-                    Width = (int)wm.ScreenWidth;
-                    Height = (int)(wm.ScreenHeight - taskbarHeight - titlebarHeight);
+                    MoveAndResize(0, taskbarHeight + titlebarHeight, (int)wm.ScreenWidth, (int)(wm.ScreenHeight - taskbarHeight - titlebarHeight), sendWMEvent: false);
 
-                    decorationWindow.Width = Width;
+                    decorationWindow.Resize((int)wm.ScreenWidth, titlebarHeight, sendWMEvent: false);
+
+                    UserResized?.Invoke();
+                    WM_RefreshAll?.Invoke();
                 }
-                Resized?.Invoke();
                 RenderDecoration();
             }
         }
@@ -130,14 +129,18 @@ namespace SphereOS.Gui.UILib
         private void DecorationDown(int x, int y)
         {
             if (x >= Width - (titlebarHeight * (_canResize ? 2 : 1)) || maximised) return;
+
             uint startMouseX = MouseManager.X;
             uint startMouseY = MouseManager.Y;
+
             int startWindowX = X;
             int startWindowY = Y;
+
             while (MouseManager.MouseState == MouseState.Left)
             {
                 X = (int)(startWindowX + (MouseManager.X - startMouseX));
                 Y = (int)(startWindowY + (MouseManager.Y - startMouseY));
+
                 ProcessManager.Yield();
             }
         }

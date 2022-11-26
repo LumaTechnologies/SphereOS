@@ -6,7 +6,9 @@ namespace SphereOS.Gui.ShellComponents
 {
     internal class StartMenu : Process
     {
-        internal StartMenu() : base("StartMenu", ProcessType.Application) { }
+        internal StartMenu() : base("StartMenu", ProcessType.Application)
+        {
+        }
 
         internal static StartMenu CurrentStartMenu
         {
@@ -30,7 +32,7 @@ namespace SphereOS.Gui.ShellComponents
 
         private Button shutdownButton;
         private Button rebootButton;
-        private Button exitButton;
+        //private Button exitButton;
 
         private const int buttonsPadding = 12;
         private const int buttonsWidth = 96;

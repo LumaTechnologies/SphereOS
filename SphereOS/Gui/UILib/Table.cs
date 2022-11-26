@@ -12,23 +12,24 @@ namespace SphereOS.Gui.UILib
             OnDown = TableDown;
         }
 
-        internal List<string> Cells { get; set; } = new List<string>();
+        internal List<TableCell> Cells { get; set; } = new List<TableCell>();
 
         internal Action<int> TableCellSelected { get; set; }
 
-        private int _selectedCell = -1;
-        internal int SelectedCell
+        internal bool AllowDeselection { get; set; } = true;
+
+        private int _selectedCellIndex = -1;
+        internal int SelectedCellIndex
         {
             get
             {
-                return _selectedCell;
+                return _selectedCellIndex;
             }
             set
             {
-                if (_selectedCell != value)
+                if (_selectedCellIndex != value)
                 {
-                    _selectedCell = value;
-                    TableCellSelected?.Invoke(_selectedCell);
+                    _selectedCellIndex = value;
                     Render();
                 }
             }
@@ -132,33 +133,28 @@ namespace SphereOS.Gui.UILib
             }
         }
 
-        private Bitmap _image;
-        internal Bitmap Image
-        {
-            get
-            {
-                return _image;
-            }
-            set
-            {
-                _image = value;
-                Render();
-            }
-        }
-
         private void TableDown(int x, int y)
         {
-            if (y > _cellHeight * Cells.Count) return;
-            SelectedCell = y / _cellHeight;
+            if (y > _cellHeight * Cells.Count)
+            {
+                if (AllowDeselection)
+                {
+                    SelectedCellIndex = -1;
+                }
+                return;
+            }
+            SelectedCellIndex = y / _cellHeight;
+            TableCellSelected?.Invoke(_selectedCellIndex);
         }
 
         internal override void Render()
         {
             Clear(Background);
+
             for (int i = 0; i < Cells.Count; i++)
             {
-                string cell = Cells[i];
-                bool selected = _selectedCell == i;
+                TableCell cell = Cells[i];
+                bool selected = _selectedCellIndex == i;
                 Rectangle cellRect = new Rectangle(0, i * _cellHeight, Width, _cellHeight);
 
                 if (selected)
@@ -166,13 +162,19 @@ namespace SphereOS.Gui.UILib
                     DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, _selectedBackground);
                 }
 
-                DrawRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, selected ? SelectedBorder : Border);
-
                 int textX = cellRect.X; //cellRect.X + (cellRect.Width / 2) - (cell.Length * 8 / 2);
                 int textY = cellRect.Y + (cellRect.Height / 2) - (16 / 2);
 
-                DrawString(cell, selected ? SelectedForeground : Foreground, textX, textY);
+                if (cell.Image != null)
+                {
+                    textX += (int)cell.Image.Width;
+                    DrawImageAlpha(cell.Image, cellRect.X, (int)(cellRect.Y + (cellRect.Height / 2) - (cell.Image.Height / 2)));
+                }
+                DrawString(cell.Text, selected ? SelectedForeground : Foreground, textX, textY);
+
+                DrawRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, selected ? SelectedBorder : Border);
             }
+
             WM.Update(this);
         }
     }

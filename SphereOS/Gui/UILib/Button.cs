@@ -44,7 +44,7 @@ namespace SphereOS.Gui.UILib
             }
         }
 
-        private Color _background = Color.FromArgb(32, 32, 32);
+        private Color _background = Color.FromArgb(48, 48, 48);
         internal Color Background
         {
             get
@@ -103,7 +103,7 @@ namespace SphereOS.Gui.UILib
         internal override void Render()
         {
             Clear(Background);
-            DrawRectangle(0, 0, Width, Height, Border);
+
             if (_image != null)
             {
                 switch (_imageLocation)
@@ -124,6 +124,9 @@ namespace SphereOS.Gui.UILib
             {
                 DrawString(Text, Foreground, (Width / 2) - (4 * Text.Length), (Height / 2) - 8);
             }
+
+            DrawRectangle(0, 0, Width, Height, Border);
+
             WM.Update(this);
         }
     }

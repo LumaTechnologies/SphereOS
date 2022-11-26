@@ -13,17 +13,17 @@ namespace SphereOS.Gui
 
         private const string settingsPath = @"0:\settings.ini";
 
-        private bool _twelveHourTime = false;
-        internal bool TwelveHourTime
+        private bool _twelveHourClock = false;
+        internal bool TwelveHourClock
         {
             get
             {
-                return _twelveHourTime;
+                return _twelveHourClock;
             }
             set
             {
-                _twelveHourTime = value;
-                ApplySettings();
+                _twelveHourClock = value;
+                ProcessManager.GetProcess<Taskbar>()?.UpdateTime();
             }
         }
 
@@ -37,13 +37,8 @@ namespace SphereOS.Gui
             set
             {
                 _leftHandStartButton = value;
-                ApplySettings();
+                ProcessManager.GetProcess<Taskbar>()?.SetLeftHandStartButton(LeftHandStartButton);
             }
-        }
-
-        private void ApplySettings()
-        {
-            ProcessManager.GetProcess<Taskbar>().SetLeftHandStartButton(LeftHandStartButton);
         }
 
         internal override void Start()
@@ -55,6 +50,10 @@ namespace SphereOS.Gui
                 if (reader.TryReadBool("LeftHandStartButton", out bool value, section: "Appearance"))
                 {
                     LeftHandStartButton = value;
+                }
+                if (reader.TryReadBool("TwelveHourClock", out bool value1, section: "DateAndTime"))
+                {
+                    TwelveHourClock = value1;
                 }
             }
         }
@@ -71,6 +70,10 @@ namespace SphereOS.Gui
             /* Appearance */
             builder.BeginSection("Appearance");
             builder.AddKey("LeftHandStartButton", LeftHandStartButton);
+
+            /* Date & Time */
+            builder.BeginSection("DateAndTime");
+            builder.AddKey("TwelveHourClock", TwelveHourClock);
 
             File.WriteAllText(settingsPath, builder.ToString());
         }

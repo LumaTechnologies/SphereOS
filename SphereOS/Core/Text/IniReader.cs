@@ -65,7 +65,7 @@ namespace SphereOS.Text
                     }
                 }
             }
-            throw new KeyNotFoundException();
+            throw new Exception("Key not found.");
         }
 
         internal int ReadInt(string key, string? section = null)
@@ -77,7 +77,7 @@ namespace SphereOS.Text
             }
             else
             {
-                throw new System.FormatException(value);
+                throw new Exception($"Format exception: {value}");
             }
         }
 
@@ -90,7 +90,7 @@ namespace SphereOS.Text
             }
             else
             {
-                throw new System.FormatException(value);
+                throw new Exception($"Format exception: {value}");
             }
         }
 
@@ -103,7 +103,7 @@ namespace SphereOS.Text
             }
             else
             {
-                throw new System.FormatException(value);
+                throw new Exception($"Format exception: {value}");
             }
         }
 

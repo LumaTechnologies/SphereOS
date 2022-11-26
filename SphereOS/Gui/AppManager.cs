@@ -44,6 +44,14 @@ namespace SphereOS.Gui
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Notepad.bmp")]
             private static byte[] _iconBytes_Notepad;
             internal static Bitmap Icon_Notepad = new Bitmap(_iconBytes_Notepad);
+
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Calendar.bmp")]
+            private static byte[] _iconBytes_Calendar;
+            internal static Bitmap Icon_Calendar = new Bitmap(_iconBytes_Calendar);
+
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Files.bmp")]
+            private static byte[] _iconBytes_Files;
+            internal static Bitmap Icon_Files = new Bitmap(_iconBytes_Files);
         }
 
         internal static void RegisterApp(App app)
@@ -60,11 +68,13 @@ namespace SphereOS.Gui
 
             RegisterApp(new App("Info", () => { return new Info(); }, Icons.Icon_Info, Color.FromArgb(0, 161, 255)));
             RegisterApp(new App("Settings", () => { return new Settings(); }, Icons.Icon_Settings, Color.FromArgb(0, 115, 186)));
-            RegisterApp(new App("Clock", () => { return new Clock(); }, Icons.Icon_Clock, Color.FromArgb(255, 86, 71)));
+            RegisterApp(new App("Clock", () => { return new Clock(); }, Icons.Icon_Clock, Color.FromArgb(168, 55, 47)));
             RegisterApp(new App("Tasks", () => { return new Tasks(); }, Icons.Icon_Tasks, Color.FromArgb(204, 241, 255)));
-            RegisterApp(new App("Calculator", () => { return new Calculator(); }, Icons.Icon_Calculator, Color.FromArgb(0, 157, 255)));
+            RegisterApp(new App("Calculator", () => { return new Calculator(); }, Icons.Icon_Calculator, Color.FromArgb(0, 115, 186)));
             //RegisterApp(new App("CodeStudio", () => { return new Apps.CodeStudio.CodeStudio(); }, Icons.Icon_CodeStudio, Color.FromArgb(127, 0, 255)));
             RegisterApp(new App("Notepad", () => { return new Notepad(); }, Icons.Icon_Notepad, Color.FromArgb(14, 59, 76)));
+            RegisterApp(new App("Calendar", () => { return new Calendar(); }, Icons.Icon_Calendar, Color.FromArgb(168, 55, 47)));
+            RegisterApp(new App("Files", () => { return new Files(); }, Icons.Icon_Files, Color.FromArgb(25, 84, 97)));
 
             appsLoaded = true;
         }

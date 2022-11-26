@@ -9,7 +9,10 @@ namespace SphereOS.Gui.ShellComponents
 {
     internal class Taskbar : Process
     {
-        internal Taskbar() : base("Taskbar", ProcessType.Application) { }
+        internal Taskbar() : base("Taskbar", ProcessType.Application)
+        {
+            Critical = true;
+        }
 
         [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Start.bmp")]
         private static byte[] startBytes;
@@ -24,6 +27,13 @@ namespace SphereOS.Gui.ShellComponents
         TextBlock time;
 
         ImageBlock start;
+
+        SettingsService settingsService;
+
+        private bool miniCalendarOpen = false;
+        private Calendar miniCalendar;
+
+        private int timeUpdateTicks = 0;
 
         internal void SetLeftHandStartButton(bool left)
         {
@@ -42,11 +52,24 @@ namespace SphereOS.Gui.ShellComponents
             return window.Height;
         }
 
-        private void UpdateTime()
+        internal void UpdateTime()
         {
-            string timeText = DateTime.Now.ToString("HH:mm");
-            if (time.Text != timeText)
+            if (settingsService == null)
             {
+                settingsService = ProcessManager.GetProcess<SettingsService>();
+            }
+
+            string timeText;
+            if (settingsService.TwelveHourClock)
+            {
+                timeText = DateTime.Now.ToString("h:mm tt");
+            }
+            else
+            {
+                timeText = DateTime.Now.ToString("HH:mm");
+            }
+            if (time.Text != timeText)
+            {   
                 time.Text = timeText;
             }
         }
@@ -54,6 +77,25 @@ namespace SphereOS.Gui.ShellComponents
         private void StartClicked(int x, int y)
         {
             StartMenu.CurrentStartMenu.ToggleStartMenu();
+        }
+
+        private void TimeClicked(int x, int y)
+        {
+            miniCalendarOpen = !miniCalendarOpen;
+            if (miniCalendarOpen)
+            {
+                miniCalendar = new Calendar(window, window.Width - 256, window.Height, 256, 256);
+                miniCalendar.Background = Color.FromArgb(56, 56, 71);
+                miniCalendar.TodayBackground = Color.FromArgb(77, 77, 91);
+                miniCalendar.Foreground = Color.White;
+                miniCalendar.WeekendForeground = Color.LightPink;
+                wm.AddWindow(miniCalendar);
+                wm.Update(miniCalendar);
+            }
+            else
+            {
+                wm.RemoveWindow(miniCalendar);
+            }
         }
 
         #region Process
@@ -64,9 +106,12 @@ namespace SphereOS.Gui.ShellComponents
             window.Clear(Color.Black);
             wm.AddWindow(window);
 
-            time = new TextBlock(window, window.Width - 48, 4, 40, 16);
+            time = new TextBlock(window, window.Width - 72, 0, 64, window.Height);
             time.Background = Color.Black;
             time.Foreground = Color.White;
+            time.HorizontalAlignment = Alignment.End;
+            time.VerticalAlignment = Alignment.Middle;
+            time.OnClick = TimeClicked;
             wm.AddWindow(time);
 
             start = new ImageBlock(window, (int)((window.Width / 2) - startBitmap.Width / 2), 0, 24, 24);
@@ -81,7 +126,11 @@ namespace SphereOS.Gui.ShellComponents
 
         internal override void Run()
         {
-            UpdateTime();
+            timeUpdateTicks++;
+            if (timeUpdateTicks % 100 == 0)
+            {
+                UpdateTime();
+            }
         }
         #endregion
     }

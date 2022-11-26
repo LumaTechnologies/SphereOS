@@ -113,6 +113,7 @@ namespace SphereOS.Core
 
         internal static void ShowCrashScreen(Exception exception)
         {
+            ProcessManager.StopAll();
             ShowMessageFullScreen(messageLoading);
             GenerateCrashLog(exception);
             while (true)
