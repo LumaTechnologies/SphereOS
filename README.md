@@ -29,7 +29,7 @@ SphereOS is a simple and secure operating system made with Cosmos!
 > Share + Download scripts!
 ## Screenshots
 ### GUI
-![Screenshot 1](/Art/screenshot_5.png)
+![Screenshot 1](/Art/screenshot_6.png)
 ### Console
 ![Screenshot 1](/Art/screenshot_1.png)
 ### Text Editor
