@@ -7,12 +7,7 @@ namespace SphereOS.Core
     {
         internal static bool CanAccess(User user, string path)
         {
-            if (user == null)
-            {
-                throw new ArgumentException("user");
-            }
-
-            if (user.Admin)
+            if (user != null && user.Admin)
             {
                 return true;
             }
@@ -27,6 +22,9 @@ namespace SphereOS.Core
 
             if (sanitised.StartsWith(@"0:\users\"))
             {
+                if (user == null)
+                    return false;
+
                 if (sanitised == $@"0:\users\{user.Username}")
                     return true;
 

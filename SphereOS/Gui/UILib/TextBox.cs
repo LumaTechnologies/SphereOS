@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 
 namespace SphereOS.Gui.UILib
 {
@@ -14,21 +15,38 @@ namespace SphereOS.Gui.UILib
             KeyPressed = TextBoxKeyPressed;
         }
 
+        internal Action Submitted;
+
         internal string Text
         {
             get
             {
-                return string.Join('\n', lines);
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    builder.Append(lines[i]);
+                    if (i != lines.Count - 1)
+                    {
+                        builder.AppendLine();
+                    }
+                }
+                return builder.ToString();
             }
             set
             {
                 lines = value.Split('\n').ToList();
+
+                caretLine = -1;
+                caretCol = 0;
+
                 MarkAllLines();
                 Render();
             }
         }
 
         internal bool ReadOnly { get; set; } = false;
+
+        internal bool MultiLine { get; set; } = false;
 
         private Color _background = Color.White;
         internal Color Background
@@ -162,6 +180,17 @@ namespace SphereOS.Gui.UILib
                     MarkLine(caretLine);
                     break;
                 case ConsoleKeyEx.Enter:
+                    if (!MultiLine)
+                    {
+                        Submitted?.Invoke();
+
+                        caretLine = -1;
+                        caretCol = 0;
+
+                        MarkAllLines();
+                        break;
+                    }
+
                     lines.Insert(caretLine + 1, lines[caretLine].Substring(caretCol));
                     lines[caretLine] = lines[caretLine].Substring(0, caretCol);
 
@@ -221,7 +250,7 @@ namespace SphereOS.Gui.UILib
             }
         }
 
-        private void MarkAllLines()
+        internal void MarkAllLines()
         {
             markedLinesBegin = 0;
             markedLinesEnd = lines.Count - 1;

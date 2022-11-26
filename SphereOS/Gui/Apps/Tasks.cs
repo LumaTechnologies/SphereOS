@@ -22,17 +22,19 @@ namespace SphereOS.Gui.Apps
             table.Cells.Clear();
             foreach (Process process in ProcessManager.Processes)
             {
-                table.Cells.Add(process.Name);
+                table.Cells.Add(new TableCell(process.Name));
             }
             table.Render();
         }
 
         private void EndTaskClicked(int x, int y)
         {
-            if (table.SelectedCell != -1 && table.SelectedCell < ProcessManager.Processes.Count)
+            if (table.SelectedCellIndex != -1 && table.SelectedCellIndex < ProcessManager.Processes.Count)
             {
-                ProcessManager.Processes[table.SelectedCell].TryStop();
+                ProcessManager.Processes[table.SelectedCellIndex].TryStop();
                 ProcessManager.Sweep();
+                table.SelectedCellIndex = -1;
+                PopulateTable();
             }
         }
 

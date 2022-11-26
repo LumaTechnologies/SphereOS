@@ -55,15 +55,47 @@ namespace SphereOS.Gui
         #region Events
         internal Action<int, int> OnDown;
         internal Action<int, int> OnClick;
+        internal Action<int, int> OnDoubleClick;
         internal Action<KeyEvent> KeyPressed;
-        internal Action Resized;
-        internal Action WM_AreaUncovered;
+        internal Action UserResized;
+        internal Action WM_RefreshAll;
         #endregion
 
         private void ResizeBuffer()
         {
             Buffer = new int[Width * Height];
             Cosmos.Core.MemoryOperations.Fill(Buffer, Color.White.ToArgb());
+        }
+
+        internal void Move(int x, int y, bool sendWMEvent = true)
+        {
+            this.x = x;
+            this.y = y;
+            if (sendWMEvent)
+            {
+                WM_RefreshAll?.Invoke();
+            }
+        }
+
+        internal void Resize(int width, int height, bool sendWMEvent = true)
+        {
+            this.width = width;
+            this.height = height;
+            ResizeBuffer();
+            if (sendWMEvent)
+            {
+                WM_RefreshAll?.Invoke();
+            }
+        }
+
+        internal void MoveAndResize(int x, int y, int width, int height, bool sendWMEvent = true)
+        {
+            Move(x, y, sendWMEvent: false);
+            Resize(width, height, sendWMEvent: false);
+            if (sendWMEvent)
+            {
+                WM_RefreshAll?.Invoke();
+            }
         }
 
         #region Graphics
@@ -411,7 +443,7 @@ namespace SphereOS.Gui
                 if (value != x)
                 {
                     x = value;
-                    WM_AreaUncovered?.Invoke();
+                    WM_RefreshAll?.Invoke();
                 }
             }
         }
@@ -427,7 +459,7 @@ namespace SphereOS.Gui
                 if (value != y)
                 {
                     y = value;
-                    WM_AreaUncovered?.Invoke();
+                    WM_RefreshAll?.Invoke();
                 }
             }
         }
@@ -444,7 +476,7 @@ namespace SphereOS.Gui
                 {
                     if (value < width)
                     {
-                        WM_AreaUncovered?.Invoke();
+                        WM_RefreshAll?.Invoke();
                     }
                     width = value;
                     ResizeBuffer();
@@ -463,7 +495,7 @@ namespace SphereOS.Gui
                 {
                     if (value < height)
                     {
-                        WM_AreaUncovered?.Invoke();
+                        WM_RefreshAll?.Invoke();
                     }
                     height = value;
                     ResizeBuffer();

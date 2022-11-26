@@ -40,7 +40,10 @@ namespace SphereOS.Gui
 
         private uint bytesPerPixel { get; set; }
 
-        //private bool bufferModified = false;
+        private bool bufferModified = false;
+
+        private DateTime lastClickDate = DateTime.MinValue;
+        private TimeSpan doubleClickTimeSpan = TimeSpan.FromSeconds(1);
 
         private Window fpsCounter;
         private int fps;
@@ -48,10 +51,12 @@ namespace SphereOS.Gui
         private int lastSecond;
 
         private MouseState lastMouseState = MouseState.None;
+        private uint lastMouseX = 0;
+        private uint lastMouseY = 0;
 
         private void RenderWindow(Window window)
         {
-            //bufferModified = true;
+            bufferModified = true;
             int screenX = window.ScreenX;
             int screenY = window.ScreenY;
             for (int y = 0; y < window.Height; y++)
@@ -96,7 +101,7 @@ namespace SphereOS.Gui
         {
             if (windows.Contains(window)) return;
             windows.Add(window);
-            window.WM_AreaUncovered = RerenderAll;
+            window.WM_RefreshAll = RerenderAll;
         }
 
         internal void RemoveWindow(Window window, bool rerender = true)
@@ -121,15 +126,10 @@ namespace SphereOS.Gui
 
         private void SetCursor(bool visible, uint x, uint y)
         {
-            driver.WaitForFifo();
-            driver.WriteRegister(Register.CursorID, 0);
-            driver.WaitForFifo();
-            driver.WriteToFifo((uint)FIFOCommand.MOVE_CURSOR);
+            driver.WriteRegister(Register.CursorOn, (uint)(visible ? 1 : 0));
             driver.WriteRegister(Register.CursorX, x);
             driver.WriteRegister(Register.CursorY, y);
-            driver.WriteRegister(Register.CursorOn, (uint)(visible ? 1 : 0));
-            // To-do: Increment CursorCount register.
-            driver.WaitForFifo();
+            driver.WriteRegister((Register)0x0C, driver.ReadRegister((Register)0x0C) + 1); // CursorCount
         }
 
         private void DefineAlphaCursor(Bitmap bitmap)
@@ -198,6 +198,12 @@ namespace SphereOS.Gui
                     lastMouseState = MouseManager.MouseState;
                     Focus = window;
                     window.OnClick?.Invoke(relativeX, relativeY);
+
+                    if (DateTime.Now - lastClickDate < doubleClickTimeSpan)
+                    {
+                        window.OnDoubleClick?.Invoke(relativeX, relativeY);
+                    }
+                    lastClickDate = DateTime.Now;
                 }
             }
 
@@ -209,7 +215,7 @@ namespace SphereOS.Gui
                     StartMenu.CurrentStartMenu.ToggleStartMenu();
                     return;
                 }
-                Focus?.KeyPressed.Invoke(key);
+                Focus?.KeyPressed?.Invoke(key);
             }
         }
 
@@ -236,6 +242,18 @@ namespace SphereOS.Gui
             Update(wallpaper);
         }
 
+        private void UpdateCursor()
+        {
+            uint mouseX = MouseManager.X;
+            uint mouseY = MouseManager.Y;
+            if (mouseX != lastMouseX || mouseY != lastMouseY)
+            {
+                SetCursor(true, mouseX, mouseY);
+            }
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+        }
+
         #region Process
         internal override void Start()
         {
@@ -259,9 +277,12 @@ namespace SphereOS.Gui
 
             DispatchEvents();
 
-            driver.DoubleBufferUpdate();
+            if (bufferModified)
+            {
+                driver.DoubleBufferUpdate();
+            }
 
-            SetCursor(true, MouseManager.X, MouseManager.Y);
+            UpdateCursor();
         }
 
         internal override void Stop()

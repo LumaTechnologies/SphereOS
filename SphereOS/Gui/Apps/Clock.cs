@@ -83,7 +83,7 @@ namespace SphereOS.Gui.Apps
             base.Start();
             window = new AppWindow(this, 256, 256, 192, 192);
             window.CanResize = true;
-            window.Resized = RenderClock;
+            window.UserResized = RenderClock;
             window.Closing = TryStop;
             wm.AddWindow(window);
 

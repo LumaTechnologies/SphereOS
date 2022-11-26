@@ -23,6 +23,20 @@ namespace SphereOS.Gui.UILib
             }
         }
 
+        private bool _alpha = false;
+        internal bool Alpha
+        {
+            get
+            {
+                return _alpha;
+            }
+            set
+            {
+                _alpha = value;
+                Render();
+            }
+        }
+
         internal override void Render()
         {
             if (_image == null)
@@ -31,7 +45,15 @@ namespace SphereOS.Gui.UILib
                 WM.Update(this);
                 return;
             }
-            DrawImage(_image, 0, 0);
+
+            if (_alpha)
+            {
+                DrawImageAlpha(_image, 0, 0);
+            }
+            else
+            {
+                DrawImage(_image, 0, 0);
+            }
 
             WM.Update(this);
         }
