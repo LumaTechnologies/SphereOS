@@ -74,7 +74,7 @@
       <None Remove="Gui\Resources\Settings\User.bmp" />
       <None Remove="Gui\Resources\Start.bmp" />
       <None Remove="Gui\Resources\WaitCursor.bmp" />
-      <None Remove="Gui\Resources\Wallpaper_1024_640.bmp" />
+      <None Remove="Gui\Resources\Wallpaper_1280_800.bmp" />
     </ItemGroup>
 
     <ItemGroup>
@@ -112,7 +112,7 @@
       <EmbeddedResource Include="Gui\Resources\Settings\User.bmp" />
       <EmbeddedResource Include="Gui\Resources\Start.bmp" />
       <EmbeddedResource Include="Gui\Resources\WaitCursor.bmp" />
-      <EmbeddedResource Include="Gui\Resources\Wallpaper_1024_640.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Wallpaper_1280_800.bmp" />
     </ItemGroup>
 
     <ItemGroup>
