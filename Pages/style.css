@@ -1,0 +1,250 @@
+:root {
+	color-scheme: dark;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+}
+
+body {
+	background-color: rgb(34, 34, 34);
+	color: white;
+	font-family: 'Inter', sans-serif;
+	font-size: 18px;
+	text-align: center;
+}
+
+.section {
+	width: 100%;
+	height: 100vh;
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	padding-left: 1em;
+	padding-right: 1em;
+	box-sizing: border-box;
+}
+
+.section-fill {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+header {
+	padding: 3em;
+	position: absolute;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#logo {
+	height: 6em;
+}
+
+button {
+	display: block;
+	background-color: white;
+	color: rgb(34, 34, 34);
+	border: none;
+	padding: 1em 1.5em;
+	border-radius: 8px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: transform 0.25s, background-color 0.25s;
+}
+
+button:hover {
+	transform: translateY(-4px);
+	background-color: #ccc;
+}
+
+button i {
+	font-size: 1.5em;
+	margin-right: 0.25em;
+	vertical-align: middle;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	margin: 1em;
+}
+
+#header-links {
+	display: flex;
+	gap: 1.5em;
+	align-items: center;
+}
+
+#header-links a {
+	transition: opacity 0.25s;
+	margin: 0;
+}
+
+#header-divider {
+	display: inline-block;
+	width: 1px;
+	height: 1.5em;
+	background-color: white;
+	opacity: 0.5;
+}
+
+#header-links a:hover {
+	opacity: 0.5;
+}
+
+/* 1 */
+#section-1 {
+	background-image: url('images/mountain.jpg');
+}
+
+#tagline {
+	display: block;
+	font-size: 2em;
+	text-align: center;
+}
+
+#tagline-2 {
+	display: block;
+	margin-top: 2em;
+	text-align: center;
+}
+
+#button-section {
+	margin-top: 2em;
+}
+
+#button-section > a {
+	display: inline-block;
+}
+
+/* 2 */
+#section-2 {
+	background-image: url('images/mesh1.png');
+}
+
+#gui-tagline {
+	font-weight: 700;
+	font-size: 4em;
+	text-align: center;
+}
+
+#gui-screenshot {
+	margin-top: 4em;
+	margin-bottom: 4em;
+	max-height: 500px;
+	max-width: 80vw;
+	border-radius: 16px;
+}
+
+#gui-desc {
+	display: block;
+	margin-top: 2em;
+}
+
+/* 3 */
+#section-3 {
+	color: rgb(34, 34, 34);
+	background-image: url('images/mesh2.png');
+}
+
+#sec-tagline {
+	font-weight: 700;
+	font-size: 4em;
+	text-align: center;
+}
+
+#sec-screenshot {
+	margin-top: 4em;
+	margin-bottom: 4em;
+	max-height: 500px;
+	max-width: 80vw;
+	border-radius: 16px;
+}
+
+#sec-desc {
+	display: block;
+	margin-top: 2em;
+}
+
+/* Size */
+#size {
+	background-color: rgb(236, 236, 236);
+	color: rgb(34, 34, 34);
+	height: 300px;
+}
+
+#size-container span {
+	display: inline-block;
+	font-weight: 700;
+}
+
+#size-big {
+	font-size: 8em;
+}
+
+#size-small {
+	font-size: 6em;
+}
+
+#section-4 {
+	background-image: url('images/mesh3.png');
+}
+
+#final-tagline {
+	font-weight: 700;
+	font-size: 4em;
+	text-align: center;
+}
+
+#final-desc {
+	display: block;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+#copy {
+	display: block;
+	text-align: center;
+	margin-bottom: 2em;
+	color: #00000080
+}
+
+/* Media queries */
+
+@media (max-width: 1000px) {
+	header {
+		width: 100%;
+		padding: 1em;
+	}
+
+	#logo {
+		height: 80vw;
+		max-height: 4em;
+	}
+
+	#header-links {
+		display: none;
+	}
+
+	#button-section > a > button {
+		padding: 0.75em 1em;
+	}
+
+	#button-section > a {
+		margin: 0.5em;
+	}
+
+	#sec-tagline, #gui-tagline {
+		font-size: 2em;
+	}
+}
