@@ -17,7 +17,7 @@ namespace SphereOS.Gui
             Critical = true;
         }
 
-        private VMWareSVGAII driver;
+        private Core.Drivers.VMWareSVGAII driver;
 
         private List<Window> windows = new List<Window>();
 
@@ -124,31 +124,9 @@ namespace SphereOS.Gui
             }
         }
 
-        private void SetCursor(bool visible, uint x, uint y)
-        {
-            driver.WriteRegister(Register.CursorOn, (uint)(visible ? 1 : 0));
-            driver.WriteRegister(Register.CursorX, x);
-            driver.WriteRegister(Register.CursorY, y);
-            driver.WriteRegister((Register)0x0C, driver.ReadRegister((Register)0x0C) + 1); // CursorCount
-        }
-
-        private void DefineAlphaCursor(Bitmap bitmap)
-        {
-            driver.WaitForFifo();
-            driver.WriteToFifo((uint)FIFOCommand.DEFINE_ALPHA_CURSOR);
-            driver.WriteToFifo(0); // ID
-            driver.WriteToFifo(0); // Hotspot X
-            driver.WriteToFifo(0); // Hotspot Y
-            driver.WriteToFifo(bitmap.Width); // Width
-            driver.WriteToFifo(bitmap.Height); // Height
-            for (int i = 0; i < bitmap.rawData.Length; i++)
-                driver.WriteToFifo((uint)bitmap.rawData[i]);
-            driver.WaitForFifo();
-        }
-
         private void SetupDriver()
         {
-            driver = new VMWareSVGAII();
+            driver = new Core.Drivers.VMWareSVGAII();
             driver.SetMode(ScreenWidth, ScreenHeight, depth: bytesPerPixel * 8);
         }
 
@@ -160,7 +138,7 @@ namespace SphereOS.Gui
             MouseManager.X = ScreenWidth / 2;
             MouseManager.Y = ScreenHeight / 2;
 
-            DefineAlphaCursor(cursorBitmap);
+            driver.DefineAlphaCursor(cursorBitmap);
         }
 
         private Window GetWindowAtPos(uint x, uint y)
@@ -251,7 +229,7 @@ namespace SphereOS.Gui
             uint mouseY = MouseManager.Y;
             if (mouseX != lastMouseX || mouseY != lastMouseY)
             {
-                SetCursor(true, mouseX, mouseY);
+                driver.SetCursor(true, mouseX, mouseY);
             }
             lastMouseX = mouseX;
             lastMouseY = mouseY;
