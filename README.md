@@ -2,9 +2,9 @@
 ![SphereOS logo](/Art/logo_dark.png#gh-light-mode-only)
 
 # SphereOS
-SphereOS is a simple and secure operating system made with Cosmos!
+SphereOS is a powerful and secure operating system made with Cosmos!
 ### Installation
-**Guide:** [Install in a VM](https://github.com/Jspa2/SphereOS/wiki/Installation)
+**Guide:** [Install in a VM](https://github.com/Project-Sphere/SphereOS/wiki/Installation)
 
 **Default Username -** admin
 
@@ -13,7 +13,7 @@ SphereOS is a simple and secure operating system made with Cosmos!
 - GUI system (Up to 1400 FPS, Notepad, Clock, Calculator, and more apps!)
 - Networking
 - CloudChat
-- [Scripting](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
+- [Scripting](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
 - Filesystem
 - Powerful text editor like nano
 - User management
@@ -24,7 +24,7 @@ SphereOS is a simple and secure operating system made with Cosmos!
 - Messages
 ## Roadmap
 - [x] Scripting language (RiverScript)
-> [Read the RiverScript Documentation!](https://github.com/Jspa2/SphereOS/wiki/RiverScript)
+> [Read the RiverScript Documentation!](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
 - [ ] Package manager (sphereget)
 > Share + Download scripts!
 ## Screenshots
