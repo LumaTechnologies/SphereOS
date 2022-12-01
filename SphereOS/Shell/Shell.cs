@@ -30,8 +30,8 @@ namespace SphereOS.Shell
             Util.PrintLine(ConsoleColor.Gray, $" - version {Kernel.Version}");
             Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
 
-            Util.Print(ConsoleColor.Yellow, "New in this version: ");
-            Util.PrintLine(ConsoleColor.White, "New GUI!");
+            /*Util.Print(ConsoleColor.Yellow, "New in this version: ");
+            Util.PrintLine(ConsoleColor.White, "New GUI!");*/
         }
 
         #region Process

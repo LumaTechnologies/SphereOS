@@ -16,9 +16,15 @@ namespace SphereOS.Commands.ConsoleTopic
         {
             Util.PrintLine(ConsoleColor.Green, "SphereOS Help");
             Util.Print(ConsoleColor.Cyan, "Select a help topic: ");
-            Util.PrintLine(ConsoleColor.White, "console, files, network, power, time, users");
+            Util.PrintLine(ConsoleColor.White, "console, files, games (NEW), network, power, time, users");
 
             var topic = Console.ReadLine();
+
+            if (topic.Trim() == string.Empty)
+            {
+                return ReturnCode.Aborted;
+            }
+
             bool found = false;
 
             foreach (Command command in CommandManager.commands)

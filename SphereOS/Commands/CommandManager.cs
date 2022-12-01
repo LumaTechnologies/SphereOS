@@ -67,6 +67,9 @@ namespace SphereOS.Commands
             //RegisterCommand(new FilesTopic.Perm());
             //RegisterCommand(new FilesTopic.Setperm());
 
+            /* Games */
+            RegisterCommand(new GamesTopic.Hangman());
+
             /* Network */
             RegisterCommand(new NetworkTopic.Resolve());
             RegisterCommand(new NetworkTopic.Cloudchat());
