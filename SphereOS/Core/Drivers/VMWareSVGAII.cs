@@ -30,10 +30,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-using System;
 using Cosmos.Core;
 using Cosmos.HAL;
 using Cosmos.System.Graphics;
+using System;
 
 namespace SphereOS.Core.Drivers
 {

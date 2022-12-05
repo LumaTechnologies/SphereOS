@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SphereOS.Commands.ConsoleTopic
+namespace SphereOS.Commands.GeneralTopic
 {
     internal class Clear : Command
     {
@@ -8,7 +8,7 @@ namespace SphereOS.Commands.ConsoleTopic
         {
             Description = "Clear the screen.";
 
-            Topic = "console";
+            Topic = "general";
         }
 
         internal override ReturnCode Execute(string[] args)

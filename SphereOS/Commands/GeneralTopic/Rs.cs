@@ -5,7 +5,7 @@ using SphereOS.Shell;
 using System;
 using System.IO;
 
-namespace SphereOS.Commands.ConsoleTopic
+namespace SphereOS.Commands.GeneralTopic
 {
     internal class Rs : Command
     {
@@ -13,7 +13,7 @@ namespace SphereOS.Commands.ConsoleTopic
         {
             Description = "Run a script or the RiverScript REPL.";
 
-            Topic = "console";
+            Topic = "general";
         }
 
         internal override ReturnCode Execute(string[] args)

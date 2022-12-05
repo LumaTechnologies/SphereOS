@@ -2,7 +2,7 @@
 using SphereOS.Shell;
 using System;
 
-namespace SphereOS.Commands.ConsoleTopic
+namespace SphereOS.Commands.GeneralTopic
 {
     internal class Logs : Command
     {
@@ -10,7 +10,7 @@ namespace SphereOS.Commands.ConsoleTopic
         {
             Description = "Show recent log messages.";
 
-            Topic = "console";
+            Topic = "general";
         }
 
         internal override ReturnCode Execute(string[] args)

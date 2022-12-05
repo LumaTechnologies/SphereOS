@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SphereOS.Commands.ConsoleTopic
+namespace SphereOS.Commands.GeneralTopic
 {
     internal class Sysinfo : Command
     {
@@ -10,7 +10,7 @@ namespace SphereOS.Commands.ConsoleTopic
         {
             Description = "Show system information.";
 
-            Topic = "console";
+            Topic = "general";
         }
 
         private const string asciiArt = "    ____\n  .XXXxxx.\n.XXXxx+++--.\nXXxx++--..  \nXXx++-..   .\n`Xx+-.      \n  `X+.   .\n     \"\"";

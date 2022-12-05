@@ -1,12 +1,10 @@
-﻿using Cosmos.HAL.Drivers.PCI.Video;
-using Cosmos.System;
+﻿using Cosmos.System;
 using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.ShellComponents;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using static Cosmos.HAL.Drivers.PCI.Video.VMWareSVGAII;
 
 namespace SphereOS.Gui
 {

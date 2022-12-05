@@ -69,7 +69,7 @@ namespace SphereOS.Gui.ShellComponents
                 timeText = DateTime.Now.ToString("HH:mm");
             }
             if (time.Text != timeText)
-            {   
+            {
                 time.Text = timeText;
             }
         }

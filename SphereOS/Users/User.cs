@@ -41,6 +41,32 @@ namespace SphereOS.Users
         /// </summary>
         internal List<Message> Messages { get; set; } = new List<Message>();
 
+        /// <summary>
+        /// How many failed login attempts there have been since the last login or lockout.
+        /// </summary>
+        private int FailedAttempts = 0;
+
+        private bool _lockedOut = false;
+
+        /// <summary>
+        /// If the user is currently locked out.
+        /// </summary>
+        internal bool LockedOut
+        {
+            get
+            {
+                return _lockedOut && DateTime.Now < LockoutEnd;
+            }
+        }
+
+        /// <summary>
+        /// When the user's lockout ends.
+        /// </summary>
+        internal DateTime LockoutEnd { get; private set; }
+
+        /// <summary>
+        /// Flush all of the user's unread messages to the console.
+        /// </summary>
         internal void FlushMessages()
         {
             foreach (var message in Messages)
@@ -53,14 +79,50 @@ namespace SphereOS.Users
             Messages.Clear();
         }
 
+        internal void ChangePassword(string currentPassword, string newPassword)
+        {
+            if (Authenticate(currentPassword))
+            {
+                Password = UserManager.HashPasswordSha256(newPassword);
+            }
+            else
+            {
+                throw new Exception("Incorrect password.");
+            }
+        }
+
         /// <summary>
         /// Check if a password is valid.
+        /// Too many failed calls to this method may lock the user out temporarily. You can query this status with <see cref="LockedOut"/>.
         /// </summary>
         /// <param name="password">The password to check against.</param>
         /// <returns>Whether the password is valid.</returns>
         internal bool Authenticate(string password)
         {
-            return UserManager.HashPasswordSha256(password) == Password;
+            if (LockedOut)
+            {
+                return false;
+            }
+
+            bool valid = UserManager.HashPasswordSha256(password) == Password;
+
+            if (valid)
+            {
+                FailedAttempts = 0;
+            }
+            else
+            {
+                FailedAttempts++;
+                if (FailedAttempts >= 3)
+                {
+                    _lockedOut = true;
+                    LockoutEnd = DateTime.Now + TimeSpan.FromMinutes(3);
+
+                    FailedAttempts = 0;
+                }
+            }
+
+            return valid;
         }
     }
 }

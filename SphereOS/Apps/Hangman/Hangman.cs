@@ -1,10 +1,7 @@
-﻿using Cosmos.HAL.BlockDevice.Registers;
-using SphereOS.Core;
+﻿using SphereOS.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Apps.Hangman
 {

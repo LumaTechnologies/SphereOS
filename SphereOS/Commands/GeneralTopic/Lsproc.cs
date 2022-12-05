@@ -3,7 +3,7 @@ using SphereOS.Shell;
 using System;
 using System.Collections.Generic;
 
-namespace SphereOS.Commands.ConsoleTopic
+namespace SphereOS.Commands.GeneralTopic
 {
     internal class Lsproc : Command
     {
@@ -11,7 +11,7 @@ namespace SphereOS.Commands.ConsoleTopic
         {
             Description = "List all processes.";
 
-            Topic = "console";
+            Topic = "general";
         }
 
         internal override ReturnCode Execute(string[] args)

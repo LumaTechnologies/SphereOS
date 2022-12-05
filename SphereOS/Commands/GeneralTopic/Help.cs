@@ -1,7 +1,7 @@
 ﻿using SphereOS.Shell;
 using System;
 
-namespace SphereOS.Commands.ConsoleTopic
+namespace SphereOS.Commands.GeneralTopic
 {
     internal class Help : Command
     {
@@ -9,14 +9,14 @@ namespace SphereOS.Commands.ConsoleTopic
         {
             Description = "Show a list of commands.";
 
-            Topic = "console";
+            Topic = "general";
         }
 
         internal override ReturnCode Execute(string[] args)
         {
             Util.PrintLine(ConsoleColor.Green, "SphereOS Help");
             Util.Print(ConsoleColor.Cyan, "Select a help topic: ");
-            Util.PrintLine(ConsoleColor.White, "console, files, games (NEW), network, power, time, users");
+            Util.PrintLine(ConsoleColor.White, "general, files, games (NEW), network, power, time, users");
 
             var topic = Console.ReadLine();
 

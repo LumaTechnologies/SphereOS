@@ -1,6 +1,4 @@
-﻿using Cosmos.System.Graphics;
-using System;
-using System.Data.Common;
+﻿using System;
 using System.Drawing;
 
 namespace SphereOS.Gui.UILib

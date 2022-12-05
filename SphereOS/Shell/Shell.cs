@@ -50,7 +50,13 @@ namespace SphereOS.Shell
                 Kernel.CurrentUser.FlushMessages();
 
                 Util.Print(ConsoleColor.Cyan, Kernel.CurrentUser.Username);
-                Util.Print(ConsoleColor.Gray, @$"@SphereOS [{WorkingDir}]> ");
+
+                string dirDisplay = WorkingDir;
+                if (WorkingDir == $@"0:\users\{Kernel.CurrentUser.Username}")
+                {
+                    dirDisplay = "~";
+                }
+                Util.Print(ConsoleColor.Gray, @$"@SphereOS [{dirDisplay}]> ");
 
                 var input = Console.ReadLine();
 

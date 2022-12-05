@@ -45,25 +45,26 @@ namespace SphereOS.Commands
         internal static void RegisterCommands()
         {
             /* Console */
-            RegisterCommand(new ConsoleTopic.Clear());
-            RegisterCommand(new ConsoleTopic.About());
-            RegisterCommand(new ConsoleTopic.Help());
-            RegisterCommand(new ConsoleTopic.Sysinfo());
-            RegisterCommand(new ConsoleTopic.Logs());
-            RegisterCommand(new ConsoleTopic.Lsproc());
-            RegisterCommand(new ConsoleTopic.Rs());
+            RegisterCommand(new GeneralTopic.About());
+            RegisterCommand(new GeneralTopic.Clear());
+            RegisterCommand(new GeneralTopic.Help());
+            RegisterCommand(new GeneralTopic.Logs());
+            RegisterCommand(new GeneralTopic.Lsproc());
+            RegisterCommand(new GeneralTopic.Rs());
+            RegisterCommand(new GeneralTopic.Sysinfo());
+            RegisterCommand(new GeneralTopic.Wd());
 
             /* Files */
-            RegisterCommand(new FilesTopic.Cd());
-            RegisterCommand(new FilesTopic.Ls());
-            RegisterCommand(new FilesTopic.Fsinfo());
-            RegisterCommand(new FilesTopic.Edit());
             RegisterCommand(new FilesTopic.Cat());
+            RegisterCommand(new FilesTopic.Cd());
             RegisterCommand(new FilesTopic.Del());
-            RegisterCommand(new FilesTopic.Paint());
+            RegisterCommand(new FilesTopic.Edit());
+            RegisterCommand(new FilesTopic.Fsinfo());
+            RegisterCommand(new FilesTopic.Ls());
             RegisterCommand(new FilesTopic.Mkdir());
-            RegisterCommand(new FilesTopic.Rmdir());
             RegisterCommand(new FilesTopic.Mkhome());
+            RegisterCommand(new FilesTopic.Paint());
+            RegisterCommand(new FilesTopic.Rmdir());
             //RegisterCommand(new FilesTopic.Perm());
             //RegisterCommand(new FilesTopic.Setperm());
 
@@ -71,27 +72,28 @@ namespace SphereOS.Commands
             RegisterCommand(new GamesTopic.Hangman());
 
             /* Network */
-            RegisterCommand(new NetworkTopic.Resolve());
             RegisterCommand(new NetworkTopic.Cloudchat());
             RegisterCommand(new NetworkTopic.Ping());
+            RegisterCommand(new NetworkTopic.Resolve());
             //RegisterCommand(new NetworkTopic.Httpserver());
 
             /* Power */
-            RegisterCommand(new PowerTopic.Shutdown());
             RegisterCommand(new PowerTopic.Reboot());
+            RegisterCommand(new PowerTopic.Shutdown());
 
             /* Time */
-            RegisterCommand(new TimeTopic.Date());
             RegisterCommand(new TimeTopic.Clock());
+            RegisterCommand(new TimeTopic.Date());
 
             /* Users */
-            RegisterCommand(new UsersTopic.Logout());
-            RegisterCommand(new UsersTopic.Lock());
             RegisterCommand(new UsersTopic.Adduser());
-            RegisterCommand(new UsersTopic.Deluser());
-            RegisterCommand(new UsersTopic.Lsuser());
             RegisterCommand(new UsersTopic.Admin());
             RegisterCommand(new UsersTopic.Broadcast());
+            RegisterCommand(new UsersTopic.Deluser());
+            RegisterCommand(new UsersTopic.Lock());
+            RegisterCommand(new UsersTopic.Logout());
+            RegisterCommand(new UsersTopic.Lsuser());
+            RegisterCommand(new UsersTopic.Pass());
 
             Log.Info("CommandManager", $"{commands.Count} commands were registered.");
         }

@@ -1,7 +1,6 @@
 ﻿using SphereOS.Core;
 using SphereOS.Gui.UILib;
 using System;
-using System.Drawing;
 
 namespace SphereOS.Gui.Apps
 {

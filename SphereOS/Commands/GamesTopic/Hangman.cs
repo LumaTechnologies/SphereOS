@@ -1,6 +1,4 @@
-﻿using SphereOS.Shell;
-using SphereOS.Users;
-using System;
+﻿using System;
 
 namespace SphereOS.Commands.GamesTopic
 {
