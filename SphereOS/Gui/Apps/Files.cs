@@ -296,6 +296,7 @@ namespace SphereOS.Gui.Apps
             shortcutsTable = new Table(window, 0, pathBoxHeight, shortcutsWidth, window.Height - pathBoxHeight);
             shortcutsTable.AllowDeselection = false;
             shortcutsTable.Background = Color.DarkGray;
+            shortcutsTable.Foreground = Color.White;
             PopulateShortcutTable();
             shortcutsTable.SelectedCellIndex = 0;
             shortcutsTable.TableCellSelected = ShortcutsTableCellSelected;
