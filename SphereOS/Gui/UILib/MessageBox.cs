@@ -20,7 +20,7 @@ namespace SphereOS.Gui.UILib
             WindowManager wm = ProcessManager.GetProcess<WindowManager>();
 
             int width = Math.Max(192, (padding * 2) + (8 * Message.Length));
-            int height = 128;
+            int height = 128 + ((Message.Split('\n').Length - 1) * 16);
 
             AppWindow window = new AppWindow(process, (int)((wm.ScreenWidth / 2) - (height / 2)), (int)((wm.ScreenWidth / 2) - (width / 2)), width, height);
             window.Title = Title;
@@ -39,6 +39,8 @@ namespace SphereOS.Gui.UILib
             wm.AddWindow(ok);
 
             wm.Update(window);
+
+            ProcessManager.GetProcess<Sound.SoundService>().PlaySystemSound(Sound.SystemSound.Alert);
         }
 
         private Process process;

@@ -147,7 +147,7 @@ namespace SphereOS.Gui.UILib
 
         private void RenderDecoration()
         {
-            decorationWindow.Clear(Color.DarkGray);
+            decorationWindow.Clear(Color.FromArgb(56, 56, 71));
             decorationWindow.DrawString(Title, Color.White, 4, 4);
             decorationWindow.DrawImageAlpha(closeBitmap, Width - titlebarHeight, 0);
             if (CanResize)

@@ -57,6 +57,7 @@
       <None Remove="Gui\Resources\AppIcons\Notepad.bmp" />
       <None Remove="Gui\Resources\AppIcons\Settings.bmp" />
       <None Remove="Gui\Resources\AppIcons\Tasks.bmp" />
+      <None Remove="Gui\Resources\ButtonBackground.bmp" />
       <None Remove="Gui\Resources\Calculator\Display.bmp" />
       <None Remove="Gui\Resources\Calculator\GridButton.bmp" />
       <None Remove="Gui\Resources\Check.bmp" />
@@ -66,14 +67,23 @@
       <None Remove="Gui\Resources\Files\Directory.bmp" />
       <None Remove="Gui\Resources\Files\Drive.bmp" />
       <None Remove="Gui\Resources\Files\File.bmp" />
+      <None Remove="Gui\Resources\Files\Home.bmp" />
       <None Remove="Gui\Resources\Files\Up.bmp" />
+      <None Remove="Gui\Resources\Lock\Background.bmp" />
+      <None Remove="Gui\Resources\Lock\Gradient.bmp" />
+      <None Remove="Gui\Resources\Lock\ShutDown.bmp" />
+      <None Remove="Gui\Resources\Lock\User.bmp" />
+      <None Remove="Gui\Resources\Lock\UserArrow.bmp" />
       <None Remove="Gui\Resources\Maximise.bmp" />
       <None Remove="Gui\Resources\Minimise.bmp" />
       <None Remove="Gui\Resources\Restore.bmp" />
       <None Remove="Gui\Resources\Settings\Admin.bmp" />
       <None Remove="Gui\Resources\Settings\Info.bmp" />
       <None Remove="Gui\Resources\Settings\User.bmp" />
+      <None Remove="Gui\Resources\Sounds\Alert.wav" />
+      <None Remove="Gui\Resources\Sounds\Login.wav" />
       <None Remove="Gui\Resources\Start.bmp" />
+      <None Remove="Gui\Resources\TitlebarBackground.bmp" />
       <None Remove="Gui\Resources\WaitCursor.bmp" />
       <None Remove="Gui\Resources\Wallpaper_1280_800.bmp" />
     </ItemGroup>
@@ -96,6 +106,7 @@
       <EmbeddedResource Include="Gui\Resources\AppIcons\Notepad.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Settings.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Tasks.bmp" />
+      <EmbeddedResource Include="Gui\Resources\ButtonBackground.bmp" />
       <EmbeddedResource Include="Gui\Resources\Calculator\Display.bmp" />
       <EmbeddedResource Include="Gui\Resources\Calculator\GridButton.bmp" />
       <EmbeddedResource Include="Gui\Resources\Check.bmp" />
@@ -105,14 +116,23 @@
       <EmbeddedResource Include="Gui\Resources\Files\Directory.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Drive.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\File.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Files\Home.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Up.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Lock\Background.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Lock\Gradient.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Lock\ShutDown.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Lock\User.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Lock\UserArrow.bmp" />
       <EmbeddedResource Include="Gui\Resources\Maximise.bmp" />
       <EmbeddedResource Include="Gui\Resources\Minimise.bmp" />
       <EmbeddedResource Include="Gui\Resources\Restore.bmp" />
       <EmbeddedResource Include="Gui\Resources\Settings\Admin.bmp" />
       <EmbeddedResource Include="Gui\Resources\Settings\Info.bmp" />
       <EmbeddedResource Include="Gui\Resources\Settings\User.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Sounds\Alert.wav" />
+      <EmbeddedResource Include="Gui\Resources\Sounds\Login.wav" />
       <EmbeddedResource Include="Gui\Resources\Start.bmp" />
+      <EmbeddedResource Include="Gui\Resources\TitlebarBackground.bmp" />
       <EmbeddedResource Include="Gui\Resources\WaitCursor.bmp" />
       <EmbeddedResource Include="Gui\Resources\Wallpaper_1280_800.bmp" />
     </ItemGroup>

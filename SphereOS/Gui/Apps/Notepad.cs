@@ -43,7 +43,7 @@ namespace SphereOS.Gui.Apps
             textBox.MultiLine = true;
             if (path != null)
             {
-                if (FileSecurity.CanAccess(user: null, path))
+                if (FileSecurity.CanAccess(Kernel.CurrentUser, path))
                 {
                     textBox.Text = File.ReadAllText(path);
                 }

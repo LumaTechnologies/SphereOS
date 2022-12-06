@@ -47,9 +47,16 @@ namespace SphereOS.Gui.SmoothMono
         public static void DrawString(string str, Color color, int[] buffer, int bufferWidth, int bufferHeight, int x, int y)
         {
             int charX = x;
+            int charY = y;
             for (int i = 0; i < str.Length; i++)
             {
-                DrawChar(str[i], color.ToArgb(), buffer, bufferWidth, bufferHeight, charX, y);
+                if (str[i] == '\n')
+                {
+                    charX = x;
+                    charY += FontData.Height;
+                    continue;
+                }
+                DrawChar(str[i], color.ToArgb(), buffer, bufferWidth, bufferHeight, charX, charY);
                 charX += FontData.Width;
             }
         }

@@ -23,11 +23,11 @@ namespace SphereOS.Gui
             {
                 for (int x = 0; x < width; x++)
                 {
-                    double xDouble = x / width;
-                    double yDouble = y / height;
+                    double xDouble = (double)x / (double)width;
+                    double yDouble = (double)y / (double)height;
 
-                    uint origX = (uint)(bmp.Width * xDouble);
-                    uint origY = (uint)(bmp.Height * yDouble);
+                    uint origX = (uint)((double)bmp.Width * xDouble);
+                    uint origY = (uint)((double)bmp.Height * yDouble);
 
                     res.rawData[y * width + x] = bmp.rawData[(origY * bmp.Width) + origX];
                 }

@@ -122,6 +122,23 @@ namespace SphereOS.Gui
             }
         }
 
+        internal void Clear()
+        {
+            for (int i = windows.Count - 1; i >= 0; i--)
+            {
+                if (i >= windows.Count) continue;
+                if (windows[i].Process != this)
+                {
+                    if (windows[i] is UILib.AppWindow appWindow)
+                    {
+                        appWindow.Closing?.Invoke();
+                    }
+                    RemoveWindow(windows[i], rerender: false);
+                }
+            }
+            RerenderAll();
+        }
+
         private void SetupDriver()
         {
             driver = new Core.Drivers.VMWareSVGAII();
@@ -188,7 +205,7 @@ namespace SphereOS.Gui
                 // To-do: Move this out of WindowManager.
                 if (key.Key == ConsoleKeyEx.LWin || key.Key == ConsoleKeyEx.RWin)
                 {
-                    StartMenu.CurrentStartMenu.ToggleStartMenu();
+                    StartMenu.CurrentStartMenu?.ToggleStartMenu();
                     return;
                 }
                 Focus?.KeyPressed?.Invoke(key);

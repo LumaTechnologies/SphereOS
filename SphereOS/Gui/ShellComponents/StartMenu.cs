@@ -15,7 +15,7 @@ namespace SphereOS.Gui.ShellComponents
             get
             {
                 StartMenu startMenu = ProcessManager.GetProcess<StartMenu>();
-                if (startMenu == null)
+                if (startMenu == null && ProcessManager.GetProcess<Taskbar>() != null)
                 {
                     startMenu = (StartMenu)ProcessManager.AddProcess(ProcessManager.GetProcess<WindowManager>(), new StartMenu());
                     startMenu.Start();
@@ -32,7 +32,7 @@ namespace SphereOS.Gui.ShellComponents
 
         private Button shutdownButton;
         private Button rebootButton;
-        //private Button exitButton;
+        private Button logoutButton;
 
         private const int buttonsPadding = 12;
         private const int buttonsWidth = 96;
@@ -49,7 +49,7 @@ namespace SphereOS.Gui.ShellComponents
 
             window = new Window(this, leftHandStartButton ? 0 : (int)(wm.ScreenWidth / 2 - 408 / 2), 24, 408, 272);
             window.Clear(Color.FromArgb(56, 56, 71));
-            window.DrawString($"Welcome", Color.White, 12, 12);
+            window.DrawString($"Welcome, {Kernel.CurrentUser.Username}", Color.White, 12, 12);
             wm.AddWindow(window);
 
             int x = 12;
@@ -85,31 +85,32 @@ namespace SphereOS.Gui.ShellComponents
             rebootButton.OnClick = RebootClicked;
             wm.AddWindow(rebootButton);
 
-            /*exitButton = new Button(window, buttonsPadding * 3 + buttonsWidth * 2, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
-            exitButton.Text = "Exit";
-            exitButton.OnClick = ExitClicked;
-            wm.AddWindow(exitButton);*/
+            logoutButton = new Button(window, buttonsPadding * 3 + buttonsWidth * 2, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
+            logoutButton.Text = "Log Out";
+            logoutButton.OnClick = LogoutClicked;
+            wm.AddWindow(logoutButton);
 
             wm.Update(window);
         }
 
         private void ShutdownClicked(int x, int y)
         {
-            wm.TryStop();
             Power.Shutdown(reboot: false);
         }
 
         private void RebootClicked(int x, int y)
         {
-            wm.TryStop();
             Power.Shutdown(reboot: true);
         }
 
-        /*private void ExitClicked(int x, int y)
+        private void LogoutClicked(int x, int y)
         {
-            ProcessManager.AddProcess(new Shell.Shell()).Start();
-            ProcessManager.GetProcess<WindowManager>().Stop();
-        }*/
+            wm.Clear();
+
+            Kernel.CurrentUser = null;
+
+            ProcessManager.AddProcess(new ShellComponents.Lock()).Start();
+        }
 
         internal void HideStartMenu()
         {

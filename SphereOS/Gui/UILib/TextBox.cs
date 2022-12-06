@@ -48,6 +48,8 @@ namespace SphereOS.Gui.UILib
 
         internal bool MultiLine { get; set; } = false;
 
+        internal bool Shield { get; set; } = false;
+
         private Color _background = Color.White;
         internal Color Background
         {
@@ -287,17 +289,19 @@ namespace SphereOS.Gui.UILib
 
                 if (i < lines.Count)
                 {
-                    DrawString(lines[i], Foreground, -scrollX, lineY);
+                    DrawString(Shield ? new string('*', lines[i].Length) : lines[i], Foreground, -scrollX, lineY);
 
                     if (caretLine == i)
                     {
-                        DrawVerticalLine(fontHeight, (caretCol * fontWidth) - scrollX, (caretLine * fontHeight) - scrollY, Foreground);
+                        DrawVerticalLine(fontHeight, ((caretCol * fontWidth) - scrollX) + 1, (caretLine * fontHeight) - scrollY, Foreground);
                     }
                 }
             }
 
             markedLinesBegin = -1;
             markedLinesEnd = -1;
+
+            DrawRectangle(0, 0, Width, Height, Color.Gray);
 
             WM.Update(this);
         }

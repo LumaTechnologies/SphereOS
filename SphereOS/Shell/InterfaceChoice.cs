@@ -22,7 +22,8 @@ namespace SphereOS.Shell
                         Gui.AppManager.LoadAllApps();
                         ProcessManager.AddProcess(wm).Start();
                         ProcessManager.AddProcess(wm, new Gui.SettingsService()).Start();
-                        ProcessManager.AddProcess(wm, new Gui.ShellComponents.Taskbar()).Start();
+                        ProcessManager.AddProcess(wm, new Gui.Sound.SoundService()).Start();
+                        ProcessManager.AddProcess(wm, new Gui.ShellComponents.Lock()).Start();
                         return;
                     case '2':
                         ProcessManager.AddProcess(new Shell()).Start();
