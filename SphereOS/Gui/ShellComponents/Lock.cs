@@ -18,7 +18,7 @@ namespace SphereOS.Gui.ShellComponents
 
         Sound.SoundService soundService = ProcessManager.GetProcess<Sound.SoundService>();
 
-        private static class Icons
+        private static class Images
         {
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.User.bmp")]
             private static byte[] _iconBytes_User;
@@ -29,12 +29,12 @@ namespace SphereOS.Gui.ShellComponents
             internal static Bitmap Icon_UserArrow = new Bitmap(_iconBytes_UserArrow);
 
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.Gradient.bmp")]
-            private static byte[] _iconBytes_Gradient;
-            internal static Bitmap Icon_Gradient = new Bitmap(_iconBytes_Gradient);
+            private static byte[] _imageBytes_Gradient;
+            internal static Bitmap Image_Gradient = new Bitmap(_imageBytes_Gradient);
 
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.Background.bmp")]
-            private static byte[] _iconBytes_Background;
-            internal static Bitmap Icon_Background = new Bitmap(_iconBytes_Background);
+            private static byte[] _imageBytes_Background;
+            internal static Bitmap Image_Background = new Bitmap(_imageBytes_Background);
 
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.ShutDown.bmp")]
             private static byte[] _iconBytes_ShutDown;
@@ -52,21 +52,21 @@ namespace SphereOS.Gui.ShellComponents
         {
             window.Clear(Color.CornflowerBlue);
 
-            window.DrawImage(Icons.Icon_Background, 0, borderHeight + gradientHeight);
+            window.DrawImage(Images.Image_Background.ResizeWidthKeepRatio((uint)(window.Width / 2)), 0, borderHeight + gradientHeight);
 
             window.DrawFilledRectangle(0, 0, window.Width, borderHeight, borderColor);
             window.DrawFilledRectangle(0, window.Height - borderHeight, window.Width, borderHeight, borderColor);
 
-            Bitmap gradientResized = Icons.Icon_Gradient.Resize((uint)window.Width, (uint)gradientHeight);
+            Bitmap gradientResized = Images.Image_Gradient.Resize((uint)window.Width, (uint)gradientHeight);
             window.DrawImage(gradientResized, 0, borderHeight);
             window.DrawImage(gradientResized, 0, window.Height - borderHeight - gradientHeight);
 
-            window.DrawImageAlpha(Icons.Icon_User, (int)(window.Width / 2 - Icons.Icon_User.Width / 2) + (window.Width / 4), (int)(window.Height / 2 - Icons.Icon_User.Height / 2));
-            window.DrawString(user.Username, Color.White, (window.Width / 2 - user.Username.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Icons.Icon_User.Height / 2 + 12));
+            window.DrawImageAlpha(Images.Icon_User, (int)(window.Width / 2 - Images.Icon_User.Width / 2) + (window.Width / 4), (int)(window.Height / 2 - Images.Icon_User.Height / 2));
+            window.DrawString(user.Username, Color.White, (window.Width / 2 - user.Username.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 12));
             
             if (errorMessage != null)
             {
-                window.DrawString(errorMessage, Color.FromArgb(255, 209, 243), (window.Width / 2 - errorMessage.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Icons.Icon_User.Height / 2 + 96));
+                window.DrawString(errorMessage, Color.FromArgb(255, 209, 243), (window.Width / 2 - errorMessage.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 96));
             }
         }
 
@@ -79,10 +79,15 @@ namespace SphereOS.Gui.ShellComponents
 
             RenderBackground();
 
-            TextBox passwordBox = new TextBox(window, (window.Width / 4) + (window.Width / 2) - (128 / 2), (int)(window.Height / 2 + Icons.Icon_User.Height / 2 + 48), 128, 20);
+            TextBox passwordBox = new TextBox(window, (window.Width / 4) + (window.Width / 2) - (128 / 2), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 48), 128, 20);
             passwordBox.Shield = true;
             passwordBox.Submitted = () =>
             {
+                if (passwordBox.Text == string.Empty)
+                {
+                    return;
+                }
+
                 if (user.Authenticate(passwordBox.Text))
                 {
                     TryStop();
@@ -116,16 +121,17 @@ namespace SphereOS.Gui.ShellComponents
             };
             wm.AddWindow(passwordBox);
 
-            Table usersTable = new Table(window, (int)((Icons.Icon_Background.Width / 2) - (160 / 2)), borderHeight + 256, 160, 28 * UserManager.Users.Count);
+            Table usersTable = new Table(window, (int)((window.Width / 4) - (160 / 2)), borderHeight + (window.Width / 4), 160, 28 * UserManager.Users.Count);
             usersTable.Background = Color.CornflowerBlue;
             usersTable.Border = Color.CornflowerBlue;
-            usersTable.Foreground = Color.Black;
+            usersTable.Foreground = Color.FromArgb(195, 216, 253);
             usersTable.CellHeight = 28;
             usersTable.SelectedBackground = Color.FromArgb(127, 174, 255);
             usersTable.SelectedBorder = Color.White;
+            usersTable.SelectedForeground = Color.White;
             foreach (User user in UserManager.Users)
             {
-                usersTable.Cells.Add(new TableCell(Icons.Icon_UserArrow, user.Username));
+                usersTable.Cells.Add(new TableCell(Images.Icon_UserArrow, user.Username));
             }
             usersTable.TableCellSelected = (int index) =>
             {
@@ -141,7 +147,7 @@ namespace SphereOS.Gui.ShellComponents
 
             Button shutdownButton = new Button(window, 48, window.Height - (borderHeight / 2) - (48 / 2), 160, 32);
             shutdownButton.ImageLocation = Button.ButtonImageLocation.Left;
-            shutdownButton.Image = Icons.Icon_ShutDown;
+            shutdownButton.Image = Images.Icon_ShutDown;
             shutdownButton.Background = borderColor;
             shutdownButton.Border = borderColor;
             shutdownButton.Text = "Shut down";

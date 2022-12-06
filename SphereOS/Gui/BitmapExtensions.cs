@@ -35,5 +35,15 @@ namespace SphereOS.Gui
 
             return res;
         }
+
+        internal static Bitmap ResizeWidthKeepRatio(this Bitmap bmp, uint width)
+        {
+            return Resize(bmp, width, (uint)((double)bmp.Height * ((double)width / (double)bmp.Width)));
+        }
+
+        internal static Bitmap ResizeHeightKeepRatio(this Bitmap bmp, uint height)
+        {
+            return Resize(bmp, (uint)((double)bmp.Width * ((double)height / (double)bmp.Height)), height);
+        }
     }
 }

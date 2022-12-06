@@ -32,7 +32,7 @@ namespace SphereOS.Gui.ShellComponents
 
         private Button shutdownButton;
         private Button rebootButton;
-        private Button logoutButton;
+        /*private Button logoutButton;*/
 
         private const int buttonsPadding = 12;
         private const int buttonsWidth = 96;
@@ -85,10 +85,10 @@ namespace SphereOS.Gui.ShellComponents
             rebootButton.OnClick = RebootClicked;
             wm.AddWindow(rebootButton);
 
-            logoutButton = new Button(window, buttonsPadding * 3 + buttonsWidth * 2, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
+            /*logoutButton = new Button(window, buttonsPadding * 3 + buttonsWidth * 2, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
             logoutButton.Text = "Log Out";
             logoutButton.OnClick = LogoutClicked;
-            wm.AddWindow(logoutButton);
+            wm.AddWindow(logoutButton);*/
 
             wm.Update(window);
         }
@@ -103,14 +103,14 @@ namespace SphereOS.Gui.ShellComponents
             Power.Shutdown(reboot: true);
         }
 
-        private void LogoutClicked(int x, int y)
+        /*private void LogoutClicked(int x, int y)
         {
             wm.Clear();
 
             Kernel.CurrentUser = null;
 
             ProcessManager.AddProcess(new ShellComponents.Lock()).Start();
-        }
+        }*/
 
         internal void HideStartMenu()
         {
