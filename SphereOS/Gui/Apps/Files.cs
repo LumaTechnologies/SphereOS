@@ -37,6 +37,10 @@ namespace SphereOS.Gui.Apps
             private static byte[] _iconBytes_Drive;
             internal static Bitmap Icon_Drive = new Bitmap(_iconBytes_Drive);
 
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Files.Home.bmp")]
+            private static byte[] _iconBytes_Home;
+            internal static Bitmap Icon_Home = new Bitmap(_iconBytes_Home);
+
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Files.Up.bmp")]
             private static byte[] _iconBytes_Up;
             internal static Bitmap Icon_Up = new Bitmap(_iconBytes_Up);
@@ -54,6 +58,7 @@ namespace SphereOS.Gui.Apps
         private readonly (string Name, string Path)[] shortcuts = new (string, string)[]
         {
             ("SphereOS (0:)", @"0:\"),
+            ("My Home", @$"0:\users\{Kernel.CurrentUser.Username}"),
             ("Users", @"0:\users")
         };
 
@@ -64,6 +69,11 @@ namespace SphereOS.Gui.Apps
 
         private Bitmap GetDirectoryIcon(string path)
         {
+            if (Path.TrimEndingDirectorySeparator(path).StartsWith(@"0:\users\"))
+            {
+                return Icons.Icon_Home;
+            }
+
             switch (path)
             {
                 case @"0:\":
@@ -116,7 +126,7 @@ namespace SphereOS.Gui.Apps
         {
             string sanitised = PathSanitiser.SanitisePath(path);
 
-            if (!FileSecurity.CanAccess(user: null, sanitised))
+            if (!FileSecurity.CanAccess(Kernel.CurrentUser, sanitised))
             {
                 MessageBox messageBox = new MessageBox(this, "Unauthorised", $"Access to {Path.GetFileName(sanitised)} is unauthorised.");
                 messageBox.Show();
@@ -176,7 +186,7 @@ namespace SphereOS.Gui.Apps
                 }
                 else if ((string)cell.Tag == "File")
                 {
-                    if (!FileSecurity.CanAccess(user: null, path))
+                    if (!FileSecurity.CanAccess(Kernel.CurrentUser, path))
                     {
                         MessageBox messageBox = new MessageBox(this, "Unauthorised", $"Access to {Path.GetFileName(path)} is unauthorised.");
                         messageBox.Show();
@@ -185,7 +195,7 @@ namespace SphereOS.Gui.Apps
 
                     switch (Path.GetExtension(path))
                     {
-                        case ".txt" or ".ini":
+                        case ".txt" or ".ini" or ".rs":
                             ProcessManager.AddProcess(new Notepad(path)).Start();
                             break;
                         default:
@@ -234,7 +244,13 @@ namespace SphereOS.Gui.Apps
             header.DrawImageAlpha(GetDirectoryIcon(currentDir), 8, 8);
 
             DirectoryInfo info = new DirectoryInfo(currentDir);
-            header.DrawString(info.Parent == null ? currentDir : Path.GetFileName(currentDir), Color.White, 32, 8);
+
+            string currentDirFriendlyName = Path.GetFileName(currentDir);
+            if (currentDir == $@"0:\users\{Kernel.CurrentUser.Username}")
+            {
+                currentDirFriendlyName = "My Home";
+            }
+            header.DrawString(info.Parent == null ? currentDir : currentDirFriendlyName, Color.White, 32, 8);
 
             if (updateWindow)
             {
@@ -280,7 +296,6 @@ namespace SphereOS.Gui.Apps
             shortcutsTable = new Table(window, 0, pathBoxHeight, shortcutsWidth, window.Height - pathBoxHeight);
             shortcutsTable.AllowDeselection = false;
             shortcutsTable.Background = Color.DarkGray;
-            shortcutsTable.Foreground = Color.White;
             PopulateShortcutTable();
             shortcutsTable.SelectedCellIndex = 0;
             shortcutsTable.TableCellSelected = ShortcutsTableCellSelected;
