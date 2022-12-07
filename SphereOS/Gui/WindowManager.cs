@@ -52,6 +52,46 @@ namespace SphereOS.Gui
         private uint lastMouseX = 0;
         private uint lastMouseY = 0;
 
+        private Window wallpaperWindow;
+
+        internal List<Mode> AvailableModes { get; } = new List<Mode>
+        {
+            /* SD Resolutions */
+            /*new Mode(320, 200, ColorDepth.ColorDepth32),
+            new Mode(320, 240, ColorDepth.ColorDepth32),
+            new Mode(640, 480, ColorDepth.ColorDepth32),
+            new Mode(720, 480, ColorDepth.ColorDepth32),*/
+            new Mode(800, 600, ColorDepth.ColorDepth32),
+            new Mode(1024, 768, ColorDepth.ColorDepth32),
+            new Mode(1152, 768, ColorDepth.ColorDepth32),
+
+            /* Old HD-Ready Resolutions */
+            new Mode(1280, 720, ColorDepth.ColorDepth32),
+            new Mode(1280, 768, ColorDepth.ColorDepth32),
+            new Mode(1280, 800, ColorDepth.ColorDepth32),  // WXGA
+            new Mode(1280, 1024, ColorDepth.ColorDepth32), // SXGA
+
+            /* Better HD-Ready Resolutions */
+            new Mode(1360, 768, ColorDepth.ColorDepth32),
+            new Mode(1440, 900, ColorDepth.ColorDepth32),  // WXGA+
+            new Mode(1400, 1050, ColorDepth.ColorDepth32), // SXGA+
+            new Mode(1600, 1200, ColorDepth.ColorDepth32), // UXGA
+            new Mode(1680, 1050, ColorDepth.ColorDepth32), // WXGA++
+
+            /* HDTV Resolutions */
+            new Mode(1920, 1080, ColorDepth.ColorDepth32),
+            new Mode(1920, 1200, ColorDepth.ColorDepth32), // WUXGA
+
+            /* 2K Resolutions */
+            /*new Mode(2048, 1536, ColorDepth.ColorDepth32), // QXGA
+            new Mode(2560, 1080, ColorDepth.ColorDepth32), // UW-UXGA
+            new Mode(2560, 1600, ColorDepth.ColorDepth32), // WQXGA
+            new Mode(2560, 2048, ColorDepth.ColorDepth32), // QXGA+
+            new Mode(3200, 2048, ColorDepth.ColorDepth32), // WQXGA+
+            new Mode(3200, 2400, ColorDepth.ColorDepth32), // QUXGA
+            new Mode(3840, 2400, ColorDepth.ColorDepth32), // WQUXGA*/
+        };
+
         private void RenderWindow(Window window)
         {
             bufferModified = true;
@@ -255,8 +295,10 @@ namespace SphereOS.Gui
         {
             base.Start();
 
-            ScreenWidth = 1280;
-            ScreenHeight = 800;
+            SettingsService settingsService = ProcessManager.GetProcess<SettingsService>();
+
+            ScreenWidth = (uint)settingsService.Mode.Columns;
+            ScreenHeight = (uint)settingsService.Mode.Rows;
             bytesPerPixel = 4;
 
             SetupDriver();

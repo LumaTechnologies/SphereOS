@@ -136,7 +136,7 @@ namespace SphereOS.Gui.Apps
 
             if (!Directory.Exists(sanitised))
             {
-                MessageBox messageBox = new MessageBox(this, "Files", $"SphereOS can't find that folder. Check the spelling and try again.");
+                MessageBox messageBox = new MessageBox(this, "Files", $"SphereOS can't find that folder.\nCheck the spelling and try again.");
                 messageBox.Show();
 
                 return false;

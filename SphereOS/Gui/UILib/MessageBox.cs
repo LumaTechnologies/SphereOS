@@ -19,7 +19,13 @@ namespace SphereOS.Gui.UILib
         {
             WindowManager wm = ProcessManager.GetProcess<WindowManager>();
 
-            int width = Math.Max(192, (padding * 2) + (8 * Message.Length));
+            int longestLineLength = 0;
+            foreach (string line in Message.Split('\n'))
+            {
+                longestLineLength = Math.Max(longestLineLength, line.Length);
+            }
+
+            int width = Math.Max(192, (padding * 2) + (8 * longestLineLength));
             int height = 128 + ((Message.Split('\n').Length - 1) * 16);
 
             AppWindow window = new AppWindow(process, (int)((wm.ScreenWidth / 2) - (height / 2)), (int)((wm.ScreenWidth / 2) - (width / 2)), width, height);

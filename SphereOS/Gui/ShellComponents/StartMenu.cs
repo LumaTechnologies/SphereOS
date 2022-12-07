@@ -1,6 +1,8 @@
 ﻿using SphereOS.Core;
 using SphereOS.Gui.UILib;
 using System.Drawing;
+using Cosmos.System.Graphics;
+using System.Security.Principal;
 
 namespace SphereOS.Gui.ShellComponents
 {
@@ -24,6 +26,13 @@ namespace SphereOS.Gui.ShellComponents
             }
         }
 
+        private static class Icons
+        {
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.StartMenu.User.bmp")]
+            private static byte[] _iconBytes_User;
+            internal static Bitmap Icon_User = new Bitmap(_iconBytes_User);
+        }
+
         Window window;
 
         WindowManager wm = ProcessManager.GetProcess<WindowManager>();
@@ -37,7 +46,8 @@ namespace SphereOS.Gui.ShellComponents
         private const int buttonsPadding = 12;
         private const int buttonsWidth = 96;
         private const int buttonsHeight = 20;
-        private const int userHeight = 48;
+        private const int userHeight = 56;
+        private const int userPadding = 12;
 
         private bool isOpen = false;
 
@@ -47,9 +57,16 @@ namespace SphereOS.Gui.ShellComponents
 
             bool leftHandStartButton = settingsService.LeftHandStartButton;
 
-            window = new Window(this, leftHandStartButton ? 0 : (int)(wm.ScreenWidth / 2 - 408 / 2), 24, 408, 272);
+            window = new Window(this, leftHandStartButton ? 0 : (int)(wm.ScreenWidth / 2 - 408 / 2), 24, 408, 320);
+
             window.Clear(Color.FromArgb(56, 56, 71));
-            window.DrawString($"Welcome, {Kernel.CurrentUser.Username}", Color.White, 12, 12);
+
+            window.DrawString($"Welcome", Color.White, 12, 12);
+
+            Rectangle userRect = new Rectangle(userPadding, window.Height - userHeight + userPadding, window.Width - (userPadding * 2), userHeight - (userPadding * 2));
+            window.DrawImageAlpha(Icons.Icon_User, userRect.X, (int)(userRect.Y + (userRect.Height / 2) - (Icons.Icon_User.Height / 2)));
+            window.DrawString(Kernel.CurrentUser.Username, Color.White, (int)(userRect.X + Icons.Icon_User.Width + userPadding), (int)(userRect.Y + (userRect.Height / 2) - (16 / 2)));
+
             wm.AddWindow(window);
 
             int x = 12;
@@ -75,13 +92,13 @@ namespace SphereOS.Gui.ShellComponents
                 }
             }
 
-            shutdownButton = new Button(window, buttonsPadding, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
+            shutdownButton = new Button(window, buttonsPadding, window.Height - buttonsHeight - userHeight, buttonsWidth, buttonsHeight);
             shutdownButton.Text = "Shut down";
             shutdownButton.OnClick = ShutdownClicked;
             wm.AddWindow(shutdownButton);
 
-            rebootButton = new Button(window, buttonsPadding * 2 + buttonsWidth, window.Height - buttonsHeight - buttonsPadding, buttonsWidth, buttonsHeight);
-            rebootButton.Text = "Reboot";
+            rebootButton = new Button(window, buttonsPadding * 2 + buttonsWidth, window.Height - buttonsHeight - userHeight, buttonsWidth, buttonsHeight);
+            rebootButton.Text = "Restart";
             rebootButton.OnClick = RebootClicked;
             wm.AddWindow(rebootButton);
 

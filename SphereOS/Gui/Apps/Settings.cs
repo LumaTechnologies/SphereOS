@@ -41,9 +41,12 @@ namespace SphereOS.Gui.Apps
                     ShowAppearanceCategory();
                     break;
                 case 1:
-                    ShowDateTimeCategory();
+                    ShowDisplayCategory();
                     break;
                 case 2:
+                    ShowDateTimeCategory();
+                    break;
+                case 3:
                     ShowUsersCategory();
                     break;
                 default:
@@ -104,6 +107,49 @@ namespace SphereOS.Gui.Apps
             wm.Update(window);
         }
 
+        private void ShowDisplayCategory()
+        {
+
+            if (currentCategoryWindow != null)
+            {
+                wm.RemoveWindow(currentCategoryWindow);
+            }
+            Window display = new Window(this, window, 128, 0, window.Width - 128, window.Height);
+            currentCategoryWindow = display;
+            display.DrawString("Display Settings", Color.DarkBlue, 12, 12);
+            wm.AddWindow(display);
+
+            Table resolutionsTable = new Table(display, 12, 40, display.Width - 24, display.Height - 12 - 16 - 12 - 12 - 16 - 12);
+            resolutionsTable.AllowDeselection = false;
+            for (int i = 0; i < wm.AvailableModes.Count; i++)
+            {
+                Mode mode = wm.AvailableModes[i];
+                resolutionsTable.Cells.Add(new TableCell($"{mode.Columns}x{mode.Rows}"));
+                if (mode.Equals(settingsService.Mode))
+                {
+                    resolutionsTable.SelectedCellIndex = i;
+                }
+            }
+            resolutionsTable.Render();
+            resolutionsTable.TableCellSelected = (int index) =>
+            {
+                Mode mode = wm.AvailableModes[index];
+                settingsService.Mode = mode;
+                settingsService.Flush();
+
+                MessageBox messageBox = new MessageBox(this, "Restart Required", "Restart your PC to apply changes.");
+                messageBox.Show();
+            };
+            wm.AddWindow(resolutionsTable);
+
+            display.DrawImageAlpha(Icons.Icon_Info, 12, window.Height - 16 - 12);
+            display.DrawString("Select a screen resolution.", Color.Gray, 36, window.Height - 16 - 12);
+
+            wm.AddWindow(display);
+
+            wm.Update(display);
+        }
+
         private void ShowUsersCategory()
         {
             if (currentCategoryWindow != null)
@@ -160,7 +206,7 @@ namespace SphereOS.Gui.Apps
         internal override void Start()
         {
             base.Start();
-            window = new AppWindow(this, 256, 256, 432, 272);
+            window = new AppWindow(this, 256, 256, 448, 272);
             window.Closing = TryStop;
             wm.AddWindow(window);
 
@@ -168,6 +214,7 @@ namespace SphereOS.Gui.Apps
 
             Table categoryTable = new Table(window, 0, 0, 128, window.Height);
             categoryTable.Cells.Add(new TableCell("Appearance"));
+            categoryTable.Cells.Add(new TableCell("Display"));
             categoryTable.Cells.Add(new TableCell("Date & Time"));
             categoryTable.Cells.Add(new TableCell("Users"));
             categoryTable.TableCellSelected = CategorySelected;

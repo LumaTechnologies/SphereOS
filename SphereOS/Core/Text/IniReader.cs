@@ -151,5 +151,19 @@ namespace SphereOS.Text
                 return false;
             }
         }
+
+        internal bool TryReadInt(string key, out int value, string? section = null)
+        {
+            try
+            {
+                value = ReadInt(key, section);
+                return true;
+            }
+            catch
+            {
+                value = default;
+                return false;
+            }
+        }
     }
 }

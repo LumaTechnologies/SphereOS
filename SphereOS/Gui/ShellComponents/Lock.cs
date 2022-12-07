@@ -66,7 +66,7 @@ namespace SphereOS.Gui.ShellComponents
             
             if (errorMessage != null)
             {
-                window.DrawString(errorMessage, Color.FromArgb(255, 209, 243), (window.Width / 2 - errorMessage.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 96));
+                window.DrawString(errorMessage, Color.FromArgb(255, 209, 243), (window.Width / 2 - errorMessage.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 72));
             }
         }
 
@@ -92,7 +92,7 @@ namespace SphereOS.Gui.ShellComponents
                 {
                     TryStop();
                     Kernel.CurrentUser = user;
-                    ProcessManager.AddProcess(wm, new Gui.ShellComponents.Taskbar()).Start();
+                    ProcessManager.AddProcess(wm, new ShellComponents.Taskbar()).Start();
                     soundService.PlaySystemSound(Sound.SystemSound.Login);
                 }
                 else
@@ -121,7 +121,7 @@ namespace SphereOS.Gui.ShellComponents
             };
             wm.AddWindow(passwordBox);
 
-            Table usersTable = new Table(window, (int)((window.Width / 4) - (160 / 2)), borderHeight + (window.Width / 4), 160, 28 * UserManager.Users.Count);
+            Table usersTable = new Table(window, (int)((window.Width / 4) - (160 / 2)), borderHeight + (window.Width / 4), 160, 28 * Math.Min(4, UserManager.Users.Count));
             usersTable.Background = Color.CornflowerBlue;
             usersTable.Border = Color.CornflowerBlue;
             usersTable.Foreground = Color.FromArgb(195, 216, 253);

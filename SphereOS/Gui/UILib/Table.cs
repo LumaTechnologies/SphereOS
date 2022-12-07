@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Cosmos.System.Graphics;
 
 namespace SphereOS.Gui.UILib
 {
@@ -11,11 +12,21 @@ namespace SphereOS.Gui.UILib
             OnDown = TableDown;
         }
 
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.ScrollbarUp.bmp")]
+        private static byte[] scrollbarUpBytes;
+        private static Bitmap scrollbarUpBitmap = new Bitmap(scrollbarUpBytes);
+
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.ScrollbarDown.bmp")]
+        private static byte[] scrollbarDownBytes;
+        private static Bitmap scrollbarDownBitmap = new Bitmap(scrollbarDownBytes);
+
         internal List<TableCell> Cells { get; set; } = new List<TableCell>();
 
         internal Action<int> TableCellSelected { get; set; }
 
         internal bool AllowDeselection { get; set; } = true;
+
+        private int scrollY = 0;
 
         private int _selectedCellIndex = -1;
         internal int SelectedCellIndex
@@ -31,6 +42,20 @@ namespace SphereOS.Gui.UILib
                     _selectedCellIndex = value;
                     Render();
                 }
+            }
+        }
+
+        private int _scrollbarThickness = 20;
+        internal int ScrollbarThickness
+        {
+            get
+            {
+                return _scrollbarThickness;
+            }
+            set
+            {
+                _scrollbarThickness = value;
+                Render();
             }
         }
 
@@ -134,7 +159,24 @@ namespace SphereOS.Gui.UILib
 
         private void TableDown(int x, int y)
         {
-            if (y > _cellHeight * Cells.Count)
+            if ((CanScrollUp || CanScrollDown) && x >= (Width - _scrollbarThickness))
+            {
+                int allCellsHeight = Cells.Count * CellHeight;
+                if (y < _scrollbarThickness && CanScrollUp)
+                {
+                    scrollY = Math.Max(0, scrollY - CellHeight);
+                    Render();
+                }
+                if (y >= Height - _scrollbarThickness && CanScrollDown)
+                {
+                    scrollY = Math.Min(allCellsHeight - Height, scrollY + CellHeight);
+                    Render();
+                }
+                return;
+            }
+
+            int scrollAdjustedY = y + scrollY;
+            if (scrollAdjustedY < 0 || scrollAdjustedY > _cellHeight * Cells.Count)
             {
                 if (AllowDeselection)
                 {
@@ -142,8 +184,53 @@ namespace SphereOS.Gui.UILib
                 }
                 return;
             }
-            SelectedCellIndex = y / _cellHeight;
+
+            SelectedCellIndex = scrollAdjustedY / _cellHeight;
             TableCellSelected?.Invoke(_selectedCellIndex);
+        }
+
+        private bool CanScrollUp
+        {
+            get
+            {
+                return scrollY > 0;
+            }
+        }
+
+        private bool CanScrollDown
+        {
+            get
+            {
+                int allCellsHeight = Cells.Count * CellHeight;
+                return (scrollY < 0) || ((allCellsHeight > Height) && (scrollY < (allCellsHeight - Height)));
+            }
+        }
+
+        private void RenderScrollbar()
+        {
+            if (CanScrollUp || CanScrollDown)
+            {
+                /* Background */
+                DrawFilledRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, Height, _border);
+
+                /* Track */
+                int trackAvailableHeight = Height - (ScrollbarThickness * 2);
+                double trackSize = (double)Height / (double)(Cells.Count * CellHeight);
+                double trackProgress = (double)scrollY / (double)((Cells.Count * CellHeight) - Height);
+                int trackY = (int)(_scrollbarThickness + (((double)trackAvailableHeight - ((double)trackAvailableHeight * trackSize)) * trackProgress));
+                DrawFilledRectangle(Width - _scrollbarThickness, trackY, _scrollbarThickness, (int)(trackSize * trackAvailableHeight), _background);
+                DrawRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, Height, _border);
+
+                /* Up arrow */
+                DrawFilledRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, _scrollbarThickness, CanScrollUp ? _background : _border);
+                DrawRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, _scrollbarThickness, _border);
+                DrawImageAlpha(scrollbarUpBitmap, (int)((Width - _scrollbarThickness) + ((_scrollbarThickness / 2) - (scrollbarUpBitmap.Width / 2))), (int)((_scrollbarThickness / 2) - (scrollbarUpBitmap.Height / 2)));
+
+                /* Down arrow */
+                DrawFilledRectangle(Width - _scrollbarThickness, Height - _scrollbarThickness, _scrollbarThickness, _scrollbarThickness, CanScrollDown ? _background : _border);
+                DrawRectangle(Width - _scrollbarThickness, Height - _scrollbarThickness, _scrollbarThickness, _scrollbarThickness, _border);
+                DrawImageAlpha(scrollbarDownBitmap, (int)((Width - _scrollbarThickness) + ((_scrollbarThickness / 2) - (scrollbarUpBitmap.Width / 2))), (int)((Height - _scrollbarThickness) + ((_scrollbarThickness / 2) - (scrollbarUpBitmap.Height / 2))));
+            }
         }
 
         internal override void Render()
@@ -154,7 +241,7 @@ namespace SphereOS.Gui.UILib
             {
                 TableCell cell = Cells[i];
                 bool selected = _selectedCellIndex == i;
-                Rectangle cellRect = new Rectangle(0, i * _cellHeight, Width, _cellHeight);
+                Rectangle cellRect = new Rectangle(0, (i * _cellHeight) - scrollY, Width, _cellHeight);
 
                 if (selected)
                 {
@@ -173,6 +260,8 @@ namespace SphereOS.Gui.UILib
 
                 DrawRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, selected ? SelectedBorder : Border);
             }
+
+            RenderScrollbar();
 
             WM.Update(this);
         }

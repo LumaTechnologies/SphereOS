@@ -260,8 +260,8 @@ namespace SphereOS.Gui.UILib
 
         private List<string> lines = new List<string>() { string.Empty };
 
-        private int markedLinesBegin = -1;
-        private int markedLinesEnd = -1;
+        private int markedLinesBegin = 0;
+        private int markedLinesEnd = 0;
 
         private const int fontWidth = 8;
         private const int fontHeight = 16;
