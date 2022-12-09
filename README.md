@@ -12,19 +12,19 @@ The default login credentials are:
 - Password: password
 ## Features
 Here are some of the key features of SphereOS:
-- Dual mode support for both console and GUI operations
-- GUI system with up to 1400 FPS for fast and responsive operation
-- Built-in apps including Notepad, Clock, Calculator, Files, Calendar, Settings, and more
-- Networking capabilities for connecting to the internet
-- CloudChat for easy online messaging and chat functionality
-- [RiverScript language](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript) for automating tasks and creating custom programs
-- Filesystem for organizing and managing files and folders
-- Powerful text editor similar to nano
-- User management tools including lock, logout, add, and remove user options
-- Shutdown and reboot commands
-- Process management
-- SHA-256 security for enhanced protection against password cracking
-- Messaging capabilities for sending and receiving messages within the system.
+- 💻 Both GUI and console support
+- 🚀 GUI system with up to 1400 FPS
+- 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, and Settings
+- 🌐 Networking capabilities
+- 💬 CloudChat
+- ✨ [RiverScript language](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
+- 📁 Filesystem
+- 📝 Powerful text editor
+- 🔒 User management tools
+- 🛑 Shutdown and reboot commands
+- ⏳ Process management
+- 🔐 SHA-256 security
+- ✉️ Messaging capabilities
 ## Roadmap
 - [x] Scripting language (RiverScript)
 > [Read the RiverScript Documentation!](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
