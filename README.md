@@ -11,7 +11,6 @@ The default login credentials are:
 - Username: admin
 - Password: password
 ## Features
-Here are some of the key features of SphereOS:
 - 💻 Both GUI and console support
 - 🚀 GUI system with up to 1400 FPS
 - 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, and Settings
