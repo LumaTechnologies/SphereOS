@@ -2,26 +2,29 @@
 ![SphereOS logo](/Art/logo_dark.png#gh-light-mode-only)
 
 # SphereOS
-SphereOS is a powerful and secure operating system made with Cosmos!
+SphereOS is a powerful and secure operating system built with Cosmos. It offers a range of features including a GUI system, networking, cloud chat, scripting tools, and user management.
 ### Installation
-**Guide:** [Install in a VM](https://github.com/Project-Sphere/SphereOS/wiki/Installation)
+To install SphereOS in a virtual machine, follow the instructions on the [Installation Guide.](https://github.com/Project-Sphere/SphereOS/wiki/Installation)
 
-**Default Username -** admin
+The default login credentials are:
 
-**Default Password -** password
+- Username: admin
+- Password: password
 ## Features
-- GUI system (Up to 1400 FPS, Notepad, Clock, Calculator, and more apps!)
-- Networking
-- CloudChat
-- [Scripting](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
-- Filesystem
-- Powerful text editor like nano
-- User management
-- Lock, logout, add and remove users
-- Shutdown & reboot
-- Processes
-- SHA-256 security
-- Messages
+Here are some of the key features of SphereOS:
+- Dual mode support for both console and GUI operations
+- GUI system with up to 1400 FPS for fast and responsive operation
+- Built-in apps including Notepad, Clock, Calculator, Files, Calendar, Settings, and more
+- Networking capabilities for connecting to the internet
+- CloudChat for easy online messaging and chat functionality
+- [RiverScript language](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript) for automating tasks and creating custom programs
+- Filesystem for organizing and managing files and folders
+- Powerful text editor similar to nano
+- User management tools including lock, logout, add, and remove user options
+- Shutdown and reboot commands
+- Process management
+- SHA-256 security for enhanced protection against password cracking
+- Messaging capabilities for sending and receiving messages within the system.
 ## Roadmap
 - [x] Scripting language (RiverScript)
 > [Read the RiverScript Documentation!](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
