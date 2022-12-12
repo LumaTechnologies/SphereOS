@@ -35,8 +35,6 @@
       <Compile Remove="Core\CorePlugs\ConsoleShim.cs" />
       <Compile Remove="Core\VideoConsole\FontData.cs" />
       <Compile Remove="Core\VideoConsole\VideoConsole.cs" />
-      <Compile Remove="Gui\Apps\CodeStudio\CodeStudio.cs" />
-      <Compile Remove="Gui\Apps\CodeStudio\Ide.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -51,9 +49,14 @@
       <None Remove="Gui\Resources\AppIcons\Calculator.bmp" />
       <None Remove="Gui\Resources\AppIcons\Calendar.bmp" />
       <None Remove="Gui\Resources\AppIcons\Clock.bmp" />
+      <None Remove="Gui\Resources\AppIcons\CodeStudio.bmp" />
       <None Remove="Gui\Resources\AppIcons\Default.bmp" />
+      <None Remove="Gui\Resources\AppIcons\DemoLauncher.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Demos\Mandelbrot.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Demos\Starfield.bmp" />
       <None Remove="Gui\Resources\AppIcons\Files.bmp" />
       <None Remove="Gui\Resources\AppIcons\Info.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Logs.bmp" />
       <None Remove="Gui\Resources\AppIcons\Notepad.bmp" />
       <None Remove="Gui\Resources\AppIcons\Settings.bmp" />
       <None Remove="Gui\Resources\AppIcons\Tasks.bmp" />
@@ -63,6 +66,8 @@
       <None Remove="Gui\Resources\Check.bmp" />
       <None Remove="Gui\Resources\Clock\ClockBackground.bmp" />
       <None Remove="Gui\Resources\Close.bmp" />
+      <None Remove="Gui\Resources\CodeStudio\Run.bmp" />
+      <None Remove="Gui\Resources\CodeStudio\Splash.bmp" />
       <None Remove="Gui\Resources\Cursor.bmp" />
       <None Remove="Gui\Resources\Files\Directory.bmp" />
       <None Remove="Gui\Resources\Files\Drive.bmp" />
@@ -74,6 +79,9 @@
       <None Remove="Gui\Resources\Lock\ShutDown.bmp" />
       <None Remove="Gui\Resources\Lock\User.bmp" />
       <None Remove="Gui\Resources\Lock\UserArrow.bmp" />
+      <None Remove="Gui\Resources\Logs\Error.bmp" />
+      <None Remove="Gui\Resources\Logs\Info.bmp" />
+      <None Remove="Gui\Resources\Logs\Warning.bmp" />
       <None Remove="Gui\Resources\Maximise.bmp" />
       <None Remove="Gui\Resources\Minimise.bmp" />
       <None Remove="Gui\Resources\Restore.bmp" />
@@ -103,9 +111,14 @@
       <EmbeddedResource Include="Gui\Resources\AppIcons\Calculator.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Calendar.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Clock.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\CodeStudio.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Default.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\DemoLauncher.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Demos\Mandelbrot.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Demos\Starfield.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Files.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Info.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Logs.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Notepad.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Settings.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Tasks.bmp" />
@@ -115,6 +128,8 @@
       <EmbeddedResource Include="Gui\Resources\Check.bmp" />
       <EmbeddedResource Include="Gui\Resources\Clock\ClockBackground.bmp" />
       <EmbeddedResource Include="Gui\Resources\Close.bmp" />
+      <EmbeddedResource Include="Gui\Resources\CodeStudio\Run.bmp" />
+      <EmbeddedResource Include="Gui\Resources\CodeStudio\Splash.bmp" />
       <EmbeddedResource Include="Gui\Resources\Cursor.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Directory.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Drive.bmp" />
@@ -126,6 +141,9 @@
       <EmbeddedResource Include="Gui\Resources\Lock\ShutDown.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\User.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\UserArrow.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Logs\Error.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Logs\Info.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Logs\Warning.bmp" />
       <EmbeddedResource Include="Gui\Resources\Maximise.bmp" />
       <EmbeddedResource Include="Gui\Resources\Minimise.bmp" />
       <EmbeddedResource Include="Gui\Resources\Restore.bmp" />
@@ -147,8 +165,6 @@
       <None Include="Core\CorePlugs\ConsoleShim.cs" />
       <None Include="Core\VideoConsole\FontData.cs" />
       <None Include="Core\VideoConsole\VideoConsole.cs" />
-      <None Include="Gui\Apps\CodeStudio\CodeStudio.cs" />
-      <None Include="Gui\Apps\CodeStudio\Ide.cs" />
     </ItemGroup>
 
     <ItemGroup>

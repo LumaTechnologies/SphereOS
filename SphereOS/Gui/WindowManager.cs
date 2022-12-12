@@ -52,7 +52,17 @@ namespace SphereOS.Gui
         private uint lastMouseX = 0;
         private uint lastMouseY = 0;
 
+        private int sweepCounter = 0;
+
         private Window wallpaperWindow;
+
+        internal int Fps
+        {
+            get
+            {
+                return fps;
+            }
+        }
 
         internal List<Mode> AvailableModes { get; } = new List<Mode>
         {
@@ -229,7 +239,14 @@ namespace SphereOS.Gui
                 else if (MouseManager.MouseState == MouseState.None && lastMouseState == MouseState.Left)
                 {
                     lastMouseState = MouseManager.MouseState;
+
+                    if (Focus != null && Focus != window)
+                    {
+                        Focus.OnUnfocused?.Invoke();
+                    }
                     Focus = window;
+                    window.OnFocused?.Invoke();
+
                     window.OnClick?.Invoke(relativeX, relativeY);
 
                     if (DateTime.Now - lastClickDate < doubleClickTimeSpan)
@@ -245,10 +262,10 @@ namespace SphereOS.Gui
                 // To-do: Move this out of WindowManager.
                 if (key.Key == ConsoleKeyEx.LWin || key.Key == ConsoleKeyEx.RWin)
                 {
-                    StartMenu.CurrentStartMenu?.ToggleStartMenu();
+                    StartMenu.CurrentStartMenu?.ToggleStartMenu(focusSearch: true);
                     return;
                 }
-                Focus?.KeyPressed?.Invoke(key);
+                Focus?.OnKeyPressed?.Invoke(key);
             }
         }
 
@@ -290,6 +307,21 @@ namespace SphereOS.Gui
             lastMouseY = mouseY;
         }
 
+        private void Sweep()
+        {
+            if (sweepCounter % 10 == 0)
+            {
+                foreach (Window window in windows)
+                {
+                    if (window.Process != null && !window.Process.IsRunning)
+                    {
+                        RemoveWindow(window);
+                    }
+                }
+            }
+            sweepCounter++;
+        }
+
         #region Process
         internal override void Start()
         {
@@ -305,13 +337,15 @@ namespace SphereOS.Gui
             SetupMouse();
             SetupWallpaper();
 
-            fpsCounter = new Window(this, 0, (int)(ScreenHeight - 16), 64, 16);
+            fpsCounter = new Window(this, (int)(ScreenWidth) - 64, (int)(ScreenHeight - 16), 64, 16);
             AddWindow(fpsCounter);
         }
 
         internal override void Run()
         {
             UpdateFps();
+
+            Sweep();
 
             DispatchEvents();
 

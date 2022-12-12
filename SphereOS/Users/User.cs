@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphereOS.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace SphereOS.Users
@@ -119,6 +120,8 @@ namespace SphereOS.Users
                     LockoutEnd = DateTime.Now + TimeSpan.FromMinutes(3);
 
                     FailedAttempts = 0;
+
+                    Log.Info("User", $"{Username} was locked out due to too many incorrect attempts.");
                 }
             }
 

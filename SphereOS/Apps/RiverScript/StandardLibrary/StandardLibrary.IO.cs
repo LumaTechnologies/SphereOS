@@ -7,7 +7,7 @@ namespace RiverScript.StandardLibrary
     internal static partial class StandardLibrary
     {
         private static VMNativeFunction Stdlib_print = new VMNativeFunction(
-        new List<string> { ("string") },
+        new List<string> { ("object") },
         (List<VMObject> arguments) =>
         {
             Console.WriteLine(arguments[0]);

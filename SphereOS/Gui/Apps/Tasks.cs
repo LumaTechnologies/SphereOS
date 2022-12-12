@@ -31,6 +31,14 @@ namespace SphereOS.Gui.Apps
         {
             if (table.SelectedCellIndex != -1 && table.SelectedCellIndex < ProcessManager.Processes.Count)
             {
+                if (Kernel.CurrentUser == null || !Kernel.CurrentUser.Admin)
+                {
+                    MessageBox messageBox = new MessageBox(this, Name, "You must be an admin to end tasks.");
+                    messageBox.Show();
+
+                    return;
+                }
+
                 ProcessManager.Processes[table.SelectedCellIndex].TryStop();
                 ProcessManager.Sweep();
                 table.SelectedCellIndex = -1;

@@ -56,7 +56,9 @@ namespace SphereOS.Gui
         internal Action<int, int> OnDown;
         internal Action<int, int> OnClick;
         internal Action<int, int> OnDoubleClick;
-        internal Action<KeyEvent> KeyPressed;
+        internal Action<KeyEvent> OnKeyPressed;
+        internal Action OnFocused;
+        internal Action OnUnfocused;
         internal Action UserResized;
         internal Action WM_RefreshAll;
         #endregion
@@ -69,22 +71,28 @@ namespace SphereOS.Gui
 
         internal void Move(int x, int y, bool sendWMEvent = true)
         {
-            this.x = x;
-            this.y = y;
-            if (sendWMEvent)
+            if (x != X || y != Y)
             {
-                WM_RefreshAll?.Invoke();
+                this.x = x;
+                this.y = y;
+                if (sendWMEvent)
+                {
+                    WM_RefreshAll?.Invoke();
+                }
             }
         }
 
         internal void Resize(int width, int height, bool sendWMEvent = true)
         {
-            this.width = width;
-            this.height = height;
-            ResizeBuffer();
-            if (sendWMEvent)
+            if (width != Width || height != Height)
             {
-                WM_RefreshAll?.Invoke();
+                this.width = width;
+                this.height = height;
+                ResizeBuffer();
+                if (sendWMEvent)
+                {
+                    WM_RefreshAll?.Invoke();
+                }
             }
         }
 

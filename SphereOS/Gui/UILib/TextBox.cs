@@ -12,10 +12,11 @@ namespace SphereOS.Gui.UILib
         public TextBox(Window parent, int x, int y, int width, int height) : base(parent, x, y, width, height)
         {
             OnDown = TextBoxDown;
-            KeyPressed = TextBoxKeyPressed;
+            OnKeyPressed = TextBoxKeyPressed;
         }
 
         internal Action Submitted;
+        internal Action Changed;
 
         internal string Text
         {
@@ -40,6 +41,20 @@ namespace SphereOS.Gui.UILib
                 caretCol = 0;
 
                 MarkAllLines();
+                Render();
+            }
+        }
+
+        private string _placeholderText = string.Empty;
+        internal string PlaceholderText
+        {
+            get
+            {
+                return _placeholderText;
+            }
+            set
+            {
+                _placeholderText = value;
                 Render();
             }
         }
@@ -77,6 +92,20 @@ namespace SphereOS.Gui.UILib
             {
                 _foreground = value;
                 MarkAllLines();
+                Render();
+            }
+        }
+
+        private Color _placeholderForeground = Color.Gray;
+        internal Color PlaceholderForeground
+        {
+            get
+            {
+                return _placeholderForeground;
+            }
+            set
+            {
+                _placeholderForeground = value;
                 Render();
             }
         }
@@ -229,6 +258,9 @@ namespace SphereOS.Gui.UILib
                     MarkLine(caretLine);
                     break;
             }
+
+            Changed?.Invoke();
+
             Render();
         }
 
@@ -274,6 +306,23 @@ namespace SphereOS.Gui.UILib
 
         internal override void Render()
         {
+            if (Text == string.Empty)
+            {
+                Clear(_background);
+
+                DrawRectangle(0, 0, Width, Height, Color.Gray);
+                DrawString(PlaceholderText, PlaceholderForeground, 0, 0);
+
+                if (caretLine == 0)
+                {
+                    DrawVerticalLine(fontHeight, 1, 0, Foreground);
+                }
+
+                WM.Update(this);
+
+                return;
+            }
+
             if (markedLinesBegin == -1 || markedLinesEnd == -1) return;
 
             AutoScroll();

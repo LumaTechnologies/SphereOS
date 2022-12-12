@@ -7,6 +7,7 @@ using RiverScript;
 using RiverScript.StandardLibrary;
 using System;
 using System.Collections.Generic;
+using SphereOS.Gui.SmoothMono;
 
 namespace SphereOS.Gui.Apps.CodeStudio
 {
@@ -32,11 +33,7 @@ namespace SphereOS.Gui.Apps.CodeStudio
 
         TextBox editor;
 
-        TextBox output;
-
         private const int headersHeight = 24;
-
-        private const int outputHeight = 128;
 
         private static class Theme
         {
@@ -46,52 +43,59 @@ namespace SphereOS.Gui.Apps.CodeStudio
 
         private void RunClicked(int x, int y)
         {
-            /*Kernel.PrintDebug("1");
-            output.Foreground = Color.White;
-            Kernel.PrintDebug("2");
-            output.Text = string.Empty;
-            Kernel.PrintDebug("3");
+            AppWindow outputWindow = new AppWindow(process, 320, 264, 384, 240);
+
+            outputWindow.Title = "CodeStudio";
+            outputWindow.Clear(Color.Black);
+
+            wm.AddWindow(outputWindow);
+            wm.Update(outputWindow);
+
+            int outputLine = 0;
+
             try
             {
-                Kernel.PrintDebug("4");
                 Interpreter interpreter = new Interpreter();
-                Kernel.PrintDebug("5");
 
                 StandardLibrary.LoadStandardLibrary(interpreter);
-                Kernel.PrintDebug("6");
 
                 interpreter.DefineVariable("print", new VMNativeFunction(
-                new List<string> { ("string") },
+                new List<string> { ("object") },
                 (List<VMObject> arguments) =>
                 {
-                    Kernel.PrintDebug("A1");
-                    output.Text += arguments[0].ToString() + "\n";
-                    Kernel.PrintDebug("A2");
+                    outputWindow.DrawString(arguments[0].ToString(), Color.White, 0, outputLine * FontData.Height);
+                    wm.Update(outputWindow);
+
+                    outputLine++;
+
+                    /*if (outputLine > outputWindow.Height / FontData.Height)
+                    {
+                        outputWindow.Clear(Color.Black);
+                        outputLine = 0;
+                    }*/
+
                     return new VMNull();
                 }), scope: null);
-                Kernel.PrintDebug("7");
 
                 Script script = new Script(editor.Text);
-                Kernel.PrintDebug("8");
                 interpreter.InterpretScript(script);
-                Kernel.PrintDebug("9");
             }
             catch (Exception e)
             {
-                Kernel.PrintDebug("10");
-                output.Foreground = Color.Red;
-                Kernel.PrintDebug("11");
-                output.Text += $"Error occurred in your program: {e.Message}";
-                Kernel.PrintDebug("12");
-            }*/
+                outputWindow.Clear(Color.Black);
+                outputWindow.DrawString($"Error: {e.Message}", Color.Red, 0, 0);
+
+                wm.Update(outputWindow);
+            }
         }
 
         internal void Start()
         {
             mainWindow = new AppWindow(process, 96, 96, 832, 576);
-            mainWindow.Title = "CodeStudio";
-            mainWindow.Clear(Color.DarkGray);
+            mainWindow.Title = "CodeStudio - Untitled";
+            mainWindow.Clear(Theme.Background);
             mainWindow.Closing = process.TryStop;
+            //mainWindow.CanResize = true;
             wm.AddWindow(mainWindow);
 
             runButton = new Button(mainWindow, 0, 0, 80, headersHeight);
@@ -101,10 +105,10 @@ namespace SphereOS.Gui.Apps.CodeStudio
             runButton.Text = "Run";
             runButton.Image = runBitmap;
             runButton.ImageLocation = Button.ButtonImageLocation.Left;
-            //runButton.OnClick = RunClicked
+            runButton.OnClick = RunClicked;
             wm.AddWindow(runButton);
 
-            editor = new TextBox(mainWindow, 0, headersHeight, mainWindow.Width, mainWindow.Height - outputHeight - (headersHeight * 2))
+            editor = new TextBox(mainWindow, 0, headersHeight, mainWindow.Width, mainWindow.Height - headersHeight /*- outputHeight - (headersHeight * 2)*/)
             {
                 Background = Theme.CodeBackground,
                 Foreground = Color.White,
@@ -121,7 +125,7 @@ namespace SphereOS.Gui.Apps.CodeStudio
             };
             wm.AddWindow(output);*/
 
-            mainWindow.DrawString("Output", Color.White, 0, mainWindow.Height - outputHeight - headersHeight);
+            //mainWindow.DrawString("Output", Color.White, 0, mainWindow.Height - outputHeight - headersHeight);
 
             wm.Update(mainWindow);
         }

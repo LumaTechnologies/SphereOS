@@ -39,6 +39,11 @@ namespace SphereOS.Core
 
         internal virtual void Start()
         {
+            if (Type == ProcessType.Service)
+            {
+                Log.Info("Process", $"Service starting: {Name}");
+            }
+
             IsRunning = true;
         }
 
@@ -46,6 +51,11 @@ namespace SphereOS.Core
 
         internal virtual void Stop()
         {
+            if (Type == ProcessType.Service)
+            {
+                Log.Info("Process", $"Service stopping: {Name}");
+            }
+
             IsRunning = false;
             foreach (Process process in ProcessManager.Processes)
             {

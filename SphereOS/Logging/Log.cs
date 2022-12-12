@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SphereOS.Logging
 {
@@ -6,22 +7,38 @@ namespace SphereOS.Logging
     {
         internal static List<LogEvent> Logs = new List<LogEvent>();
 
+        internal static List<Action<LogEvent>> LogEmittedReceivers { get; private set; } = new List<Action<LogEvent>>();
+
+        private static void EmitEvent(LogEvent log)
+        {
+            foreach (Action<LogEvent> action in LogEmittedReceivers)
+            {
+                action.Invoke(log);
+            }
+        }
+
         internal static void Info(string source, string message)
         {
             LogEvent logEvent = new LogEvent(LogPriority.Info, source, message);
             Logs.Add(logEvent);
+
+            EmitEvent(logEvent);
         }
 
         internal static void Warning(string source, string message)
         {
             LogEvent logEvent = new LogEvent(LogPriority.Warning, source, message);
             Logs.Add(logEvent);
+
+            EmitEvent(logEvent);
         }
 
         internal static void Error(string source, string message)
         {
             LogEvent logEvent = new LogEvent(LogPriority.Error, source, message);
             Logs.Add(logEvent);
+
+            EmitEvent(logEvent);
         }
     }
 }

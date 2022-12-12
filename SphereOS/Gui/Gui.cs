@@ -1,10 +1,7 @@
 ﻿using SphereOS.Core;
 using SphereOS.Gui.UILib;
+using SphereOS.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Gui
 {
@@ -16,6 +13,8 @@ namespace SphereOS.Gui
             Console.CursorVisible = false;
 
             var wm = new WindowManager();
+
+            Log.Info("Gui", "GUI starting.");
 
             AppManager.LoadAllApps();
 
@@ -31,6 +30,8 @@ namespace SphereOS.Gui
 
             if (Cosmos.Core.CPU.GetAmountOfRAM() < 1000)
             {
+                Log.Warning("Gui", "Less than 1 GB of memory is allocated to the GUI.");
+
                 MessageBox messageBox = new MessageBox(null, "Memory Warning", "SphereOS is running with a low\namount of memory.\n\nAt least 1 GB of system memory\nshould be allocated for optimal\nperformance and stability.");
                 messageBox.Show();
             }

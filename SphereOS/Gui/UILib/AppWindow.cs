@@ -115,7 +115,7 @@ namespace SphereOS.Gui.UILib
                     originalWidth = Width;
                     originalHeight = Height;
 
-                    MoveAndResize(0, taskbarHeight + titlebarHeight, (int)wm.ScreenWidth, (int)(wm.ScreenHeight - taskbarHeight - titlebarHeight), sendWMEvent: false);
+                    MoveAndResize(0, taskbarHeight + titlebarHeight, (int)wm.ScreenWidth, (int)wm.ScreenHeight - titlebarHeight - taskbarHeight, sendWMEvent: false);
 
                     decorationWindow.Resize((int)wm.ScreenWidth, titlebarHeight, sendWMEvent: false);
 

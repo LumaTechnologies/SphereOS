@@ -1,6 +1,7 @@
 ﻿using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.UILib;
+using SphereOS.Logging;
 using System.Drawing;
 using System.IO;
 
@@ -131,6 +132,8 @@ namespace SphereOS.Gui.Apps
                 MessageBox messageBox = new MessageBox(this, "Unauthorised", $"Access to {Path.GetFileName(sanitised)} is unauthorised.");
                 messageBox.Show();
 
+                Log.Info("Files", $"{Kernel.CurrentUser.Username}: Unauthorised directory blocked.");
+
                 return false;
             }
 
@@ -190,6 +193,9 @@ namespace SphereOS.Gui.Apps
                     {
                         MessageBox messageBox = new MessageBox(this, "Unauthorised", $"Access to {Path.GetFileName(path)} is unauthorised.");
                         messageBox.Show();
+
+                        Log.Info("Files", $"{Kernel.CurrentUser.Username}: Unauthorised file blocked.");
+
                         return;
                     }
 

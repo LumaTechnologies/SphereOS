@@ -1,10 +1,10 @@
-﻿using SphereOS.Core;
+﻿using Cosmos.System.Graphics;
+using SphereOS.Core;
 using SphereOS.Gui.UILib;
-using System.Drawing;
-using Cosmos.System.Graphics;
+using SphereOS.Logging;
 using SphereOS.Users;
-using SphereOS.Shell;
 using System;
+using System.Drawing;
 
 namespace SphereOS.Gui.ShellComponents
 {
@@ -63,7 +63,7 @@ namespace SphereOS.Gui.ShellComponents
 
             window.DrawImageAlpha(Images.Icon_User, (int)(window.Width / 2 - Images.Icon_User.Width / 2) + (window.Width / 4), (int)(window.Height / 2 - Images.Icon_User.Height / 2));
             window.DrawString(user.Username, Color.White, (window.Width / 2 - user.Username.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 12));
-            
+
             if (errorMessage != null)
             {
                 window.DrawString(errorMessage, Color.FromArgb(255, 209, 243), (window.Width / 2 - errorMessage.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 72));
@@ -81,6 +81,7 @@ namespace SphereOS.Gui.ShellComponents
 
             TextBox passwordBox = new TextBox(window, (window.Width / 4) + (window.Width / 2) - (128 / 2), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 48), 128, 20);
             passwordBox.Shield = true;
+            passwordBox.PlaceholderText = "Password";
             passwordBox.Submitted = () =>
             {
                 if (passwordBox.Text == string.Empty)
@@ -94,6 +95,8 @@ namespace SphereOS.Gui.ShellComponents
                     Kernel.CurrentUser = user;
                     ProcessManager.AddProcess(wm, new ShellComponents.Taskbar()).Start();
                     soundService.PlaySystemSound(Sound.SystemSound.Login);
+
+                    Log.Info("Lock", $"{user.Username} logged on to the GUI.");
                 }
                 else
                 {

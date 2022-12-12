@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Cosmos.System.Graphics;
+using SphereOS.Gui.SmoothMono;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Cosmos.System.Graphics;
 
 namespace SphereOS.Gui.UILib
 {
@@ -233,6 +234,26 @@ namespace SphereOS.Gui.UILib
             }
         }
 
+        internal void ScrollToTop()
+        {
+            scrollY = 0;
+            Render();
+        }
+
+        internal void ScrollToBottom()
+        {
+            int allCellsHeight = Cells.Count * CellHeight;
+            if (allCellsHeight > Height)
+            {
+                scrollY = allCellsHeight - Height;
+            }
+            else
+            {
+                scrollY = 0;
+            }
+            Render();
+        }
+
         internal override void Render()
         {
             Clear(Background);
@@ -248,7 +269,7 @@ namespace SphereOS.Gui.UILib
                     DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, _selectedBackground);
                 }
 
-                int textX = cellRect.X; //cellRect.X + (cellRect.Width / 2) - (cell.Length * 8 / 2);
+                int textX = cellRect.X + (cell.Image != null ? (CellHeight - FontData.Height) / 2 : 0); //cellRect.X + (cellRect.Width / 2) - (cell.Length * 8 / 2);
                 int textY = cellRect.Y + (cellRect.Height / 2) - (16 / 2);
 
                 if (cell.Image != null)

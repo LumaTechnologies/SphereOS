@@ -36,7 +36,7 @@ namespace SphereOS.Shell
                 if (user.Authenticate(password))
                 {
                     Kernel.CurrentUser = user;
-                    Log.Info("Kernel", $"{user.Username} logged on.");
+                    Log.Info("LoginPrompt", $"{user.Username} logged on.");
                     Console.WriteLine();
                     Util.PrintLine(ConsoleColor.Green, $"Welcome to SphereOS!");
                     return true;

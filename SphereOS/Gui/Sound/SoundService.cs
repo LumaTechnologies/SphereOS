@@ -73,7 +73,7 @@ namespace SphereOS.Gui.Sound
                     Driver = AC97.Initialize(bufferSize);
                 }
             }
-            
+
             if (Driver != null)
             {
                 DriverReady = true;
@@ -88,6 +88,10 @@ namespace SphereOS.Gui.Sound
 
                 Log.Info("SoundService", "SoundService ready.");
             }
+            else
+            {
+                Log.Warning("SoundService", "No driver available.");
+            }
         }
 
         internal override void Run()
@@ -99,6 +103,7 @@ namespace SphereOS.Gui.Sound
             base.Stop();
             if (DriverReady)
             {
+                Log.Info("SoundService", "Driver disabling.");
                 AudioManager.Disable();
             }
         }
