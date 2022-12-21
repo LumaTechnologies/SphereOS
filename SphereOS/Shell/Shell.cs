@@ -28,7 +28,7 @@ namespace SphereOS.Shell
             Util.Print(ConsoleColor.Cyan, "Welcome to ");
             Util.Print(ConsoleColor.Magenta, "SphereOS");
             Util.PrintLine(ConsoleColor.Gray, $" - version {Kernel.Version}");
-            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022. All rights reserved.");
+            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022-2023. All rights reserved.");
 
             /*Util.Print(ConsoleColor.Yellow, "New in this version: ");
             Util.PrintLine(ConsoleColor.White, "New GUI!");*/
