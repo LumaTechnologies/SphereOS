@@ -2,7 +2,7 @@
 ![SphereOS logo](/Art/logo_dark.png#gh-light-mode-only)
 
 # SphereOS
-SphereOS is a powerful and secure operating system built with Cosmos. It offers a range of features including a GUI system, networking, cloud chat, scripting tools, and user management.
+SphereOS - A powerful & secure Cosmos-based operating system.
 ### Installation
 To install SphereOS in a virtual machine, follow the instructions on the [Installation Guide.](https://github.com/Project-Sphere/SphereOS/wiki/Installation)
 
