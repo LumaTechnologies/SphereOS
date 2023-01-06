@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SphereOS", "SphereOS\SphereOS.csproj", "{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextCore", "NextCore\NextCore.csproj", "{98348E45-1FAB-4D55-96FF-D11B7001A585}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
