@@ -16,7 +16,7 @@ The default login credentials are:
 - 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, and Settings
 - 🌐 Networking capabilities
 - 💬 CloudChat
-- ✨ [RiverScript language](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
+- ✨ [RiverScript language](https://sphere.jsph.dev/developer/riverscript/)
 - 📁 Filesystem
 - 📝 Powerful text editor
 - 🔒 User management tools
@@ -26,7 +26,7 @@ The default login credentials are:
 - ✉️ Messaging capabilities
 ## Roadmap
 - [x] Scripting language (RiverScript)
-> [Read the RiverScript Documentation!](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
+> [Read the RiverScript Documentation!](https://sphere.jsph.dev/developer/docs/riverscript/)
 - [ ] Package manager (sphereget)
 > Share + Download scripts!
 ## Screenshots
