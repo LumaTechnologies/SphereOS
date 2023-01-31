@@ -2,7 +2,7 @@
 ![SphereOS logo](/Art/logo_dark.png#gh-light-mode-only)
 
 # SphereOS
-SphereOS is a powerful and secure operating system built with Cosmos. It offers a range of features including a GUI system, networking, cloud chat, scripting tools, and user management.
+SphereOS - A powerful & secure Cosmos-based operating system.
 ### Installation
 To install SphereOS in a virtual machine, follow the instructions on the [Installation Guide.](https://github.com/Project-Sphere/SphereOS/wiki/Installation)
 
@@ -16,7 +16,7 @@ The default login credentials are:
 - 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, and Settings
 - 🌐 Networking capabilities
 - 💬 CloudChat
-- ✨ [RiverScript language](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
+- ✨ [RiverScript language](https://sphere.jsph.dev/developer/riverscript/)
 - 📁 Filesystem
 - 📝 Powerful text editor
 - 🔒 User management tools
@@ -26,7 +26,7 @@ The default login credentials are:
 - ✉️ Messaging capabilities
 ## Roadmap
 - [x] Scripting language (RiverScript)
-> [Read the RiverScript Documentation!](https://github.com/Project-Sphere/SphereOS/wiki/RiverScript)
+> [Read the RiverScript Documentation!](https://sphere.jsph.dev/developer/docs/riverscript/)
 - [ ] Package manager (sphereget)
 > Share + Download scripts!
 ## Screenshots
