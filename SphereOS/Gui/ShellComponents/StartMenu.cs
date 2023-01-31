@@ -77,7 +77,7 @@ namespace SphereOS.Gui.ShellComponents
             int y = 44;
             for (int i = 0; i < 4; i++)
             {
-                App app = AppManager.Apps[i];
+                AppMetadata app = AppManager.AppMetadatas[i];
 
                 Button appButton = new Button(window, x, y, 90, 90);
 
@@ -137,7 +137,7 @@ namespace SphereOS.Gui.ShellComponents
                     {
                         if (index != -1)
                         {
-                            ((App)searchResults.Cells[index].Tag).Start(this);
+                            ((AppMetadata)searchResults.Cells[index].Tag).Start(this);
                             HideStartMenu();
                         }
                     };
@@ -147,7 +147,7 @@ namespace SphereOS.Gui.ShellComponents
 
                 if (searchBox.Text.Trim().Length > 0)
                 {
-                    foreach (App app in AppManager.Apps)
+                    foreach (AppMetadata app in AppManager.AppMetadatas)
                     {
                         if (app.Name.ToLower().StartsWith(searchBox.Text.ToLower()))
                         {
@@ -177,7 +177,7 @@ namespace SphereOS.Gui.ShellComponents
 
                 if (searchResults != null && searchResults.Cells.Count > 0)
                 {
-                    ((App)searchResults.Cells[0].Tag).Start(this);
+                    ((AppMetadata)searchResults.Cells[0].Tag).Start(this);
                     HideStartMenu();
                 }
             };
@@ -217,7 +217,7 @@ namespace SphereOS.Gui.ShellComponents
             allAppsTable.Border = Color.FromArgb(36, 36, 51);
             allAppsTable.Foreground = Color.White;
 
-            foreach (App app in AppManager.Apps)
+            foreach (AppMetadata app in AppManager.AppMetadatas)
             {
                 allAppsTable.Cells.Add(new TableCell(app.Icon.Resize(20, 20), app.Name));
             }
@@ -227,7 +227,7 @@ namespace SphereOS.Gui.ShellComponents
             {
                 if (index != -1)
                 {
-                    AppManager.Apps[index].Start(this);
+                    AppManager.AppMetadatas[index].Start(this);
                     HideStartMenu();
                 }
             };

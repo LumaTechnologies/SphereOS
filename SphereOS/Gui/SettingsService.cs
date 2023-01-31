@@ -64,8 +64,8 @@ namespace SphereOS.Gui
 
             builder.AddKey("LeftHandStartButton", LeftHandStartButton);
 
-            builder.AddKey("ScreenWidth", Mode.Columns);
-            builder.AddKey("ScreenHeight", Mode.Rows);
+            builder.AddKey("ScreenWidth", Mode.Width);
+            builder.AddKey("ScreenHeight", Mode.Height);
 
             /* Date & Time */
             builder.BeginSection("DateAndTime");

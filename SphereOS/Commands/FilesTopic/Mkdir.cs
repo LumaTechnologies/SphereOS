@@ -11,6 +11,8 @@ namespace SphereOS.Commands.FilesTopic
         {
             Description = "Create a directory.";
 
+            Usage = "<dir>";
+
             Topic = "files";
         }
 

@@ -28,10 +28,10 @@ namespace SphereOS.Gui.Apps
             internal static Bitmap Icon_Mandelbrot = new Bitmap(_iconBytes_Mandelbrot);
         }
 
-        List<App> demoApps = new()
+        List<AppMetadata> demoApps = new()
         {
-            new App("Starfield", () => { return new Apps.Demos.Starfield(); }, Icons.Icon_Starfield, Color.Black ),
-            new App("Mandelbrot", () => { return new Apps.Demos.Mandelbrot(); }, Icons.Icon_Mandelbrot, Color.Black ),
+            new AppMetadata("Starfield", () => { return new Apps.Demos.Starfield(); }, Icons.Icon_Starfield, Color.Black ),
+            new AppMetadata("Mandelbrot", () => { return new Apps.Demos.Mandelbrot(); }, Icons.Icon_Mandelbrot, Color.Black ),
         };
 
         private const string message = "Demo Launcher";
@@ -39,7 +39,7 @@ namespace SphereOS.Gui.Apps
         private void PopulateTable()
         {
             table.Cells.Clear();
-            foreach (App app in demoApps)
+            foreach (AppMetadata app in demoApps)
             {
                 table.Cells.Add(new TableCell(app.Icon.Resize(32, 32), app.Name));
             }
@@ -67,7 +67,7 @@ namespace SphereOS.Gui.Apps
             {
                 if (table.SelectedCellIndex != -1)
                 {
-                    App app = demoApps[table.SelectedCellIndex];
+                    AppMetadata app = demoApps[table.SelectedCellIndex];
                     ProcessManager.AddProcess(app.CreateProcess()).Start();
                 }
             };

@@ -7,14 +7,14 @@ namespace SphereOS.Commands.UsersTopic
     {
         public Logout() : base("logout")
         {
-            Description = "Log out of SphereOS.";
+            Description = "Log out of this PC.";
 
             Topic = "users";
         }
 
         internal override ReturnCode Execute(string[] args)
         {
-            Util.PrintLine(ConsoleColor.Green, "Goodbye!");
+            Util.PrintLine(ConsoleColor.Green, $"Logging out {Kernel.CurrentUser.Username}.");
 
             Kernel.CurrentUser = null;
             Shell.Shell.CurrentShell.WorkingDir = @"0:\";

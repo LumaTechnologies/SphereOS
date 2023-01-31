@@ -1,4 +1,5 @@
-﻿using SphereOS.Shell;
+﻿using SphereOS.Logging;
+using SphereOS.Shell;
 using SphereOS.Users;
 using System;
 
@@ -8,7 +9,9 @@ namespace SphereOS.Commands.UsersTopic
     {
         public Broadcast() : base("broadcast")
         {
-            Description = "Broadcast a message to all users.";
+            Description = "Send a message to all users on the PC.";
+
+            Usage = "<message>";
 
             Topic = "users";
         }
@@ -44,6 +47,8 @@ namespace SphereOS.Commands.UsersTopic
             UserManager.Flush();
 
             Util.PrintLine(ConsoleColor.Green, $"Sent {UserManager.Users.Count} message(s).");
+
+            Log.Info("Broadcast", $"User '{Kernel.CurrentUser.Username}' broadcasted a message to {UserManager.Users.Count} users.");
 
             return ReturnCode.Success;
         }

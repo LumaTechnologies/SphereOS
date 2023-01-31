@@ -1,5 +1,6 @@
 ﻿using SphereOS.Core.Crypto;
 using SphereOS.Logging;
+using SphereOS.Shell;
 using SphereOS.Text;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,18 @@ namespace SphereOS.Users
     {
         internal static List<User> Users = new List<User>();
 
-        private const string userDataPath = @"0:\users.ini";
+        private const string oldUserDataPath = @"0:\users.ini";
+        private const string userDataPath = @"0:\etc\users.ini";
 
         internal static void Load()
         {
+            if (File.Exists(oldUserDataPath))
+            {
+                Log.Info("UserManager", "Upgrading users.ini...");
+                string text = File.ReadAllText(oldUserDataPath);
+                File.WriteAllText(userDataPath, text);
+                File.Delete(oldUserDataPath);
+            }
             if (File.Exists(userDataPath))
             {
                 try
@@ -37,8 +46,10 @@ namespace SphereOS.Users
                                 string username = key;
                                 string password = reader.ReadString("password", section);
                                 bool admin = reader.ReadBool("admin", section);
+                                bool expired = reader.ReadBool("expired", section);
 
                                 User user = new User(username, password, admin);
+                                user.PasswordExpired = expired;
                                 Users.Add(user);
 
                                 //Util.PrintTask($"DEBUG: UserMgr loadusr {username} {admin}");
@@ -66,8 +77,10 @@ namespace SphereOS.Users
             }
             else
             {
-                Log.Info("UserManager", $"Default user admin was created.");
-                AddUser("admin", "password", admin: true, flush: false);
+                Log.Info("UserManager", $"Default user 'admin' was created.");
+                Util.PrintTask("Default user 'admin' was created.");
+                User user = AddUser("admin", "password", admin: true, flush: false);
+                user.PasswordExpired = true;
             }
         }
 
@@ -95,11 +108,11 @@ namespace SphereOS.Users
 
             if (admin)
             {
-                Log.Info("UserManager", $"Admin user {username} was added.");
+                Log.Info("UserManager", $"Admin user '{username}' was added.");
             }
             else
             {
-                Log.Info("UserManager", $"User {username} was added.");
+                Log.Info("UserManager", $"User '{username}' was added.");
             }
 
             return user;
@@ -122,7 +135,7 @@ namespace SphereOS.Users
                 {
                     Users.Remove(user);
                     Flush();
-                    Log.Info("UserManager", $"User {username} was deleted.");
+                    Log.Info("UserManager", $"User '{username}' was deleted.");
                     return true;
                 }
             }
@@ -164,9 +177,10 @@ namespace SphereOS.Users
                     builder.BeginSection($"User.{user.Username}");
                     builder.AddKey("password", user.Password);
                     builder.AddKey("admin", user.Admin);
+                    builder.AddKey("expired", user.PasswordExpired);
                 }
                 Random random = new Random((int)DateTime.Now.Ticks);
-                int messageIndex = 1;
+                int messageIndex = 0;
                 foreach (User user in Users)
                 {
                     foreach (Message message in user.Messages)

@@ -9,7 +9,9 @@ namespace SphereOS.Commands.NetworkTopic
     {
         public Resolve() : base("resolve")
         {
-            Description = "Find the IP of a domain.";
+            Description = "Find the IP address of a domain.";
+
+            Usage = "<domain>";
 
             Topic = "network";
         }

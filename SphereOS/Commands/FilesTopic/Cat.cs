@@ -11,6 +11,8 @@ namespace SphereOS.Commands.FilesTopic
         {
             Description = "Read a file.";
 
+            Usage = "<file>";
+
             Topic = "files";
         }
 

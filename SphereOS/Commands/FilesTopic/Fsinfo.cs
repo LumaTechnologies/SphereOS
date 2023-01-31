@@ -9,7 +9,7 @@ namespace SphereOS.Commands.FilesTopic
     {
         public Fsinfo() : base("fsinfo")
         {
-            Description = "Show volume information.";
+            Description = "Show filesystem information.";
 
             Topic = "files";
         }
@@ -18,14 +18,17 @@ namespace SphereOS.Commands.FilesTopic
         {
             var root = Directory.GetDirectoryRoot(Shell.Shell.CurrentShell.WorkingDir);
 
-            Util.PrintLine(ConsoleColor.Green, $"Volume information for {root}");
-
-            Util.Print(ConsoleColor.Cyan, "Label: ");
-            Util.PrintLine(ConsoleColor.White, FsManager.Fs.GetFileSystemLabel(root));
-
             long totalSize = FsManager.Fs.GetTotalSize(root) / 1024 / 1024;
             long freeSpace = FsManager.Fs.GetAvailableFreeSpace(root) / 1024 / 1024;
             long usedSpace = totalSize - freeSpace;
+
+            string label = FsManager.Fs.GetFileSystemLabel(root);
+            string fsType = FsManager.Fs.GetFileSystemType(root);
+
+            Util.PrintLine(ConsoleColor.Green, $"Volume information for {root}");
+
+            Util.Print(ConsoleColor.Cyan, "Label: ");
+            Util.PrintLine(ConsoleColor.White, label);
 
             Util.Print(ConsoleColor.Cyan, "Total size: ");
             Util.PrintLine(ConsoleColor.White, $"{totalSize} MB");
@@ -37,7 +40,7 @@ namespace SphereOS.Commands.FilesTopic
             Util.PrintLine(ConsoleColor.White, $"{usedSpace} MB");
 
             Util.Print(ConsoleColor.Cyan, "File system: ");
-            Util.PrintLine(ConsoleColor.White, FsManager.Fs.GetFileSystemType(root));
+            Util.PrintLine(ConsoleColor.White, fsType);
 
             return ReturnCode.Success;
         }

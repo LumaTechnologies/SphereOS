@@ -35,6 +35,11 @@ namespace SphereOS.Commands
         internal string Description { get; set; }
 
         /// <summary>
+        /// The usage of the command.
+        /// </summary>
+        internal string Usage { get; set; }
+
+        /// <summary>
         /// The topic of the command, to categorise help pages.
         /// </summary>
         internal string Topic { get; set; }

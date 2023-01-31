@@ -16,12 +16,12 @@ namespace SphereOS.Commands.UsersTopic
         internal override ReturnCode Execute(string[] args)
         {
             Util.Print(ConsoleColor.Cyan, "Current password: ");
-            string currentPassword = Util.ReadPassword();
+            string currentPassword = Util.ReadLineEx(cancelKey: null, mask: true);
 
             if (Kernel.CurrentUser.Authenticate(currentPassword))
             {
                 Util.Print(ConsoleColor.Cyan, "New password: ");
-                string newPassword = Util.ReadPassword();
+                string newPassword = Util.ReadLineEx(cancelKey: null, mask: true);
 
                 Kernel.CurrentUser.ChangePassword(currentPassword, newPassword);
                 UserManager.Flush();

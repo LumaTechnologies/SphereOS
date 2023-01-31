@@ -16,7 +16,7 @@ namespace SphereOS.Commands.GeneralTopic
         {
             Util.Print(ConsoleColor.Magenta, "SphereOS");
             Util.PrintLine(ConsoleColor.Gray, $" - version {Kernel.Version}");
-            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022-2023 Sphere Technologies. All rights reserved.");
+            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2023. All rights reserved.");
             return ReturnCode.Success;
         }
     }

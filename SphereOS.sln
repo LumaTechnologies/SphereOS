@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SphereOS", "SphereOS\SphereOS.csproj", "{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextCore", "NextCore\NextCore.csproj", "{98348E45-1FAB-4D55-96FF-D11B7001A585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextCore", "NextCore\NextCore.csproj", "{98348E45-1FAB-4D55-96FF-D11B7001A585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextCore.Plugs", "NextCore.Plugs\NextCore.Plugs.csproj", "{5A843BEA-31FB-44EE-ABB9-124654ABBC24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextCore.Graphics", "NextCore.Graphics\NextCore.Graphics.csproj", "{9495FE74-32BB-4DB3-9F09-29F97BE3FF22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SphereOS", "SphereOS\SphereOS.csproj", "{DADFFCBA-0B69-4AAB-881D-ABCC2152DE5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SphereOS.Plugs", "SphereOS.Plugs\SphereOS.Plugs.csproj", "{66BED454-BF22-49A5-ADE8-2E11B17CB1F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{95FC49EB-4CDB-4D99-8C70-8A3AB487C3AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98348E45-1FAB-4D55-96FF-D11B7001A585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A843BEA-31FB-44EE-ABB9-124654ABBC24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A843BEA-31FB-44EE-ABB9-124654ABBC24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A843BEA-31FB-44EE-ABB9-124654ABBC24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A843BEA-31FB-44EE-ABB9-124654ABBC24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9495FE74-32BB-4DB3-9F09-29F97BE3FF22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9495FE74-32BB-4DB3-9F09-29F97BE3FF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9495FE74-32BB-4DB3-9F09-29F97BE3FF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9495FE74-32BB-4DB3-9F09-29F97BE3FF22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DADFFCBA-0B69-4AAB-881D-ABCC2152DE5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DADFFCBA-0B69-4AAB-881D-ABCC2152DE5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DADFFCBA-0B69-4AAB-881D-ABCC2152DE5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DADFFCBA-0B69-4AAB-881D-ABCC2152DE5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66BED454-BF22-49A5-ADE8-2E11B17CB1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66BED454-BF22-49A5-ADE8-2E11B17CB1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66BED454-BF22-49A5-ADE8-2E11B17CB1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66BED454-BF22-49A5-ADE8-2E11B17CB1F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

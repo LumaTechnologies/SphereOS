@@ -6,7 +6,7 @@ namespace SphereOS.Commands.GeneralTopic
     {
         public Wd() : base("wd")
         {
-            Description = "Print the working directory.";
+            Description = "Show the full working directory.";
 
             Topic = "general";
         }

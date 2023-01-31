@@ -8,14 +8,19 @@ namespace SphereOS.Commands.PowerTopic
     {
         public Reboot() : base("reboot")
         {
-            Description = "Reboot your PC.";
+            Description = "Reboot this PC.";
 
             Topic = "power";
         }
 
         internal override ReturnCode Execute(string[] args)
         {
-            Util.PrintLine(ConsoleColor.Green, "Goodbye!");
+            if (!Kernel.CurrentUser.Admin)
+            {
+                Util.PrintLine(ConsoleColor.Red, "Unauthorised. You must be an admin to run this command.");
+                return ReturnCode.Unauthorised;
+            }
+
             Power.Shutdown(reboot: true);
             return ReturnCode.Success;
         }

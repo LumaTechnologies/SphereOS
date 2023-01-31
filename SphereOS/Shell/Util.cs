@@ -36,16 +36,40 @@ namespace SphereOS.Shell
 
         internal static void PrintTask(string task)
         {
-            Print(ConsoleColor.Gray, "[SphereOS] ");
+            Print(ConsoleColor.Cyan, "SphereOS - ");
             PrintLine(ConsoleColor.White, task);
         }
 
+        internal static void PrintWarning(string warning)
+        {
+            Print(ConsoleColor.Cyan, "SphereOS - ");
+            Print(ConsoleColor.Yellow, "Warning - ");
+            PrintLine(ConsoleColor.White, warning);
+        }
+
+        private static void SetCursorPosWrap(int left, int top)
+        {
+            if (left < 0)
+            {
+                left = Console.WindowWidth - 1;
+                top--;
+            }
+            if (left >= Console.WindowWidth)
+            {
+                left = 0;
+                top++;
+            }
+
+            Console.SetCursorPosition(left, top);
+        }
+
         /// <summary>
-        /// Read a password from the console.
+        /// Read line extended.
         /// </summary>
         /// <param name="cancelKey">An optional key that will cancel the function and return null.</param>
-        /// <returns>The password entered, or null if cancelKey was pressed.</returns>
-        internal static string ReadPassword(Cosmos.System.ConsoleKeyEx? cancelKey = null)
+        /// <param name="mask">Whether to mask the password.</param>
+        /// <returns>The text entered, or null if cancelKey was pressed.</returns>
+        internal static string ReadLineEx(Cosmos.System.ConsoleKeyEx? cancelKey = null, bool mask = false)
         {
             var chars = new List<char>(32);
             Cosmos.System.KeyEvent current;
@@ -66,7 +90,7 @@ namespace SphereOS.Shell
                     {
                         int curCharTemp = Console.GetCursorPosition().Left;
                         chars.RemoveAt(currentCount - 1);
-                        Console.SetCursorPosition(Console.GetCursorPosition().Left - 1, Console.GetCursorPosition().Top);
+                        SetCursorPosWrap(Console.GetCursorPosition().Left - 1, Console.GetCursorPosition().Top);
 
                         for (int x = currentCount - 1; x < chars.Count; x++)
                         {
@@ -75,7 +99,7 @@ namespace SphereOS.Shell
 
                         Console.Write(' ');
 
-                        Console.SetCursorPosition(curCharTemp - 1, Console.GetCursorPosition().Top);
+                        SetCursorPosWrap(curCharTemp - 1, Console.GetCursorPosition().Top);
 
                         currentCount--;
                     }
@@ -85,7 +109,7 @@ namespace SphereOS.Shell
                 {
                     if (currentCount > 0)
                     {
-                        Console.SetCursorPosition(Console.GetCursorPosition().Left - 1, Console.GetCursorPosition().Top);
+                        SetCursorPosWrap(Console.GetCursorPosition().Left - 1, Console.GetCursorPosition().Top);
                         currentCount--;
                     }
                     continue;
@@ -94,7 +118,7 @@ namespace SphereOS.Shell
                 {
                     if (currentCount < chars.Count)
                     {
-                        Console.SetCursorPosition(Console.GetCursorPosition().Left + 1, Console.GetCursorPosition().Top);
+                        SetCursorPosWrap(Console.GetCursorPosition().Left + 1, Console.GetCursorPosition().Top);
                         currentCount++;
                     }
                     continue;
@@ -108,7 +132,7 @@ namespace SphereOS.Shell
                 if (currentCount == chars.Count)
                 {
                     chars.Add(current.KeyChar);
-                    Console.Write('*');
+                    Console.Write(mask ? '*' : chars[chars.Count - 1]);
                     currentCount++;
                 }
                 else
@@ -129,10 +153,10 @@ namespace SphereOS.Shell
 
                     for (int x = currentCount; x < chars.Count; x++)
                     {
-                        Console.Write('*');
+                        Console.Write(mask ? '*' : chars[x]);
                     }
 
-                    Console.SetCursorPosition(Console.GetCursorPosition().Left - (chars.Count - currentCount) - 1, Console.GetCursorPosition().Top);
+                    SetCursorPosWrap(Console.GetCursorPosition().Left - (chars.Count - currentCount) - 1, Console.GetCursorPosition().Top);
                     currentCount++;
                 }
             }
@@ -145,12 +169,14 @@ namespace SphereOS.Shell
         internal static void PrintTable(List<List<string>> columns, ConsoleColor color = ConsoleColor.White, ConsoleColor headerColour = ConsoleColor.White, int margin = 2)
         {
             int[] longestWidths = new int[columns.Count];
+            int tallestColumn = 0;
             for (int i = 0; i < columns.Count; i++)
             {
                 for (int j = 0; j < columns[i].Count; j++)
                 {
                     longestWidths[i] = Math.Max(longestWidths[i], columns[i][j].Length);
                 }
+                tallestColumn = Math.Max(tallestColumn, columns[i].Count);
             }
             int rowCount = 0;
             foreach (var column in columns)
@@ -160,10 +186,17 @@ namespace SphereOS.Shell
             string[] rows = new string[rowCount];
             for (int i = 0; i < columns.Count; i++)
             {
-                for (int j = 0; j < columns[i].Count; j++)
+                for (int j = 0; j < tallestColumn; j++)
                 {
-                    string cell = columns[i][j];
-                    rows[j] += cell + new string(' ', longestWidths[i] - cell.Length + margin);
+                    if (j >= columns[i].Count)
+                    {
+                        rows[j] += new string(' ', longestWidths[i] + margin);
+                    }
+                    else
+                    {
+                        string cell = columns[i][j];
+                        rows[j] += cell + new string(' ', Math.Max(0, longestWidths[i] - cell.Length + margin));
+                    }
                 }
             }
             for (int i = 0; i < rows.Length; i++)

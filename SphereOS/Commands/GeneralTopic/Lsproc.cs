@@ -9,7 +9,7 @@ namespace SphereOS.Commands.GeneralTopic
     {
         public Lsproc() : base("lsproc")
         {
-            Description = "List all processes.";
+            Description = "Show a list of processes.";
 
             Topic = "general";
         }

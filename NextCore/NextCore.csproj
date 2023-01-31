@@ -19,12 +19,24 @@
         <PxeInterface>192.168.0.8</PxeInterface>
         <DebugEnabled>False</DebugEnabled>
         <VMWareEdition>Workstation</VMWareEdition>
+        <CompileVBEMultiboot>True</CompileVBEMultiboot>
+        <VBEResolution>1280x720x32</VBEResolution>
+        <ExtractMapFile>False</ExtractMapFile>
+        <RemoveBootDebugOutput>True</RemoveBootDebugOutput>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\NextCore.Graphics\NextCore.Graphics.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PlugsReference Include="..\NextCore.Plugs\bin\Debug\net6.0\NextCore.Plugs.dll" />
     </ItemGroup>
 
 </Project>

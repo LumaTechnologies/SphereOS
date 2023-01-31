@@ -10,6 +10,8 @@ namespace SphereOS.Commands.UsersTopic
         {
             Description = "Set or remove a user as an admin.";
 
+            Usage = "<true/false> <user>";
+
             Topic = "users";
         }
 
@@ -41,7 +43,7 @@ namespace SphereOS.Commands.UsersTopic
 
             if (args.Length != 3)
             {
-                Util.PrintLine(ConsoleColor.Red, "Invalid usage.\nUsage: admin <true/false> <username>");
+                Util.PrintLine(ConsoleColor.Red, "Invalid usage.\nUsage: admin <true/false> <user>");
                 return ReturnCode.Invalid;
             }
 
@@ -59,7 +61,7 @@ namespace SphereOS.Commands.UsersTopic
                     case "false":
                         if (!ValidateAdminRemoval(user))
                         {
-                            Util.PrintLine(ConsoleColor.Red, "There must be at least one admin user.");
+                            Util.PrintLine(ConsoleColor.Red, "There must be at least one admin user on this PC.");
                             return ReturnCode.Invalid;
                         }
                         UserManager.SetAdmin(username, false);

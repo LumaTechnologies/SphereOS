@@ -8,7 +8,7 @@ namespace SphereOS.Commands.GeneralTopic
     {
         public Logs() : base("logs")
         {
-            Description = "Show recent log messages.";
+            Description = "Show a list of recent log messages.";
 
             Topic = "general";
         }

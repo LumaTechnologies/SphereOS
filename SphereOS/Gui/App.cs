@@ -5,9 +5,9 @@ using System.Drawing;
 
 namespace SphereOS.Gui
 {
-    internal class App
+    internal class AppMetadata
     {
-        public App(string name, Func<Process> createProcess, Bitmap icon, Color themeColor)
+        public AppMetadata(string name, Func<Process> createProcess, Bitmap icon, Color themeColor)
         {
             Name = name;
             CreateProcess = createProcess;

@@ -1,4 +1,5 @@
 ﻿using SphereOS.Logging;
+using SphereOS.Shell;
 using System;
 using System.Collections.Generic;
 
@@ -36,6 +37,11 @@ namespace SphereOS.Users
         /// The hashed password of the user.
         /// </summary>
         internal string Password { get; set; }
+
+        /// <summary>
+        /// If the user must reset their password on the next logon.
+        /// </summary>
+        internal bool PasswordExpired { get; set; } = false;
 
         /// <summary>
         /// Unread messages to this user.
@@ -85,6 +91,7 @@ namespace SphereOS.Users
             if (Authenticate(currentPassword))
             {
                 Password = UserManager.HashPasswordSha256(newPassword);
+                PasswordExpired = false;
             }
             else
             {
@@ -121,11 +128,24 @@ namespace SphereOS.Users
 
                     FailedAttempts = 0;
 
-                    Log.Info("User", $"{Username} was locked out due to too many incorrect attempts.");
+                    Log.Info("User", $"{Username} was locked out of the PC due to too many incorrect password attempts.");
                 }
             }
 
             return valid;
+        }
+
+        /// <summary>
+        /// Reset the password via the console.
+        /// </summary>
+        internal void ResetPasswordConsole(string currentPassword)
+        {
+            Util.Print(ConsoleColor.Cyan, "New password: ");
+            string newPassword = Util.ReadLineEx(cancelKey: null, mask: true);
+
+            Kernel.CurrentUser.ChangePassword(currentPassword, newPassword);
+            UserManager.Flush();
+            Util.PrintLine(ConsoleColor.Green, "Password successfully changed.\n");
         }
     }
 }

@@ -84,7 +84,7 @@ namespace SphereOS.Gui.ShellComponents
             miniCalendarOpen = !miniCalendarOpen;
             if (miniCalendarOpen)
             {
-                miniCalendar = new Calendar(window, window.Width - 256, window.Height, 256, 256);
+                miniCalendar = new Calendar(window, window.Width - 256, window.Height, 256, 288);
                 miniCalendar.Background = Color.FromArgb(56, 56, 71);
                 miniCalendar.TodayBackground = Color.FromArgb(77, 77, 91);
                 miniCalendar.Foreground = Color.White;

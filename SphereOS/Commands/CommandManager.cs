@@ -11,7 +11,7 @@ namespace SphereOS.Commands
         /// <summary>
         /// The list of commands available on the system.
         /// </summary>
-        internal static List<Command> commands = new();
+        internal static List<Command> Commands = new();
 
         /// <summary>
         /// Find a command by its name.
@@ -20,7 +20,7 @@ namespace SphereOS.Commands
         /// <returns>The command, if it was found; otherwise, null.</returns>
         internal static Command GetCommand(string name)
         {
-            foreach (Command command in commands)
+            foreach (Command command in Commands)
             {
                 if (command.Name == name)
                 {
@@ -36,7 +36,7 @@ namespace SphereOS.Commands
         /// <param name="command">The command to register.</param>
         private static void RegisterCommand(Command command)
         {
-            commands.Add(command);
+            Commands.Add(command);
         }
 
         /// <summary>
@@ -44,27 +44,38 @@ namespace SphereOS.Commands
         /// </summary>
         internal static void RegisterCommands()
         {
-            /* Console */
+            /* General (formerly Console) */
             RegisterCommand(new GeneralTopic.About());
+            RegisterCommand(new GeneralTopic.Asyscfg());
             RegisterCommand(new GeneralTopic.Clear());
+            RegisterCommand(new GeneralTopic.Crash());
+            RegisterCommand(new GeneralTopic.Echo());
             RegisterCommand(new GeneralTopic.Help());
+            RegisterCommand(new GeneralTopic.License());
             RegisterCommand(new GeneralTopic.Logs());
             RegisterCommand(new GeneralTopic.Lsproc());
+            RegisterCommand(new GeneralTopic.Name());
+            RegisterCommand(new GeneralTopic.Pci());
             RegisterCommand(new GeneralTopic.Rs());
             RegisterCommand(new GeneralTopic.Sysinfo());
             RegisterCommand(new GeneralTopic.Wd());
 
             /* Files */
+            RegisterCommand(new FilesTopic.Al());
+            RegisterCommand(new FilesTopic.Audit());
             RegisterCommand(new FilesTopic.Cat());
             RegisterCommand(new FilesTopic.Cd());
+            RegisterCommand(new FilesTopic.Cp());
             RegisterCommand(new FilesTopic.Del());
             RegisterCommand(new FilesTopic.Edit());
+            RegisterCommand(new FilesTopic.Ff());
             RegisterCommand(new FilesTopic.Fsinfo());
             RegisterCommand(new FilesTopic.Ls());
             RegisterCommand(new FilesTopic.Mkdir());
             RegisterCommand(new FilesTopic.Mkhome());
-            RegisterCommand(new FilesTopic.Paint());
+            RegisterCommand(new FilesTopic.Mv());
             RegisterCommand(new FilesTopic.Rmdir());
+            RegisterCommand(new FilesTopic.Touch());
             //RegisterCommand(new FilesTopic.Perm());
             //RegisterCommand(new FilesTopic.Setperm());
 
@@ -72,7 +83,7 @@ namespace SphereOS.Commands
             RegisterCommand(new GamesTopic.Hangman());
 
             /* Network */
-            RegisterCommand(new NetworkTopic.Cloudchat());
+            RegisterCommand(new NetworkTopic.Ip());
             RegisterCommand(new NetworkTopic.Ping());
             RegisterCommand(new NetworkTopic.Resolve());
             //RegisterCommand(new NetworkTopic.Httpserver());
@@ -90,12 +101,15 @@ namespace SphereOS.Commands
             RegisterCommand(new UsersTopic.Admin());
             RegisterCommand(new UsersTopic.Broadcast());
             RegisterCommand(new UsersTopic.Deluser());
+            RegisterCommand(new UsersTopic.Expire());
             RegisterCommand(new UsersTopic.Lock());
             RegisterCommand(new UsersTopic.Logout());
             RegisterCommand(new UsersTopic.Lsuser());
             RegisterCommand(new UsersTopic.Pass());
+            RegisterCommand(new UsersTopic.Send());
+            RegisterCommand(new UsersTopic.Su());
 
-            Log.Info("CommandManager", $"{commands.Count} commands were registered.");
+            Log.Info("CommandManager", $"{Commands.Count} commands were registered.");
         }
     }
 }

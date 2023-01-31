@@ -1,4 +1,4 @@
-﻿using SphereOS.Apps;
+﻿using SphereOS.ConsoleApps;
 using SphereOS.Core;
 using SphereOS.Shell;
 using System;
@@ -11,6 +11,8 @@ namespace SphereOS.Commands.FilesTopic
         public Edit() : base("edit")
         {
             Description = "Edit a file.";
+
+            Usage = "<file>";
 
             Topic = "files";
         }
@@ -25,11 +27,11 @@ namespace SphereOS.Commands.FilesTopic
 
             string editPath = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
-            if (!FileSecurity.CanAccess(Kernel.CurrentUser, editPath))
+            /*if (!FileSecurity.CanAccess(Kernel.CurrentUser, editPath))
             {
                 Util.PrintLine(ConsoleColor.Red, "You do not have permission to access this file.");
                 return ReturnCode.Unauthorised;
-            }
+            }*/
 
             TextEditor textEditor = new TextEditor(editPath);
             textEditor.Start();

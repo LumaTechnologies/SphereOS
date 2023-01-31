@@ -11,8 +11,9 @@
 
         internal override void Run()
         {
-            if (ticks % 10 == 0)
+            if (ticks == 5)
             {
+                ticks = 0;
                 Cosmos.Core.Memory.Heap.Collect();
                 ProcessManager.Sweep();
             }

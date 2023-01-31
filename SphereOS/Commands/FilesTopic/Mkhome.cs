@@ -11,6 +11,8 @@ namespace SphereOS.Commands.FilesTopic
         {
             Description = "Create a home directory for a user.";
 
+            Usage = "<user>";
+
             Topic = "files";
         }
 

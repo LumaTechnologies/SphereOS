@@ -30,7 +30,7 @@ namespace SphereOS.Commands.GeneralTopic
                 longestAsciiLine = Math.Max(longestAsciiLine, line.Length);
             }
 
-            Util.PrintLine(ConsoleColor.White, asciiArt);
+            Util.PrintLine(ConsoleColor.Cyan, asciiArt);
 
             (int Left, int Top) endingPos = Console.GetCursorPosition();
             (int Left, int Top) startingPos = (endingPos.Left, endingPos.Top - asciiLines);
@@ -38,13 +38,13 @@ namespace SphereOS.Commands.GeneralTopic
 
             var y = infoStartingPos.Top;
             Console.SetCursorPosition(infoStartingPos.Left, y);
-            Util.Print(ConsoleColor.Green, "SphereOS");
+            Util.Print(ConsoleColor.White, "SphereOS");
             y += 2;
 
             foreach (var item in items)
             {
                 Console.SetCursorPosition(infoStartingPos.Left, y);
-                Util.Print(ConsoleColor.Cyan, item.Title + new string(' ', itemTitleWidth - item.Title.Length));
+                Util.Print(ConsoleColor.Magenta, item.Title + new string(' ', itemTitleWidth - item.Title.Length));
                 Util.Print(ConsoleColor.White, item.Value);
                 y++;
             }
@@ -61,10 +61,10 @@ namespace SphereOS.Commands.GeneralTopic
 
             List<(string Title, string Value)> items = new()
             {
-                ("OS", $"SphereOS {Kernel.Version}"),
+                ("OS", $"SphereOS - {Kernel.Version}"),
 
-                ("RAM", string.Format(
-                    "{0:d1} MB / {1} MB ({2:d1}%) memory used, {3} MB free",
+                ("MEM", string.Format(
+                    "{0:d1} MB / {1} MB ({2:d1}%) ({3} MB free)",
                     memUsed,
                     memTotal,
                     memPercentUsed,

@@ -1,7 +1,7 @@
 ﻿/*
 BSD 3-Clause License
 
-Copyright (c) 2022, CosmosOS, COSMOS Project
+Copyright (c) 2023, CosmosOS, COSMOS Project
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -464,19 +464,19 @@ namespace SphereOS.Core.Drivers
         /// <summary>
         /// Index port.
         /// </summary>
-        private IOPort IndexPort;
+        private readonly ushort IndexPort;
         /// <summary>
         /// Value port.
         /// </summary>
-        private IOPort ValuePort;
+        private readonly ushort ValuePort;
         /// <summary>
         /// BIOS port.
         /// </summary>
-        private IOPort BiosPort;
+        private ushort BiosPort;
         /// <summary>
         /// IRQ port.
         /// </summary>
-        private IOPort IRQPort;
+        private ushort IRQPort;
 
         /// <summary>
         /// Video memory block.
@@ -519,10 +519,10 @@ namespace SphereOS.Core.Drivers
             device = (PCI.GetDevice(VendorID.VMWare, DeviceID.SVGAIIAdapter));
             device.EnableMemory(true);
             uint basePort = device.BaseAddressBar[0].BaseAddress;
-            IndexPort = new IOPort((ushort)(basePort + (uint)IOPortOffset.Index));
-            ValuePort = new IOPort((ushort)(basePort + (uint)IOPortOffset.Value));
-            BiosPort = new IOPort((ushort)(basePort + (uint)IOPortOffset.Bios));
-            IRQPort = new IOPort((ushort)(basePort + (uint)IOPortOffset.IRQ));
+            IndexPort = (ushort)(basePort + (uint)IOPortOffset.Index);
+            ValuePort = (ushort)(basePort + (uint)IOPortOffset.Value);
+            BiosPort = (ushort)(basePort + (uint)IOPortOffset.Bios);
+            IRQPort = (ushort)(basePort + (uint)IOPortOffset.IRQ);
 
             WriteRegister(Register.ID, (uint)ID.V2);
             if (ReadRegister(Register.ID) != (uint)ID.V2)
@@ -578,8 +578,8 @@ namespace SphereOS.Core.Drivers
         /// <param name="value">A value.</param>
         protected void WriteRegister(Register register, uint value)
         {
-            IndexPort.DWord = (uint)register;
-            ValuePort.DWord = value;
+            IOPort.Write32(IndexPort, (uint)register);
+            IOPort.Write32(ValuePort, value);
         }
 
         /// <summary>
@@ -589,8 +589,8 @@ namespace SphereOS.Core.Drivers
         /// <returns>uint value.</returns>
         protected uint ReadRegister(Register register)
         {
-            IndexPort.DWord = (uint)register;
-            return ValuePort.DWord;
+            IOPort.Write32(IndexPort, (uint)register);
+            return IOPort.Read32(ValuePort);
         }
 
         /// <summary>

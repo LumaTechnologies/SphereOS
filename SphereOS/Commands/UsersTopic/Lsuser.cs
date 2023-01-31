@@ -8,7 +8,7 @@ namespace SphereOS.Commands.UsersTopic
     {
         public Lsuser() : base("lsusr")
         {
-            Description = "List all users on the system.";
+            Description = "List all users on this PC.";
 
             Topic = "users";
         }
@@ -21,6 +21,10 @@ namespace SphereOS.Commands.UsersTopic
                 if (user.Admin)
                 {
                     Util.Print(ConsoleColor.Cyan, " (admin)");
+                }
+                if (user.PasswordExpired)
+                {
+                    Util.Print(ConsoleColor.Yellow, " (password expired)");
                 }
                 if (user.Messages.Count > 0)
                 {

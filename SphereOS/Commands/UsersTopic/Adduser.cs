@@ -10,6 +10,8 @@ namespace SphereOS.Commands.UsersTopic
         {
             Description = "Add a new user.";
 
+            Usage = "<user>";
+
             Topic = "users";
         }
 
@@ -35,7 +37,7 @@ namespace SphereOS.Commands.UsersTopic
             }
 
             Util.Print(ConsoleColor.Cyan, $"New password for {username}: ");
-            var newPassword = Util.ReadPassword();
+            var newPassword = Util.ReadLineEx(cancelKey: null, mask: true);
 
             User user = UserManager.AddUser(username, newPassword, admin: false);
 

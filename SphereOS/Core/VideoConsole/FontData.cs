@@ -1,4 +1,4 @@
-﻿namespace SphereOS.VideoConsole
+﻿/*namespace SphereOS.VideoConsole
 {
 	internal static class FontData
 	{
@@ -546,4 +546,4 @@
 			null
 		};
 	}
-}
+}*/

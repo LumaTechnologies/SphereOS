@@ -32,20 +32,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Core\CorePlugs\ConsoleShim.cs" />
-      <Compile Remove="Core\VideoConsole\FontData.cs" />
-      <Compile Remove="Core\VideoConsole\VideoConsole.cs" />
+      <Compile Remove="Gui\Apps\CodeStudio\CodeStudio.cs" />
+      <Compile Remove="Gui\Apps\CodeStudio\Ide.cs" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Apps\Hangman\WordList.txt" />
-      <None Remove="Apps\Paint\Images\brush.bmp" />
-      <None Remove="Apps\Paint\Images\cursor.bmp" />
-      <None Remove="Apps\Paint\Images\exit.bmp" />
-      <None Remove="Apps\Paint\Images\pencil.bmp" />
-      <None Remove="Apps\Paint\Images\save.bmp" />
-      <None Remove="Apps\Paint\Images\selected.bmp" />
-      <None Remove="Apps\Paint\Images\text.bmp" />
       <None Remove="Gui\Resources\AppIcons\Calculator.bmp" />
       <None Remove="Gui\Resources\AppIcons\Calendar.bmp" />
       <None Remove="Gui\Resources\AppIcons\Clock.bmp" />
@@ -94,20 +85,16 @@
       <None Remove="Gui\Resources\Sounds\Login.wav" />
       <None Remove="Gui\Resources\Start.bmp" />
       <None Remove="Gui\Resources\StartMenu\User.bmp" />
+      <None Remove="Gui\Resources\SwitchKnob.bmp" />
+      <None Remove="Gui\Resources\SwitchOff.bmp" />
+      <None Remove="Gui\Resources\SwitchOn.bmp" />
       <None Remove="Gui\Resources\TitlebarBackground.bmp" />
       <None Remove="Gui\Resources\WaitCursor.bmp" />
       <None Remove="Gui\Resources\Wallpaper_1280_800.bmp" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Apps\Hangman\WordList.txt" />
-      <EmbeddedResource Include="Apps\Paint\Images\brush.bmp" />
-      <EmbeddedResource Include="Apps\Paint\Images\cursor.bmp" />
-      <EmbeddedResource Include="Apps\Paint\Images\exit.bmp" />
-      <EmbeddedResource Include="Apps\Paint\Images\pencil.bmp" />
-      <EmbeddedResource Include="Apps\Paint\Images\save.bmp" />
-      <EmbeddedResource Include="Apps\Paint\Images\selected.bmp" />
-      <EmbeddedResource Include="Apps\Paint\Images\text.bmp" />
+      <EmbeddedResource Include="ConsoleApps\Hangman\WordList.txt" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Calculator.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Calendar.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Clock.bmp" />
@@ -156,21 +143,31 @@
       <EmbeddedResource Include="Gui\Resources\Sounds\Login.wav" />
       <EmbeddedResource Include="Gui\Resources\Start.bmp" />
       <EmbeddedResource Include="Gui\Resources\StartMenu\User.bmp" />
+      <EmbeddedResource Include="Gui\Resources\SwitchKnob.bmp" />
+      <EmbeddedResource Include="Gui\Resources\SwitchOff.bmp" />
+      <EmbeddedResource Include="Gui\Resources\SwitchOn.bmp" />
       <EmbeddedResource Include="Gui\Resources\TitlebarBackground.bmp" />
       <EmbeddedResource Include="Gui\Resources\WaitCursor.bmp" />
       <EmbeddedResource Include="Gui\Resources\Wallpaper_1280_800.bmp" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="Core\CorePlugs\ConsoleShim.cs" />
+      <None Include="Core\Shims\ConsoleShim.cs" />
+      <None Include="Core\Drivers\VMWareSVGAII.cs" />
       <None Include="Core\VideoConsole\FontData.cs" />
       <None Include="Core\VideoConsole\VideoConsole.cs" />
+      <None Include="Gui\Apps\CodeStudio\CodeStudio.cs" />
+      <None Include="Gui\Apps\CodeStudio\Ide.cs" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PlugsReference Include="$(MSBuildProjectDirectory)\..\SphereOS.Plugs\bin\Debug\net6.0\SphereOS.Plugs.dll"></PlugsReference>
     </ItemGroup>
 
 </Project>

@@ -11,7 +11,9 @@ namespace SphereOS.Commands.NetworkTopic
     {
         public Ping() : base("ping")
         {
-            Description = "Ping an IP address.";
+            Description = "Ping a server.";
+
+            Usage = "<ip>";
 
             Topic = "network";
         }
@@ -57,7 +59,7 @@ namespace SphereOS.Commands.NetworkTopic
             {
                 Console.WriteLine();
 
-                Util.PrintLine(ConsoleColor.Cyan, $"Pinging {address.ToString()}:");
+                Util.PrintLine(ConsoleColor.Cyan, $"Pinging {address.ToString()} (Hold CTRL+C to stop):");
 
                 EndPoint endpoint = new EndPoint(Address.Zero, 0);
 

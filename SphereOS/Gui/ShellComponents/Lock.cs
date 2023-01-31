@@ -41,7 +41,7 @@ namespace SphereOS.Gui.ShellComponents
             internal static Bitmap Icon_ShutDown = new Bitmap(_iconBytes_ShutDown);
         }
 
-        private Color borderColor = Color.FromArgb(0, 70, 138);
+        private Color borderColor = Color.FromArgb(0, 0, 0);
         private int borderHeight = 128;
 
         private int gradientHeight = 4;
@@ -50,7 +50,7 @@ namespace SphereOS.Gui.ShellComponents
 
         private void RenderBackground(string errorMessage = null)
         {
-            window.Clear(Color.CornflowerBlue);
+            window.Clear(Color.FromArgb(38, 38, 38));
 
             window.DrawImage(Images.Image_Background.ResizeWidthKeepRatio((uint)(window.Width / 2)), 0, borderHeight + gradientHeight);
 
@@ -125,11 +125,11 @@ namespace SphereOS.Gui.ShellComponents
             wm.AddWindow(passwordBox);
 
             Table usersTable = new Table(window, (int)((window.Width / 4) - (160 / 2)), borderHeight + (window.Width / 4), 160, 28 * Math.Min(4, UserManager.Users.Count));
-            usersTable.Background = Color.CornflowerBlue;
-            usersTable.Border = Color.CornflowerBlue;
-            usersTable.Foreground = Color.FromArgb(195, 216, 253);
+            usersTable.Background = Color.FromArgb(38, 38, 38);
+            usersTable.Border = Color.FromArgb(38, 38, 38);
+            usersTable.Foreground = Color.White;
             usersTable.CellHeight = 28;
-            usersTable.SelectedBackground = Color.FromArgb(127, 174, 255);
+            usersTable.SelectedBackground = Color.FromArgb(90, 90, 90);
             usersTable.SelectedBorder = Color.White;
             usersTable.SelectedForeground = Color.White;
             foreach (User user in UserManager.Users)

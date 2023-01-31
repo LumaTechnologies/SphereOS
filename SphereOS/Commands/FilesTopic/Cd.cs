@@ -1,4 +1,5 @@
-﻿using SphereOS.Shell;
+﻿using SphereOS.Core;
+using SphereOS.Shell;
 using System;
 using System.IO;
 
@@ -9,6 +10,8 @@ namespace SphereOS.Commands.FilesTopic
         public Cd() : base("cd")
         {
             Description = "Change the working directory.";
+
+            Usage = "<dir>";
 
             Topic = "files";
         }
@@ -23,6 +26,11 @@ namespace SphereOS.Commands.FilesTopic
 
             if (args[1] == "..")
             {
+                string wd = Shell.Shell.CurrentShell.WorkingDir;
+                if (Directory.GetDirectoryRoot(wd) == wd)
+                {
+                    return ReturnCode.Failure;
+                }
                 Shell.Shell.CurrentShell.WorkingDir = Directory.GetParent(Shell.Shell.CurrentShell.WorkingDir).FullName;
             }
             else if (args[1] == "~")
@@ -32,7 +40,7 @@ namespace SphereOS.Commands.FilesTopic
             else
             {
                 var newDir = Path.Combine(Shell.Shell.CurrentShell.WorkingDir, args[1]);
-                if (Directory.Exists(newDir))
+                if (Directory.Exists(newDir) && FileSecurity.CanAccess(Kernel.CurrentUser, newDir))
                 {
                     Shell.Shell.CurrentShell.WorkingDir = Path.GetFullPath(newDir);
                 }

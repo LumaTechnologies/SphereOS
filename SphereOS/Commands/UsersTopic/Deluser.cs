@@ -1,6 +1,7 @@
 ﻿using SphereOS.Shell;
 using SphereOS.Users;
 using System;
+using System.IO;
 
 namespace SphereOS.Commands.UsersTopic
 {
@@ -9,6 +10,8 @@ namespace SphereOS.Commands.UsersTopic
         public Deluser() : base("deluser")
         {
             Description = "Delete a user.";
+
+            Usage = "<user>";
 
             Topic = "users";
         }
@@ -38,6 +41,13 @@ namespace SphereOS.Commands.UsersTopic
             if (UserManager.DeleteUser(username))
             {
                 Util.PrintLine(ConsoleColor.Green, $"Successfully deleted user {username}.");
+
+                string home = @$"0:\users\{username}";
+                if (Directory.Exists(home))
+                {
+                    Util.PrintWarning($"This user still has a home directory at '{home}'.\nYou may want to delete it.");
+                }
+
                 return ReturnCode.Success;
             }
             else

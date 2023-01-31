@@ -16,7 +16,7 @@ namespace SphereOS.Commands.TimeTopic
         internal override ReturnCode Execute(string[] args)
         {
             Util.Print(ConsoleColor.Gray, "[!]");
-            Util.PrintLine(ConsoleColor.White, " Tip: Press ESC to exit the clock.");
+            Util.PrintLine(ConsoleColor.White, " Press ESC to exit the clock.");
             Util.PrintLine(ConsoleColor.Cyan, "Enter a message to display (optional): ");
             var message = Console.ReadLine();
 

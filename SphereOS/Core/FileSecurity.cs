@@ -13,6 +13,10 @@ namespace SphereOS.Core
 
             string sanitised = PathSanitiser.SanitisePath(path);
 
+            if (sanitised.StartsWith(@"0:\etc\") || sanitised == @"0:\etc")
+                return false;
+
+            // Legacy file
             if (sanitised == @"0:\users.ini")
                 return false;
 

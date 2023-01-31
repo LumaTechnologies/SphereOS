@@ -7,7 +7,7 @@ namespace SphereOS.Shell
     {
         internal static void ChooseInterface()
         {
-            Util.PrintTask("Which interface would you like to use?");
+            Util.PrintTask("Select an interface.");
             Util.PrintLine(ConsoleColor.Cyan, "[1] Graphical");
             Util.PrintLine(ConsoleColor.Cyan, "[2] Console");
 

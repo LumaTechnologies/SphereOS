@@ -6,7 +6,7 @@ namespace SphereOS.Commands.GeneralTopic
     {
         public Clear() : base("clear")
         {
-            Description = "Clear the screen.";
+            Description = "Clear the console.";
 
             Topic = "general";
         }

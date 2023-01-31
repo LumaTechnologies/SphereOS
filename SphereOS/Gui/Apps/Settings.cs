@@ -75,7 +75,7 @@ namespace SphereOS.Gui.Apps
             appearance.DrawString("Appearance Settings", Color.DarkBlue, 12, 12);
             wm.AddWindow(appearance);
 
-            CheckBox leftStartButton = new CheckBox(appearance, 12, 40, 244, 16);
+            Switch leftStartButton = new Switch(appearance, 12, 40, 244, 16);
             leftStartButton.Text = "Left-hand start button";
             leftStartButton.Checked = settingsService.LeftHandStartButton;
             leftStartButton.CheckBoxChanged = LeftStartButtonChanged;
@@ -95,14 +95,22 @@ namespace SphereOS.Gui.Apps
             dateTime.DrawString("Date & Time Settings", Color.DarkBlue, 12, 12);
             wm.AddWindow(dateTime);
 
-            UILib.Calendar calendar = new UILib.Calendar(dateTime, 12, 40, dateTime.Width - 24, 192);
-            wm.AddWindow(calendar);
-
-            CheckBox twelveHourClock = new CheckBox(dateTime, 12, 244, 244, 16);
+            Switch twelveHourClock = new Switch(dateTime, 12, 40, 244, 16);
             twelveHourClock.Text = "12-hour clock";
             twelveHourClock.Checked = settingsService.TwelveHourClock;
             twelveHourClock.CheckBoxChanged = TwelveHourClockChanged;
             wm.AddWindow(twelveHourClock);
+
+            AppMetadata calendarApp = AppManager.GetApp("Calendar");
+            Button openCalendar = new Button(dateTime, 12, 68, 160, 20);
+            openCalendar.Text = "Open Calendar";
+            openCalendar.Image = calendarApp.Icon.Resize(20, 20);
+            openCalendar.ImageLocation = Button.ButtonImageLocation.Left;
+            openCalendar.OnClick = (int x, int y) =>
+            {
+                calendarApp.Start(wm);
+            };
+            wm.AddWindow(openCalendar);
 
             wm.Update(window);
         }
@@ -124,7 +132,7 @@ namespace SphereOS.Gui.Apps
             for (int i = 0; i < wm.AvailableModes.Count; i++)
             {
                 Mode mode = wm.AvailableModes[i];
-                resolutionsTable.Cells.Add(new TableCell($"{mode.Columns}x{mode.Rows}"));
+                resolutionsTable.Cells.Add(new TableCell($"{mode.Width}x{mode.Height}"));
                 if (mode.Equals(settingsService.Mode))
                 {
                     resolutionsTable.SelectedCellIndex = i;

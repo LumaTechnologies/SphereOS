@@ -67,7 +67,7 @@ namespace SphereOS.Gui.Apps
             cal.Year = now.Year;
             cal.Month = now.Month;
 
-            /*prevButton = new Button(window, 8, 8, 24, 24);
+            prevButton = new Button(window, 8, 8, 24, 24);
             prevButton.Text = "<";
             prevButton.OnClick = PrevClicked;
             wm.AddWindow(prevButton);
@@ -75,7 +75,7 @@ namespace SphereOS.Gui.Apps
             nextButton = new Button(window, 40, 8, 24, 24);
             nextButton.Text = ">";
             nextButton.OnClick = NextClicked;
-            wm.AddWindow(nextButton);*/
+            wm.AddWindow(nextButton);
 
             wm.Update(window);
         }

@@ -7,7 +7,7 @@ namespace SphereOS.Commands.UsersTopic
     {
         public Lock() : base("lock")
         {
-            Description = "Lock your PC.";
+            Description = "Lock this PC.";
 
             Topic = "users";
         }
@@ -21,13 +21,13 @@ namespace SphereOS.Commands.UsersTopic
                 {
                     Console.Clear();
 
-                    Util.Print(ConsoleColor.Gray, "[SphereOS] ");
+                    Util.Print(ConsoleColor.Gray, "SphereOS - ");
                     Util.Print(ConsoleColor.Cyan, "This PC is locked.");
                     Util.PrintLine(ConsoleColor.Gray, " (ESC to switch users)");
 
                     Util.PrintLine(ConsoleColor.Cyan, $"Enter the password for {Kernel.CurrentUser.Username}: ");
 
-                    var password = Util.ReadPassword(cancelKey: Cosmos.System.ConsoleKeyEx.Escape);
+                    var password = Util.ReadLineEx(cancelKey: Cosmos.System.ConsoleKeyEx.Escape, mask: true);
                     if (password == null)
                     {
                         Kernel.CurrentUser = null;

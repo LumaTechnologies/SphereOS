@@ -34,11 +34,11 @@ namespace SphereOS.Logging
                     Util.Print(ConsoleColor.Red, "[Error]");
                     break;
                 default:
-                    Util.Print(ConsoleColor.Gray, "[Unknown]");
+                    Util.Print(ConsoleColor.Gray, "[LogEvent]");
                     break;
             }
             Console.Write(" ");
-            Util.Print(ConsoleColor.White, Date.ToString("HH:mm"));
+            Util.Print(ConsoleColor.White, Date.ToString("HH:mm:ss"));
             Util.PrintLine(ConsoleColor.White, $" - {Source}: {Message}");
         }
     }

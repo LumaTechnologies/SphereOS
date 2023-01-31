@@ -11,6 +11,8 @@ namespace SphereOS.Commands.FilesTopic
         {
             Description = "Delete a file.";
 
+            Usage = "<file>";
+
             Topic = "files";
         }
 

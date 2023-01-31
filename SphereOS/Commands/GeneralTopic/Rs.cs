@@ -13,6 +13,8 @@ namespace SphereOS.Commands.GeneralTopic
         {
             Description = "Run a script or the RiverScript REPL.";
 
+            Usage = "[file]";
+
             Topic = "general";
         }
 
@@ -22,6 +24,12 @@ namespace SphereOS.Commands.GeneralTopic
             {
                 Util.PrintLine(ConsoleColor.Red, "Invalid usage. Please either provide the name of the file to run, or to start the REPL, no arguments.");
                 return ReturnCode.Invalid;
+            }
+
+            if (SysCfg.RsAdminOnly && !Kernel.CurrentUser.Admin)
+            {
+                Util.PrintLine(ConsoleColor.Red, "System policy forbids non-admins from using RiverScript.");
+                return ReturnCode.Unauthorised;
             }
 
             if (args.Length == 2)

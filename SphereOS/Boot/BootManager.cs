@@ -12,11 +12,23 @@ namespace SphereOS.Boot
 {
     internal static class BootManager
     {
+        private static void Fail(string reason)
+        {
+            Log.Info("BootManager", $"Boot failed: {reason}");
+
+            Util.PrintTask("Error: Boot failed!");
+            Util.PrintLine(ConsoleColor.Red, reason);
+            Util.PrintLine(ConsoleColor.Cyan, "SphereOS has failed to boot. Press any key to reboot.");
+
+            System.Console.ReadKey(true);
+            Power.Shutdown(reboot: true);
+        }
+
         private static void Console()
         {
             System.Console.Clear();
 
-            Log.Info("BootManager", "Loading font...");
+            Log.Info("BootManager", "Loading VGA font...");
 
             PCScreenFont font = PCScreenFont.Default;
             VGAScreen.SetFont(font.CreateVGAFont(), font.Height);
@@ -24,20 +36,27 @@ namespace SphereOS.Boot
 
         private static void SysInit()
         {
+            Util.PrintTask("Initialising system...");
             ProcessManager.AddProcess(new Core.MemService()).TryStart();
 
-            Util.PrintTask("Initialising commands...");
             CommandManager.RegisterCommands();
 
-            FsManager.Initialise();
+            if (!FsManager.Initialise())
+            {
+                // Preprocessor option to allow FsManager failure.
+#if false
+                Util.PrintWarning("File system initialisation failed.");
+#else
+                Fail("FsManager initialisation failure.");
+#endif
+            }
 
-            Util.PrintTask("Initialising system...");
             UserManager.Load();
         }
 
         private static void Net()
         {
-            Util.PrintTask("Starting SphereOS network...");
+            Util.PrintTask("Starting network...");
             try
             {
                 if (Cosmos.HAL.NetworkDevice.Devices.Count == 0)

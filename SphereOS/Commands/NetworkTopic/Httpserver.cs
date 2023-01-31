@@ -8,7 +8,7 @@ namespace SphereOS.Commands.NetworkTopic
     {
         public Httpserver() : base("httpserver")
         {
-            Description = "Start a HTTP server.";
+            Description = "Start the SphereOS Web Server.";
 
             Topic = "network";
         }

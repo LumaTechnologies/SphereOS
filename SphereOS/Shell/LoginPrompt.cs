@@ -11,7 +11,13 @@ namespace SphereOS.Shell
         internal static bool PromptLogin()
         {
             Util.Print(ConsoleColor.Cyan, "Username: ");
+
             var username = Console.ReadLine().Trim();
+            if (username.Trim() == string.Empty)
+            {
+                return false;
+            }
+
             User user = UserManager.GetUser(username);
             if (user != null)
             {
@@ -32,13 +38,21 @@ namespace SphereOS.Shell
                     return false;
                 }
                 Util.Print(ConsoleColor.Cyan, $"Password for {username}: ");
-                var password = Util.ReadPassword();
+                var password = Util.ReadLineEx(cancelKey: null, mask: true);
                 if (user.Authenticate(password))
                 {
                     Kernel.CurrentUser = user;
                     Log.Info("LoginPrompt", $"{user.Username} logged on.");
                     Console.WriteLine();
-                    Util.PrintLine(ConsoleColor.Green, $"Welcome to SphereOS!");
+                    if (user.PasswordExpired)
+                    {
+                        Util.PrintLine(ConsoleColor.White, "Your password has expired. Please set a new password:");
+                        user.ResetPasswordConsole(password);
+                    }
+                    Util.PrintLine(ConsoleColor.Cyan, $"Welcome to SphereOS.");
+                    Util.Print(ConsoleColor.Gray, "[i] Type");
+                    Util.Print(ConsoleColor.White, " 'help' ");
+                    Util.PrintLine(ConsoleColor.Gray, "for help.");
                     return true;
                 }
                 else

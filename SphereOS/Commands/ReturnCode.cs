@@ -3,36 +3,36 @@
     /// <summary>
     /// Describes whether a command executed successfully.
     /// </summary>
-    internal enum ReturnCode
+    internal enum ReturnCode : byte
     {
         /// <summary>
         /// The command completed successfully.
         /// </summary>
-        Success,
-
-        /// <summary>
-        /// The command was provided with invalid arguments.
-        /// </summary>
-        Invalid,
-
-        /// <summary>
-        /// The specified file, directory, or device was not found.
-        /// </summary>
-        NotFound,
+        Success = 0,
 
         /// <summary>
         /// The command failed.
         /// </summary>
-        Failure,
+        Failure = 1,
+
+        /// <summary>
+        /// The specified file, directory, or device was not found.
+        /// </summary>
+        NotFound = 2,
+
+        /// <summary>
+        /// The command was provided with invalid arguments.
+        /// </summary>
+        Invalid = 3,
 
         /// <summary>
         /// The user is unauthorised to execute this command.
         /// </summary>
-        Unauthorised,
+        Unauthorised = 4,
 
         /// <summary>
         /// The command was aborted.
         /// </summary>
-        Aborted
+        Aborted = 5
     }
 }

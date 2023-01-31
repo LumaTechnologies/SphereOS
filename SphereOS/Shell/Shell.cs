@@ -1,6 +1,8 @@
 ﻿using SphereOS.Commands;
 using SphereOS.Core;
+using SphereOS.Users;
 using System;
+using System.IO;
 
 namespace SphereOS.Shell
 {
@@ -21,14 +23,15 @@ namespace SphereOS.Shell
 
         internal string WorkingDir { get; set; } = @"0:\";
 
-        internal bool CommandRunning { get; private set; } = false;
+        internal bool Backgrounded { get; private set; } = false;
 
         internal void WelcomeMessage()
         {
+            //Util.PrintLine(ConsoleColor.Cyan, banner);
             Util.Print(ConsoleColor.Cyan, "Welcome to ");
             Util.Print(ConsoleColor.Magenta, "SphereOS");
-            Util.PrintLine(ConsoleColor.Gray, $" - version {Kernel.Version}");
-            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2022-2023. All rights reserved.");
+            Util.PrintLine(ConsoleColor.Gray, $" - {Kernel.Version}");
+            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2023 Sphere Systems. All rights reserved.");
 
             /*Util.Print(ConsoleColor.Yellow, "New in this version: ");
             Util.PrintLine(ConsoleColor.White, "New GUI!");*/
@@ -41,52 +44,108 @@ namespace SphereOS.Shell
             WelcomeMessage();
         }
 
+        internal ReturnCode Execute(string text)
+        {
+            if (text.Trim() == string.Empty)
+                return ReturnCode.Success;
+
+            var args = text.Trim().Split();
+            var name = args[0];
+
+            Command command = CommandManager.GetCommand(name);
+            if (command != null)
+            {
+                try
+                {
+                    return command.Execute(args);
+                }
+                catch (Exception e)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Util.PrintLine(ConsoleColor.Red, $"An error occurred while running '{name}'.");
+                    Util.PrintLine(ConsoleColor.White, $"Exception: {e.ToString()}");
+
+                    return ReturnCode.Failure;
+                }
+            }
+            else
+            {
+                string path = Path.Join(WorkingDir, name);
+                if (FileSecurity.CanAccess(Kernel.CurrentUser, path) && File.Exists(path))
+                {
+                    return RunShellScript(path);
+                }
+                else
+                {
+                    Util.PrintLine(ConsoleColor.Red, $"Command or shell script '{name}' does not exist.");
+                    return ReturnCode.NotFound;
+                }
+            }
+        }
+
+        internal ReturnCode RunShellScript(string path)
+        {
+            User user = Kernel.CurrentUser;
+
+            Console.CursorVisible = false;
+
+            string[] lines = File.ReadAllLines(path);
+
+            foreach (string line in lines)
+            {
+                // If the logged in user has changed during
+                // script execution, abort the script. This
+                // is to prevent attacks where a user could
+                // execute arbitrary code as another user.
+                if (Kernel.CurrentUser != user)
+                {
+                    return ReturnCode.Aborted;
+                }
+
+                ReturnCode returnCode = Execute(line);
+
+                if (returnCode != ReturnCode.Success)
+                {
+                    Util.Print(ConsoleColor.Red, "Script aborted. ");
+                    Util.PrintLine(ConsoleColor.Gray, $"(code {((int)returnCode).ToString()})");
+
+                    return returnCode;
+                }
+            }
+
+            Console.CursorVisible = true;
+
+            return ReturnCode.Success;
+        }
+
         internal override void Run()
         {
-            if (CommandRunning) return;
+            if (Backgrounded) return;
 
             if (Kernel.CurrentUser != null)
             {
                 Kernel.CurrentUser.FlushMessages();
 
-                Util.Print(ConsoleColor.Cyan, Kernel.CurrentUser.Username);
+                Util.Print(ConsoleColor.Green, Kernel.CurrentUser.Username);
 
                 string dirDisplay = WorkingDir;
                 if (WorkingDir == $@"0:\users\{Kernel.CurrentUser.Username}")
                 {
                     dirDisplay = "~";
                 }
-                Util.Print(ConsoleColor.Gray, @$"@SphereOS [{dirDisplay}]> ");
+                dirDisplay.Replace($@"0:\users\{Kernel.CurrentUser.Username}\", string.Empty);
+                Util.Print(ConsoleColor.Blue, @$"@{SysCfg.Name} ");
+                Util.Print(ConsoleColor.White, @$"{dirDisplay}");
+                Util.Print(ConsoleColor.Blue, Kernel.CurrentUser.Admin ? "# " : "$ ");
 
                 var input = Console.ReadLine();
 
-                if (input.Trim() == string.Empty)
-                    return;
+                Backgrounded = true;
 
-                var args = input.Trim().Split();
-                var commandName = args[0];
+                Execute(input);
 
-                Command command = CommandManager.GetCommand(commandName);
-                if (command != null)
-                {
-                    CommandRunning = true;
-                    try
-                    {
-                        command.Execute(args);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Util.PrintLine(ConsoleColor.Red, $"Something went wrong while running '{commandName}'.");
-                        Util.PrintLine(ConsoleColor.White, $"Error information: {e.ToString()}");
-                    }
-                    CommandRunning = false;
-                }
-                else
-                {
-                    Util.PrintLine(ConsoleColor.Red, $"Unknown command '{commandName}'.");
-                }
+                Backgrounded = false;
             }
             else
             {

@@ -15,9 +15,11 @@ namespace SphereOS.Gui
             Critical = true;
         }
 
-        private Core.Drivers.VMWareSVGAII driver;
+        private Cosmos.HAL.Drivers.PCI.Video.VMWareSVGAII driver;
 
         private List<Window> windows = new List<Window>();
+
+        internal Queue<Window> UpdateQueue = new Queue<Window>();
 
         [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Cursor.bmp")]
         private static byte[] cursorBytes;
@@ -191,7 +193,7 @@ namespace SphereOS.Gui
 
         private void SetupDriver()
         {
-            driver = new Core.Drivers.VMWareSVGAII();
+            driver = new Cosmos.HAL.Drivers.PCI.Video.VMWareSVGAII();
             driver.SetMode(ScreenWidth, ScreenHeight, depth: bytesPerPixel * 8);
         }
 
@@ -203,7 +205,7 @@ namespace SphereOS.Gui
             MouseManager.X = ScreenWidth / 2;
             MouseManager.Y = ScreenHeight / 2;
 
-            driver.DefineAlphaCursor(cursorBitmap);
+            driver.DefineAlphaCursor(cursorBitmap.Width, cursorBitmap.Height, cursorBitmap.rawData);
         }
 
         private Window GetWindowAtPos(uint x, uint y)
@@ -329,8 +331,8 @@ namespace SphereOS.Gui
 
             SettingsService settingsService = ProcessManager.GetProcess<SettingsService>();
 
-            ScreenWidth = (uint)settingsService.Mode.Columns;
-            ScreenHeight = (uint)settingsService.Mode.Rows;
+            ScreenWidth = (uint)settingsService.Mode.Width;
+            ScreenHeight = (uint)settingsService.Mode.Height;
             bytesPerPixel = 4;
 
             SetupDriver();
@@ -346,6 +348,16 @@ namespace SphereOS.Gui
             UpdateFps();
 
             Sweep();
+
+            if (UpdateQueue.Count > 0)
+            {
+                Window toUpdate = UpdateQueue.Dequeue();
+                if (toUpdate is UILib.Control control)
+                {
+                    control.Render();
+                }
+                RenderWindow(toUpdate);
+            }
 
             DispatchEvents();
 

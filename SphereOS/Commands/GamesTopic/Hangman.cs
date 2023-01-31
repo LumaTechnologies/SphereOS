@@ -13,7 +13,7 @@ namespace SphereOS.Commands.GamesTopic
 
         internal override ReturnCode Execute(string[] args)
         {
-            var hangman = new Apps.Hangman.Hangman();
+            var hangman = new ConsoleApps.Hangman.Hangman();
             bool exit = false;
             while (!exit)
             {

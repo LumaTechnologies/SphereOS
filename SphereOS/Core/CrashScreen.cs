@@ -4,24 +4,37 @@ using SphereOS.Commands;
 using SphereOS.Logging;
 using SphereOS.Users;
 using System;
+using System.IO;
 
 namespace SphereOS.Core
 {
-    internal static class CrashScreen
+    public static class CrashScreen
     {
         private static string messageLoading = @"
- :(  SphereOS Crash
+ SphereOS Crash
 
  Generating crash log, please wait...";
 
         private static string message = @"
- :(  SphereOS Crash
+ SphereOS Crash
+
+ Something went wrong, and SphereOS must reboot.
+
+ SphereOS has generated a crash log, which you can view by pressing 'V'.
+ This crash log has also been saved to 0:\crash.log.
+
+                                             [V] View Log   [Esc] Reboot";
+
+        private static string messageNoLogDump = @"
+ SphereOS Crash
 
  Something went wrong, and SphereOS must reboot.
 
  SphereOS has generated a crash log, which you can view by pressing 'V'.
 
                                              [V] View Log   [Esc] Reboot";
+
+        private static bool? logDumpSuccess;
 
         private static string log = string.Empty;
 
@@ -102,36 +115,52 @@ namespace SphereOS.Core
             log += "[Counters]";
             log += $"Users:{UserManager.Users.Count};";
             log += $"LogEvents:{Log.Logs.Count};";
-            log += $"Cmds:{CommandManager.commands.Count};";
+            log += $"Cmds:{CommandManager.Commands.Count};";
             log += "[PciDump]";
             foreach (PCIDevice device in Cosmos.HAL.PCI.Devices)
             {
                 log += $"I:{device.DeviceID.ToString("X")};";
                 log += $"V:{device.VendorID.ToString("X")};";
             }
+            try
+            {
+                File.WriteAllText(@"0:\crash.log", log);
+                logDumpSuccess = true;
+            }
+            catch
+            {
+                logDumpSuccess = false;
+            }
         }
 
-        internal static void ShowCrashScreen(Exception exception)
+        public static void ShowCrashScreen(Exception exception)
         {
-            ProcessManager.StopAll();
-            ShowMessageFullScreen(messageLoading);
-            GenerateCrashLog(exception);
-            while (true)
+            try
             {
-                ShowMessageFullScreen(message);
-                var key = Console.ReadKey(true);
-                switch (key.Key)
+                ProcessManager.StopAll();
+                ShowMessageFullScreen(messageLoading);
+                GenerateCrashLog(exception);
+                while (true)
                 {
-                    case ConsoleKey.Escape:
-                        Cosmos.System.Power.Reboot();
-                        break;
-                    case ConsoleKey.V:
-                        ShowCrashLog();
-                        break;
-                    default:
-                        break;
+                    ShowMessageFullScreen((bool)logDumpSuccess ? message : messageNoLogDump);
+                    var key = Console.ReadKey(true);
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.Escape:
+                            Cosmos.System.Power.Reboot();
+                            break;
+                        case ConsoleKey.V:
+                            ShowCrashLog();
+                            break;
+                        default:
+                            break;
+                    }
+                    Cosmos.Core.Memory.Heap.Collect();
                 }
-                Cosmos.Core.Memory.Heap.Collect();
+            }
+            catch
+            {
+                ShowMessageFullScreen("Fatal: Double fault.");
             }
         }
     }

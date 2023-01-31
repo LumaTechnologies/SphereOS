@@ -8,7 +8,7 @@ namespace SphereOS.Gui
 {
     internal static class AppManager
     {
-        internal static List<App> Apps { get; private set; } = new List<App>();
+        internal static List<AppMetadata> AppMetadatas { get; private set; } = new List<AppMetadata>();
 
         private static bool appsLoaded = false;
 
@@ -46,9 +46,9 @@ namespace SphereOS.Gui
             private static byte[] _iconBytes_Calculator;
             internal static Bitmap Icon_Calculator = new Bitmap(_iconBytes_Calculator);
 
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.CodeStudio.bmp")]
+            /*[IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.CodeStudio.bmp")]
             private static byte[] _iconBytes_CodeStudio;
-            internal static Bitmap Icon_CodeStudio = new Bitmap(_iconBytes_CodeStudio);
+            internal static Bitmap Icon_CodeStudio = new Bitmap(_iconBytes_CodeStudio);*/
 
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Notepad.bmp")]
             private static byte[] _iconBytes_Notepad;
@@ -71,9 +71,21 @@ namespace SphereOS.Gui
             internal static Bitmap Icon_DemoLauncher = new Bitmap(_iconBytes_DemoLauncher);
         }
 
-        internal static void RegisterApp(App app)
+        internal static void RegisterApp(AppMetadata app)
         {
-            Apps.Add(app);
+            AppMetadatas.Add(app);
+        }
+
+        internal static AppMetadata GetApp(string name)
+        {
+            foreach (AppMetadata app in AppMetadatas)
+            {
+                if (app.Name == name)
+                {
+                    return app;
+                }
+            }
+            return null;
         }
 
         internal static void LoadAllApps()
@@ -83,18 +95,18 @@ namespace SphereOS.Gui
                 return;
             }
 
-            RegisterApp(new App("Files", () => { return new Files(); }, Icons.Icon_Files, Color.FromArgb(25, 84, 97)));
-            RegisterApp(new App("Clock", () => { return new Clock(); }, Icons.Icon_Clock, Color.FromArgb(168, 55, 47)));
-            RegisterApp(new App("Notepad", () => { return new Notepad(); }, Icons.Icon_Notepad, Color.FromArgb(14, 59, 76)));
-            RegisterApp(new App("Settings", () => { return new Settings(); }, Icons.Icon_Settings, Color.FromArgb(0, 115, 186)));
-            RegisterApp(new App("Tasks", () => { return new Tasks(); }, Icons.Icon_Tasks, Color.FromArgb(204, 241, 255)));
-            RegisterApp(new App("Calculator", () => { return new Calculator(); }, Icons.Icon_Calculator, Color.FromArgb(0, 115, 186)));
-            RegisterApp(new App("CodeStudio", () => { return new Apps.CodeStudio.CodeStudio(); }, Icons.Icon_CodeStudio, Color.FromArgb(127, 0, 255)));
-            RegisterApp(new App("Calendar", () => { return new Calendar(); }, Icons.Icon_Calendar, Color.FromArgb(168, 55, 47)));
-            RegisterApp(new App("Event Log", () => { return new Logs(); }, Icons.Icon_Logs, Color.FromArgb(14, 59, 76)));
-            RegisterApp(new App("Demos", () => { return new DemoLauncher(); }, Icons.Icon_DemoLauncher, Color.FromArgb(14, 59, 76)));
+            RegisterApp(new AppMetadata("Files", () => { return new Files(); }, Icons.Icon_Files, Color.FromArgb(25, 84, 97)));
+            RegisterApp(new AppMetadata("Clock", () => { return new Clock(); }, Icons.Icon_Clock, Color.FromArgb(168, 55, 47)));
+            RegisterApp(new AppMetadata("Notepad", () => { return new Notepad(); }, Icons.Icon_Notepad, Color.FromArgb(14, 59, 76)));
+            RegisterApp(new AppMetadata("Settings", () => { return new Settings(); }, Icons.Icon_Settings, Color.FromArgb(0, 115, 186)));
+            RegisterApp(new AppMetadata("Tasks", () => { return new Tasks(); }, Icons.Icon_Tasks, Color.FromArgb(204, 241, 255)));
+            RegisterApp(new AppMetadata("Calculator", () => { return new Calculator(); }, Icons.Icon_Calculator, Color.FromArgb(0, 115, 186)));
+            //RegisterApp(new App("CodeStudio", () => { return new Apps.CodeStudio.CodeStudio(); }, Icons.Icon_CodeStudio, Color.FromArgb(127, 0, 255)));
+            RegisterApp(new AppMetadata("Calendar", () => { return new Calendar(); }, Icons.Icon_Calendar, Color.FromArgb(168, 55, 47)));
+            RegisterApp(new AppMetadata("Event Log", () => { return new Logs(); }, Icons.Icon_Logs, Color.FromArgb(14, 59, 76)));
+            RegisterApp(new AppMetadata("Demos", () => { return new DemoLauncher(); }, Icons.Icon_DemoLauncher, Color.FromArgb(14, 59, 76)));
 
-            Log.Info("AppManager", $"{Apps.Count} apps were registered.");
+            Log.Info("AppManager", $"{AppMetadatas.Count} apps were registered.");
 
             appsLoaded = true;
         }
