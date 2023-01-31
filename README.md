@@ -31,8 +31,8 @@ The default login credentials are:
 > Share + Download scripts!
 ## Screenshots
 ### GUI
-![Screenshot 1](/Art/screenshot_6.png)
+![Screenshot 1](/Art/screenshot_7.png)
 ### Console
-![Screenshot 1](/Art/screenshot_1.png)
+![Screenshot 1](/Art/screenshot_8.png)
 ### Text Editor
-![Screenshot 2](/Art/screenshot_2.png)
+![Screenshot 2](/Art/screenshot_9.png)
