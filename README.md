@@ -26,6 +26,7 @@ The default login credentials are:
 - 🛑 Shutdown and reboot commands
 - ⏳ Process management
 - 🔐 SHA-256 security
+
 And more!
 ## Roadmap
 - [x] Scripting language (RiverScript)
