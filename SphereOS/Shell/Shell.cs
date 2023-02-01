@@ -4,6 +4,8 @@ using SphereOS.Users;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using ConsoleKeyEx = Cosmos.System.ConsoleKeyEx;
 
 namespace SphereOS.Shell
 {
@@ -22,7 +24,27 @@ namespace SphereOS.Shell
             }
         }
 
-        internal string WorkingDir { get; set; } = @"0:\";
+        private readonly ConsoleKeyEx[] readLineCancelKeys = { ConsoleKeyEx.UpArrow, ConsoleKeyEx.DownArrow };
+
+        private string _workingDir = @"0:\";
+        private string? _previousWorkingDir = null;
+
+        internal string WorkingDir
+        {
+            get
+            {
+                return _workingDir;
+            }
+            set
+            {
+                if (_workingDir != value)
+                {
+                    _previousWorkingDir = _workingDir;
+
+                    _workingDir = value;
+                }
+            }
+        }
 
         internal bool Backgrounded { get; private set; } = false;
 
@@ -36,6 +58,14 @@ namespace SphereOS.Shell
 
             /*Util.Print(ConsoleColor.Yellow, "New in this version: ");
             Util.PrintLine(ConsoleColor.White, "New GUI!");*/
+        }
+
+        internal void WorkingDirHistoryBack()
+        {
+            if (_previousWorkingDir != null)
+            {
+                WorkingDir = _previousWorkingDir;
+            }
         }
 
         #region Process
@@ -56,12 +86,29 @@ namespace SphereOS.Shell
             var args = new List<string>();
             bool inQuotes = false;
             string buffer = string.Empty;
+            string? chainCommand = null;
             for (int i = 0; i < text.Length; i++)
             {
+                if (chainCommand != null)
+                {
+                    break;
+                }
                 switch (text[i])
                 {
                     case '"':
                         inQuotes = !inQuotes;
+                        break;
+                    case '&' when !inQuotes && (i < text.Length - 1 && text[i + 1] == '&'):
+                        // Handle a chained command.
+                        if (text.Length > i + 1)
+                        {
+                            chainCommand = text.Substring(i + 2);
+                        }
+                        else
+                        {
+                            // The command following the chaining operator is missing.
+                            chainCommand = string.Empty;
+                        }
                         break;
                     case ' ':
                         if (inQuotes)
@@ -91,7 +138,13 @@ namespace SphereOS.Shell
             {
                 try
                 {
-                    return command.Execute(args.ToArray());
+                    ReturnCode returnCode = command.Execute(args.ToArray());
+
+                    // If the command was successful, then run the chained command, if any.
+                    if (returnCode == ReturnCode.Success && chainCommand != null)
+                        return Execute(chainCommand);
+                    else
+                        return returnCode;
                 }
                 catch (Exception e)
                 {
@@ -108,7 +161,12 @@ namespace SphereOS.Shell
                 string path = PathUtil.JoinPaths(WorkingDir, name);
                 if (FileSecurity.CanAccess(Kernel.CurrentUser, path) && File.Exists(path))
                 {
-                    return RunShellScript(path);
+                    ReturnCode returnCode = RunShellScript(path);
+
+                    if (returnCode == ReturnCode.Success && chainCommand != null)
+                        return Execute(chainCommand);
+                    else
+                        return returnCode;
                 }
                 else
                 {
@@ -173,11 +231,51 @@ namespace SphereOS.Shell
                 Util.Print(ConsoleColor.White, @$"{dirDisplay}");
                 Util.Print(ConsoleColor.Blue, Kernel.CurrentUser.Admin ? "# " : "$ ");
 
-                var input = Console.ReadLine();
+                bool commandConfirmed = false;
+                int historyIndex = Kernel.CurrentUser.CommandHistory.Count;
+                string finalInput = string.Empty;
+                while (!commandConfirmed)
+                {
+                    ReadLineExResult result = Util.ReadLineEx(
+                        cancelKeys: readLineCancelKeys,
+                        clearOnCancel: true,
+
+                        // If in bounds of the command history, set it
+                        // as the initial value of the ReadLineEx.
+                        initialValue: historyIndex < Kernel.CurrentUser.CommandHistory.Count
+                                      ? Kernel.CurrentUser.CommandHistory[historyIndex] : null
+                    ); 
+
+                    if (result.CancelKey == ConsoleKeyEx.UpArrow)
+                    {
+                        // History backwards.
+                        if (historyIndex == 0)
+                        {
+                            continue;
+                        }
+                        historyIndex--;
+                    }
+                    else if (result.CancelKey == ConsoleKeyEx.DownArrow)
+                    {
+                        // History forwards.
+                        if (historyIndex >= Kernel.CurrentUser.CommandHistory.Count)
+                        {
+                            continue;
+                        }
+                        historyIndex++;
+                    }
+                    else
+                    {
+                        finalInput = result.Input;
+                        commandConfirmed = true;
+                    }
+                }
 
                 Backgrounded = true;
 
-                Execute(input);
+                Kernel.CurrentUser.AddCommandHistory(finalInput);
+
+                Execute(finalInput);
 
                 Backgrounded = false;
             }

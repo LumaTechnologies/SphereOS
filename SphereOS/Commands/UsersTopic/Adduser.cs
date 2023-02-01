@@ -37,9 +37,9 @@ namespace SphereOS.Commands.UsersTopic
             }
 
             Util.Print(ConsoleColor.Cyan, $"New password for {username}: ");
-            var newPassword = Util.ReadLineEx(cancelKey: null, mask: true);
+            var result = Util.ReadLineEx(mask: true);
 
-            User user = UserManager.AddUser(username, newPassword, admin: false);
+            User user = UserManager.AddUser(username, result.Input, admin: false);
 
             Util.PrintLine(ConsoleColor.Green, $"Successfully created user {username}.");
 

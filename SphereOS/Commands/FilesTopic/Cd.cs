@@ -24,6 +24,13 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
+            if (args[1].Trim() == "-")
+            {
+                Shell.Shell.CurrentShell.WorkingDirHistoryBack();
+
+                return ReturnCode.Success;
+            }
+
             var newDir = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, args[1]);
             if (Directory.Exists(newDir) && FileSecurity.CanAccess(Kernel.CurrentUser, newDir))
             {

@@ -344,7 +344,9 @@ namespace SphereOS.ConsoleApps
             {
                 RenderPrompt("Path to save to: ", new (string, string)[] { ("Enter", "Save"), ("Esc", "Cancel") });
 
-                path = Util.ReadLineEx(Cosmos.System.ConsoleKeyEx.Escape);
+                ReadLineExResult result = Util.ReadLineEx(cancelKeys: new Cosmos.System.ConsoleKeyEx[] { Cosmos.System.ConsoleKeyEx.Escape });
+                path = result.Input;
+
                 if (!path.Contains(@":\"))
                 {
                     path = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, path);

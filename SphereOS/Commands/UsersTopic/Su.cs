@@ -60,8 +60,8 @@ namespace SphereOS.Commands.UsersTopic
             if (!Kernel.CurrentUser.Admin)
             {
                 Util.Print(ConsoleColor.Cyan, $"Password for {username}: ");
-                var password = Util.ReadLineEx(cancelKey: null, mask: true);
-                if (!user.Authenticate(password))
+                var result = Util.ReadLineEx(mask: true);
+                if (!user.Authenticate(result.Input))
                 {
                     Util.PrintLine(ConsoleColor.Red, "Incorrect password.");
                     return ReturnCode.Unauthorised;

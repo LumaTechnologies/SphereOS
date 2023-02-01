@@ -69,16 +69,42 @@ namespace SphereOS.Shell
         /// <param name="cancelKey">An optional key that will cancel the function and return null.</param>
         /// <param name="mask">Whether to mask the password.</param>
         /// <returns>The text entered, or null if cancelKey was pressed.</returns>
-        internal static string ReadLineEx(Cosmos.System.ConsoleKeyEx? cancelKey = null, bool mask = false)
+        internal static ReadLineExResult ReadLineEx(Cosmos.System.ConsoleKeyEx[]? cancelKeys = null, bool mask = false, string initialValue = "", bool clearOnCancel = false)
         {
             var chars = new List<char>(32);
             Cosmos.System.KeyEvent current;
             int currentCount = 0;
+            if (initialValue != null)
+            {
+                chars.AddRange(initialValue.ToCharArray());
+                Console.Write(initialValue);
+                currentCount = initialValue.Length;
+            }
             while ((current = Cosmos.System.KeyboardManager.ReadKey()).Key != Cosmos.System.ConsoleKeyEx.Enter)
             {
-                if (current.Key == cancelKey)
+                if (cancelKeys != null && Array.IndexOf(cancelKeys, current.Key) != -1)
                 {
-                    return null;
+                    if (clearOnCancel)
+                    {
+                        while (chars.Count > 0)
+                        {
+                            int curCharTemp = Console.GetCursorPosition().Left;
+                            chars.RemoveAt(currentCount - 1);
+                            SetCursorPosWrap(Console.GetCursorPosition().Left - 1, Console.GetCursorPosition().Top);
+
+                            for (int x = currentCount - 1; x < chars.Count; x++)
+                            {
+                                Console.Write(chars[x]);
+                            }
+
+                            Console.Write(' ');
+
+                            SetCursorPosWrap(curCharTemp - 1, Console.GetCursorPosition().Top);
+
+                            currentCount--;
+                        }
+                    }
+                    return new ReadLineExResult(cancelKey: current.Key);
                 }
                 if (current.Key == Cosmos.System.ConsoleKeyEx.NumEnter)
                 {
@@ -163,7 +189,7 @@ namespace SphereOS.Shell
             Console.WriteLine();
 
             char[] final = chars.ToArray();
-            return new string(final);
+            return new ReadLineExResult(new string(final));
         }
 
         internal static void PrintTable(List<List<string>> columns, ConsoleColor color = ConsoleColor.White, ConsoleColor headerColour = ConsoleColor.White, int margin = 2)

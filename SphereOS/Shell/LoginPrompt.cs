@@ -38,8 +38,8 @@ namespace SphereOS.Shell
                     return false;
                 }
                 Util.Print(ConsoleColor.Cyan, $"Password for {username}: ");
-                var password = Util.ReadLineEx(cancelKey: null, mask: true);
-                if (user.Authenticate(password))
+                ReadLineExResult result = Util.ReadLineEx(mask: true);
+                if (user.Authenticate(result.Input))
                 {
                     Kernel.CurrentUser = user;
                     Log.Info("LoginPrompt", $"{user.Username} logged on.");
@@ -47,7 +47,7 @@ namespace SphereOS.Shell
                     if (user.PasswordExpired)
                     {
                         Util.PrintLine(ConsoleColor.White, "Your password has expired. Please set a new password:");
-                        user.ResetPasswordConsole(password);
+                        user.ResetPasswordConsole(result.Input);
                     }
                     Util.PrintLine(ConsoleColor.Cyan, $"Welcome to SphereOS.");
                     Util.Print(ConsoleColor.Gray, "[i] Type");

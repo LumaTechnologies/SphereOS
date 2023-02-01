@@ -27,8 +27,8 @@ namespace SphereOS.Commands.UsersTopic
 
                     Util.PrintLine(ConsoleColor.Cyan, $"Enter the password for {Kernel.CurrentUser.Username}: ");
 
-                    var password = Util.ReadLineEx(cancelKey: Cosmos.System.ConsoleKeyEx.Escape, mask: true);
-                    if (password == null)
+                    ReadLineExResult result = Util.ReadLineEx(cancelKeys: new Cosmos.System.ConsoleKeyEx[] { Cosmos.System.ConsoleKeyEx.Escape }, mask: true);
+                    if (result.CancelKey == Cosmos.System.ConsoleKeyEx.Escape)
                     {
                         Kernel.CurrentUser = null;
                         Shell.Shell.CurrentShell.WorkingDir = @"0:\";
@@ -39,7 +39,7 @@ namespace SphereOS.Commands.UsersTopic
                         return ReturnCode.Aborted;
                     }
 
-                    authenticated = Kernel.CurrentUser.Authenticate(password);
+                    authenticated = Kernel.CurrentUser.Authenticate(result.Input);
                 }
                 return ReturnCode.Success;
             }

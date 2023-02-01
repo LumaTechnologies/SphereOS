@@ -72,6 +72,19 @@ namespace SphereOS.Users
         internal DateTime LockoutEnd { get; private set; }
 
         /// <summary>
+        /// The list of commands the user has recently executed.
+        /// </summary>
+        internal List<string> CommandHistory { get; init; } = new();
+
+        internal void AddCommandHistory(string command)
+        {
+            // Remove the item from the history if it already exists.
+            CommandHistory.Remove(command);
+
+            CommandHistory.Add(command);
+        }
+
+        /// <summary>
         /// Flush all of the user's unread messages to the console.
         /// </summary>
         internal void FlushMessages()
@@ -141,9 +154,9 @@ namespace SphereOS.Users
         internal void ResetPasswordConsole(string currentPassword)
         {
             Util.Print(ConsoleColor.Cyan, "New password: ");
-            string newPassword = Util.ReadLineEx(cancelKey: null, mask: true);
+            ReadLineExResult newPasswordResult = Util.ReadLineEx(mask: true);
 
-            Kernel.CurrentUser.ChangePassword(currentPassword, newPassword);
+            Kernel.CurrentUser.ChangePassword(currentPassword, newPasswordResult.Input);
             UserManager.Flush();
             Util.PrintLine(ConsoleColor.Green, "Password successfully changed.\n");
         }
