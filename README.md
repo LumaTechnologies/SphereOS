@@ -15,6 +15,7 @@ The default login credentials are:
 ## Features
 - 💻 Both GUI and console support
 - 🚀 GUI system with up to 1400 FPS
+- ⚙ Advanced shell with a custom parser
 - 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, and Settings
 - 🌐 Networking capabilities
 - 💬 CloudChat
@@ -25,7 +26,7 @@ The default login credentials are:
 - 🛑 Shutdown and reboot commands
 - ⏳ Process management
 - 🔐 SHA-256 security
-- ✉️ Messaging capabilities
+And more!
 ## Roadmap
 - [x] Scripting language (RiverScript)
 > [Read the RiverScript Documentation!](https://sphere.jsph.dev/developer/docs/riverscript/)
