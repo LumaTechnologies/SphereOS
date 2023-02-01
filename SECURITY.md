@@ -6,7 +6,8 @@ Supported SphereOS versions:
 
 | Version          | Supported          | End Of Support                       |
 | ---------------- | ------------------ | ------------------------------------ |
-| v0.1.8-preview   | :white_check_mark: | 1 week after next release            |
+| v0.1.9-preview   | :white_check_mark: | 1 week after next release            |
+| v0.1.8-preview   | :white_check_mark: | Support ends 08/02/2023              |
 | v0.1.7-preview   | ❌                 | Support ended 14/12/2022             |
 | v0.1.6-preview   | ❌                 | Support ended 12/12/2022             |
 | v0.1.5-preview   | ❌                 | Support ended 03/12/2022             |
