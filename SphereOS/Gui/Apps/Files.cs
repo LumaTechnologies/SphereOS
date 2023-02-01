@@ -182,7 +182,7 @@ namespace SphereOS.Gui.Apps
             if (entryTable.SelectedCellIndex != -1)
             {
                 TableCell cell = entryTable.Cells[entryTable.SelectedCellIndex];
-                string path = Path.Join(currentDir, cell.Text);
+                string path = PathUtil.JoinPaths(currentDir, cell.Text);
                 if ((string)cell.Tag == "Directory")
                 {
                     NavigateTo(path);

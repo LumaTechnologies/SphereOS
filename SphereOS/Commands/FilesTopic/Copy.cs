@@ -5,9 +5,9 @@ using System.IO;
 
 namespace SphereOS.Commands.FilesTopic
 {
-    internal class Cp : Command
+    internal class Copy : Command
     {
-        public Cp() : base("cp")
+        public Copy() : base("copy")
         {
             Description = "Copy a file.";
 
@@ -24,25 +24,8 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            string srcPath;
-            if (args[1].Contains(@":\"))
-            {
-                srcPath = args[1];
-            }
-            else
-            {
-                srcPath = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
-            }
-
-            string destPath;
-            if (args[2].Contains(@":\"))
-            {
-                destPath = args[2];
-            }
-            else
-            {
-                destPath = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[2]);
-            }
+            string srcPath = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, args[1]);
+            string destPath = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, args[2]);
 
             if (!FileSecurity.CanAccess(Kernel.CurrentUser, srcPath))
             {

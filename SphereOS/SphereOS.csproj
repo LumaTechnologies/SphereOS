@@ -166,8 +166,8 @@
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PlugsReference Include="$(MSBuildProjectDirectory)\..\SphereOS.Plugs\bin\Debug\net6.0\SphereOS.Plugs.dll"></PlugsReference>
-    </ItemGroup>
+    <!--<ItemGroup>
+      <PlugsReference Condition="" Include="$(MSBuildProjectDirectory)\..\SphereOS.Plugs\bin\Debug\net6.0\SphereOS.Plugs.dll"></PlugsReference>
+    </ItemGroup>-->
 
 </Project>

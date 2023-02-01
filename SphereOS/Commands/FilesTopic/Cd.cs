@@ -24,31 +24,23 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            if (args[1] == "..")
+            var newDir = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, args[1]);
+            if (Directory.Exists(newDir) && FileSecurity.CanAccess(Kernel.CurrentUser, newDir))
             {
-                string wd = Shell.Shell.CurrentShell.WorkingDir;
-                if (Directory.GetDirectoryRoot(wd) == wd)
-                {
-                    return ReturnCode.Failure;
-                }
-                Shell.Shell.CurrentShell.WorkingDir = Directory.GetParent(Shell.Shell.CurrentShell.WorkingDir).FullName;
-            }
-            else if (args[1] == "~")
-            {
-                Shell.Shell.CurrentShell.WorkingDir = $@"0:\users\{Kernel.CurrentUser.Username}";
+                Shell.Shell.CurrentShell.WorkingDir = Path.GetFullPath(newDir);
             }
             else
             {
-                var newDir = Path.Combine(Shell.Shell.CurrentShell.WorkingDir, args[1]);
-                if (Directory.Exists(newDir) && FileSecurity.CanAccess(Kernel.CurrentUser, newDir))
+                string dirname = Path.GetFileName(newDir);
+                if (dirname.Trim().Length > 0)
                 {
-                    Shell.Shell.CurrentShell.WorkingDir = Path.GetFullPath(newDir);
+                    Util.PrintLine(ConsoleColor.Red, $"No such directory '{dirname}'.");
                 }
                 else
                 {
-                    Util.PrintLine(ConsoleColor.Red, $"No such directory '{Path.GetFileName(newDir)}'.");
-                    return ReturnCode.NotFound;
+                    Util.PrintLine(ConsoleColor.Red, $"No such directory.");
                 }
+                return ReturnCode.NotFound;
             }
 
             return ReturnCode.Success;

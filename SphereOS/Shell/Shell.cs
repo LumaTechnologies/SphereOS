@@ -2,6 +2,7 @@
 using SphereOS.Core;
 using SphereOS.Users;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace SphereOS.Shell
@@ -46,10 +47,43 @@ namespace SphereOS.Shell
 
         internal ReturnCode Execute(string text)
         {
-            if (text.Trim() == string.Empty)
+            text = text.Trim();
+
+            if (text == string.Empty)
                 return ReturnCode.Success;
 
-            var args = text.Trim().Split();
+            // Parse arguments.
+            var args = new List<string>();
+            bool inQuotes = false;
+            string buffer = string.Empty;
+            for (int i = 0; i < text.Length; i++)
+            {
+                switch (text[i])
+                {
+                    case '"':
+                        inQuotes = !inQuotes;
+                        break;
+                    case ' ':
+                        if (inQuotes)
+                        {
+                            buffer += ' ';
+                        }
+                        else
+                        {
+                            args.Add(buffer);
+                            buffer = string.Empty;
+                        }
+                        break;
+                    default:
+                        buffer += text[i];
+                        break;
+                }
+            }
+            if (buffer.Length > 0)
+            {
+                args.Add(buffer);
+            }
+
             var name = args[0];
 
             Command command = CommandManager.GetCommand(name);
@@ -57,21 +91,21 @@ namespace SphereOS.Shell
             {
                 try
                 {
-                    return command.Execute(args);
+                    return command.Execute(args.ToArray());
                 }
                 catch (Exception e)
                 {
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.ForegroundColor = ConsoleColor.White;
                     Util.PrintLine(ConsoleColor.Red, $"An error occurred while running '{name}'.");
-                    Util.PrintLine(ConsoleColor.White, $"Exception: {e.ToString()}");
+                    Util.PrintLine(ConsoleColor.White, e.ToString());
 
                     return ReturnCode.Failure;
                 }
             }
             else
             {
-                string path = Path.Join(WorkingDir, name);
+                string path = PathUtil.JoinPaths(WorkingDir, name);
                 if (FileSecurity.CanAccess(Kernel.CurrentUser, path) && File.Exists(path))
                 {
                     return RunShellScript(path);

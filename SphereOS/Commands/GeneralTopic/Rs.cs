@@ -34,7 +34,7 @@ namespace SphereOS.Commands.GeneralTopic
 
             if (args.Length == 2)
             {
-                string path = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
+                string path = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
                 if (!FileSecurity.CanAccess(Kernel.CurrentUser, path))
                 {

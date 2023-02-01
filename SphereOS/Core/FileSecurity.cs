@@ -20,6 +20,10 @@ namespace SphereOS.Core
             if (sanitised == @"0:\users.ini")
                 return false;
 
+            // Legacy file
+            if (sanitised == @"0:\settings.ini")
+                return false;
+
             if (sanitised == @"0:\users")
                 return false;
 

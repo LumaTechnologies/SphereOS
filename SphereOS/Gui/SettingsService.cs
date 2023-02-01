@@ -1,6 +1,7 @@
 ﻿using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.ShellComponents;
+using SphereOS.Logging;
 using SphereOS.Text;
 using System.IO;
 
@@ -12,7 +13,8 @@ namespace SphereOS.Gui
         {
         }
 
-        private const string settingsPath = @"0:\settings.ini";
+        private const string oldSettingsPath = @"0:\settings.ini";
+        private const string settingsPath = @"0:\etc\gui.cfg";
 
         private bool _twelveHourClock = false;
         internal bool TwelveHourClock
@@ -78,6 +80,13 @@ namespace SphereOS.Gui
         internal override void Start()
         {
             base.Start();
+            if (File.Exists(oldSettingsPath))
+            {
+                Log.Info("SettingsService", "Upgrading settings.ini...");
+                string text = File.ReadAllText(oldSettingsPath);
+                File.WriteAllText(settingsPath, text);
+                File.Delete(oldSettingsPath);
+            }
             if (File.Exists(settingsPath))
             {
                 IniReader reader = new IniReader(File.ReadAllText(settingsPath));

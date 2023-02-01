@@ -9,6 +9,8 @@ namespace SphereOS.Commands.GeneralTopic
             Description = "Print to the console.";
 
             Topic = "general";
+
+            Usage = "<text>";
         }
 
         internal override ReturnCode Execute(string[] args)

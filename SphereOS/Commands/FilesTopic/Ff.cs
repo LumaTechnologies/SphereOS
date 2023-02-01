@@ -24,7 +24,7 @@ namespace SphereOS.Commands.FilesTopic
                 return ReturnCode.Invalid;
             }
 
-            string path = Path.Join(Shell.Shell.CurrentShell.WorkingDir, args[1]);
+            string path = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, args[1]);
 
             string query = string.Empty;
             for (int i = 2; i < args.Length; i++)

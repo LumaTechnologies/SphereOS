@@ -90,13 +90,19 @@ namespace SphereOS.Users
                 throw new InvalidOperationException($"A user named {username} already exists!");
 
             if (username.IndexOf(' ') != -1)
-                throw new InvalidOperationException("Usernames must not contain spaces.");
+                throw new InvalidOperationException("Usernames may not contain spaces.");
 
             if (username.IndexOf(':') != -1)
-                throw new InvalidOperationException("Usernames must not contain colons.");
+                throw new InvalidOperationException("Usernames may not contain colons.");
+
+            if (username.IndexOf('.') != -1)
+                throw new InvalidOperationException("Usernames may not contain dots.");
+
+            if (username.IndexOf('~') != -1)
+                throw new InvalidOperationException("Usernames may not contain tildes.");
 
             if (username.IndexOf('/') != -1 || username.IndexOf('\\') != -1)
-                throw new InvalidOperationException("Usernames must not contain path separators.");
+                throw new InvalidOperationException("Usernames may not contain path separators.");
 
             User user = new User(username, HashPasswordSha256(password), admin);
             Users.Add(user);

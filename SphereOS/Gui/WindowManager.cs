@@ -352,11 +352,15 @@ namespace SphereOS.Gui
             if (UpdateQueue.Count > 0)
             {
                 Window toUpdate = UpdateQueue.Dequeue();
-                if (toUpdate is UILib.Control control)
+
+                if (windows.Contains(toUpdate))
                 {
-                    control.Render();
+                    if (toUpdate is UILib.Control control)
+                    {
+                        control.Render();
+                    }
+                    RenderWindow(toUpdate);
                 }
-                RenderWindow(toUpdate);
             }
 
             DispatchEvents();

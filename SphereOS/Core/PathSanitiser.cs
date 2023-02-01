@@ -5,7 +5,7 @@ namespace SphereOS.Core
 {
     internal static class PathSanitiser
     {
-        private static string RemoveDuplicateDirectorySeparators(string path)
+        internal static string RemoveDuplicateDirectorySeparators(string path)
         {
             var result = new StringBuilder();
             bool lastSeparator = false;

@@ -1,4 +1,5 @@
-﻿using Cosmos.System.Graphics;
+﻿using Cosmos.System;
+using Cosmos.System.Graphics;
 using SphereOS.Gui.SmoothMono;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,10 @@ namespace SphereOS.Gui.UILib
 
         internal bool AllowDeselection { get; set; } = true;
 
-        private int scrollY = 0;
+        private double scrollY = 0;
+
+        private bool dragging = false;
+        private int lastDragY = 0;
 
         private int _selectedCellIndex = -1;
         internal int SelectedCellIndex
@@ -158,6 +162,20 @@ namespace SphereOS.Gui.UILib
             }
         }
 
+        private Alignment _textAlignment = Alignment.Start;
+        internal Alignment TextAlignment
+        {
+            get
+            {
+                return _textAlignment;
+            }
+            set
+            {
+                _textAlignment = value;
+                Render();
+            }
+        }
+
         private void TableDown(int x, int y)
         {
             if ((CanScrollUp || CanScrollDown) && x >= (Width - _scrollbarThickness))
@@ -173,10 +191,16 @@ namespace SphereOS.Gui.UILib
                     scrollY = Math.Min(allCellsHeight - Height, scrollY + CellHeight);
                     Render();
                 }
+                if (y < Height - _scrollbarThickness && y >= _scrollbarThickness)
+                {
+                    dragging = true;
+                    lastDragY = (int)MouseManager.Y;
+                    Render();
+                }
                 return;
             }
 
-            int scrollAdjustedY = y + scrollY;
+            int scrollAdjustedY = (int)(y + scrollY);
             if (scrollAdjustedY < 0 || scrollAdjustedY > _cellHeight * Cells.Count)
             {
                 if (AllowDeselection)
@@ -219,17 +243,23 @@ namespace SphereOS.Gui.UILib
                 double trackSize = (double)Height / (double)(Cells.Count * CellHeight);
                 double trackProgress = (double)scrollY / (double)((Cells.Count * CellHeight) - Height);
                 int trackY = (int)(_scrollbarThickness + (((double)trackAvailableHeight - ((double)trackAvailableHeight * trackSize)) * trackProgress));
-                DrawFilledRectangle(Width - _scrollbarThickness, trackY, _scrollbarThickness, (int)(trackSize * trackAvailableHeight), _background);
-                DrawRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, Height, _border);
+                // Border
+                DrawFilledRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, Height, _border);
+                // Background
+                DrawFilledRectangle(Width - _scrollbarThickness + 1, trackY + 1, _scrollbarThickness - 2, (int)(trackSize * trackAvailableHeight) - 2, _background);
 
                 /* Up arrow */
-                DrawFilledRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, _scrollbarThickness, CanScrollUp ? _background : _border);
-                DrawRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, _scrollbarThickness, _border);
+                // Border
+                DrawFilledRectangle(Width - _scrollbarThickness, 0, _scrollbarThickness, _scrollbarThickness, _border);
+                // Background
+                DrawFilledRectangle(Width - _scrollbarThickness + 1, 1, _scrollbarThickness - 2, _scrollbarThickness - 2, CanScrollUp ? _background : _border);
                 DrawImageAlpha(scrollbarUpBitmap, (int)((Width - _scrollbarThickness) + ((_scrollbarThickness / 2) - (scrollbarUpBitmap.Width / 2))), (int)((_scrollbarThickness / 2) - (scrollbarUpBitmap.Height / 2)));
 
                 /* Down arrow */
-                DrawFilledRectangle(Width - _scrollbarThickness, Height - _scrollbarThickness, _scrollbarThickness, _scrollbarThickness, CanScrollDown ? _background : _border);
-                DrawRectangle(Width - _scrollbarThickness, Height - _scrollbarThickness, _scrollbarThickness, _scrollbarThickness, _border);
+                // Border
+                DrawFilledRectangle(Width - _scrollbarThickness, Height - _scrollbarThickness, _scrollbarThickness, _scrollbarThickness, _border);
+                // Background
+                DrawFilledRectangle(Width - _scrollbarThickness + 1, Height - _scrollbarThickness + 1, _scrollbarThickness - 2, _scrollbarThickness - 2, CanScrollDown ? _background : _border);
                 DrawImageAlpha(scrollbarDownBitmap, (int)((Width - _scrollbarThickness) + ((_scrollbarThickness / 2) - (scrollbarUpBitmap.Width / 2))), (int)((Height - _scrollbarThickness) + ((_scrollbarThickness / 2) - (scrollbarUpBitmap.Height / 2))));
             }
         }
@@ -256,20 +286,72 @@ namespace SphereOS.Gui.UILib
 
         internal override void Render()
         {
+            int scrollMax = (Cells.Count * CellHeight) - Height;
+            if (dragging)
+            {
+                scrollY += (int)(MouseManager.Y - lastDragY);
+                lastDragY = (int)MouseManager.Y;
+                if (MouseManager.MouseState != MouseState.Left)
+                {
+                    dragging = false;
+                }
+                WM.UpdateQueue.Enqueue(this);
+            }
+            else if (scrollY < 0 || scrollY > scrollMax)
+            {
+                double oldScrollY = scrollY;
+                double move;
+                if (scrollY > 0)
+                {
+                    move = (scrollMax - scrollY) / 8d;
+                }
+                else
+                {
+                    move = (-scrollY) / 8d;
+                }
+                scrollY += move;
+                if (Math.Abs(scrollY - oldScrollY) > 0.05)
+                {
+                    WM.UpdateQueue.Enqueue(this);
+                }
+            }
+
             Clear(Background);
 
             for (int i = 0; i < Cells.Count; i++)
             {
                 TableCell cell = Cells[i];
                 bool selected = _selectedCellIndex == i;
-                Rectangle cellRect = new Rectangle(0, (i * _cellHeight) - scrollY, Width, _cellHeight);
+                Rectangle cellRect = new Rectangle(0, (int)((i * _cellHeight) - scrollY), Width, _cellHeight);
 
-                if (selected)
+                if (cellRect.Y < -cellRect.Height || cellRect.Y > Height)
                 {
-                    DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, _selectedBackground);
+                    continue;
                 }
 
-                int textX = cellRect.X + (cell.Image != null ? (CellHeight - FontData.Height) / 2 : 0); //cellRect.X + (cellRect.Width / 2) - (cell.Length * 8 / 2);
+                // Border.
+                DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, selected ? _selectedBorder : _border);
+
+                // Background.
+                DrawFilledRectangle(cellRect.X + 1, cellRect.Y + 1, cellRect.Width - 2, cellRect.Height - 2, selected ? _selectedBackground : _background);
+
+                int textX;
+                switch (_textAlignment)
+                {
+                    case Alignment.Start:
+                        textX = cellRect.X + (cell.Image != null ? (CellHeight - FontData.Height) / 2 : 0);
+                        break;
+                    case Alignment.Middle:
+                        textX = cellRect.X + (cellRect.Width / 2) - (cell.Text.Length * FontData.Width / 2);
+                        break;
+                    case Alignment.End:
+                        textX = cellRect.X + cellRect.Width - (cell.Text.Length * FontData.Width);
+                        break;
+                    default:
+                        throw new Exception("Invalid Table alignment!");
+                }
+
+
                 int textY = cellRect.Y + (cellRect.Height / 2) - (16 / 2);
 
                 if (cell.Image != null)
@@ -278,9 +360,9 @@ namespace SphereOS.Gui.UILib
                     DrawImageAlpha(cell.Image, cellRect.X, (int)(cellRect.Y + (cellRect.Height / 2) - (cell.Image.Height / 2)));
                 }
                 DrawString(cell.Text, selected ? SelectedForeground : Foreground, textX, textY);
-
-                DrawRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, selected ? SelectedBorder : Border);
             }
+
+            //DrawString($"{scrollY.ToString()} {dragging.ToString()} {scrollMax.ToString()}", Color.Red, 0, 0);
 
             RenderScrollbar();
 

@@ -65,7 +65,7 @@ namespace SphereOS.Commands
             RegisterCommand(new FilesTopic.Audit());
             RegisterCommand(new FilesTopic.Cat());
             RegisterCommand(new FilesTopic.Cd());
-            RegisterCommand(new FilesTopic.Cp());
+            RegisterCommand(new FilesTopic.Copy());
             RegisterCommand(new FilesTopic.Del());
             RegisterCommand(new FilesTopic.Edit());
             RegisterCommand(new FilesTopic.Ff());
@@ -83,6 +83,7 @@ namespace SphereOS.Commands
             RegisterCommand(new GamesTopic.Hangman());
 
             /* Network */
+            RegisterCommand(new NetworkTopic.Cloudchat());
             RegisterCommand(new NetworkTopic.Ip());
             RegisterCommand(new NetworkTopic.Ping());
             RegisterCommand(new NetworkTopic.Resolve());

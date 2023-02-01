@@ -55,7 +55,8 @@ namespace SphereOS.Commands.GeneralTopic
         internal override ReturnCode Execute(string[] args)
         {
             uint memTotal = Cosmos.Core.CPU.GetAmountOfRAM();
-            uint memUsed = Cosmos.Core.GCImplementation.GetUsedRAM() / 1024 / 1024;
+            uint memUnavail = memTotal - (uint)Cosmos.Core.GCImplementation.GetAvailableRAM();
+            uint memUsed = (Cosmos.Core.GCImplementation.GetUsedRAM() / 1024 / 1024) + memUnavail;
             uint memFree = memTotal - memUsed;
             uint memPercentUsed = (uint)((float)memUsed / memTotal * 100f);
 

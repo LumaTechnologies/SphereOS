@@ -72,7 +72,7 @@ namespace SphereOS.Gui.UILib
             {
                 int diff = (int)(MouseManager.X - lastMouseX);
                 lastMouseX = (int)MouseManager.X;
-                totalDragged += diff;
+                totalDragged += Math.Abs(diff);
                 knobX = Math.Clamp(knobX + diff, 0, offBitmap.Width - knobBitmap.Width);
 
                 WM.UpdateQueue.Enqueue(this);

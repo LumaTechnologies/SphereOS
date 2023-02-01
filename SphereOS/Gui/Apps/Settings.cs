@@ -221,14 +221,25 @@ namespace SphereOS.Gui.Apps
             window.Title = "Settings";
 
             Table categoryTable = new Table(window, 0, 0, 128, window.Height);
+
+            categoryTable.TextAlignment = Alignment.Middle;
+
+            categoryTable.TableCellSelected = CategorySelected;
+            categoryTable.SelectedCellIndex = 0;
+            categoryTable.AllowDeselection = false;
+
+            categoryTable.CellHeight = 24;
+
+            /*categoryTable.Border = categoryTable.Background;
+            categoryTable.SelectedBorder = categoryTable.SelectedBackground;*/
+
             categoryTable.Cells.Add(new TableCell("Appearance"));
             categoryTable.Cells.Add(new TableCell("Display"));
             categoryTable.Cells.Add(new TableCell("Date & Time"));
             categoryTable.Cells.Add(new TableCell("Users"));
-            categoryTable.TableCellSelected = CategorySelected;
-            categoryTable.SelectedCellIndex = 0;
-            categoryTable.AllowDeselection = false;
+
             categoryTable.Render();
+
             wm.AddWindow(categoryTable);
 
             ShowAppearanceCategory();

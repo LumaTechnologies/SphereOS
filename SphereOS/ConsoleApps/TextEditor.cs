@@ -347,7 +347,7 @@ namespace SphereOS.ConsoleApps
                 path = Util.ReadLineEx(Cosmos.System.ConsoleKeyEx.Escape);
                 if (!path.Contains(@":\"))
                 {
-                    path = Path.Join(Shell.Shell.CurrentShell.WorkingDir, path);
+                    path = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, path);
                 }
 
                 Console.BackgroundColor = ConsoleColor.Black;
