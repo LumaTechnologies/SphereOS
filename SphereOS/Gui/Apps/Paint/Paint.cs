@@ -16,6 +16,8 @@ namespace SphereOS.Gui.Apps.Paint
 
         ToolBox toolBox;
 
+        ColourPicker colourPicker;
+
         WindowManager wm = ProcessManager.GetProcess<WindowManager>();
 
         private bool down = false;
@@ -48,6 +50,8 @@ namespace SphereOS.Gui.Apps.Paint
 
             toolBox = new ToolBox(this, canvas);
 
+            colourPicker = new ColourPicker(this, canvas);
+
             wm.Update(canvas);
         }
 
@@ -68,6 +72,8 @@ namespace SphereOS.Gui.Apps.Paint
                    (int)(MouseManager.X - canvas.ScreenX),
                    (int)(MouseManager.Y - canvas.ScreenY)
                 );
+
+                wm.Update(canvas);
             }
         }
     }

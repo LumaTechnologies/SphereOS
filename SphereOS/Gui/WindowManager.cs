@@ -301,8 +301,8 @@ namespace SphereOS.Gui
         internal void ShowFps()
         {
             fpsShown = true;
-            UpdateFps();
             AddWindow(fpsCounter);
+            UpdateFps();
         }
 
         private void SetupWallpaper()

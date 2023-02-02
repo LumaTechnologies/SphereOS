@@ -80,7 +80,7 @@ namespace SphereOS.Gui.UILib
             else
             {
                 double oldKnobX = knobX;
-                if (knobX == -1)
+                if (knobX < 0)
                 {
                     knobX = knobGoal;
                 }

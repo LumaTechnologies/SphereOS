@@ -1,4 +1,5 @@
 ﻿using Cosmos.System.Graphics;
+using System.Drawing;
 
 namespace SphereOS.Gui.UILib
 {
@@ -33,5 +34,7 @@ namespace SphereOS.Gui.UILib
         internal string Text { get; set; } = string.Empty;
 
         internal object Tag { get; set; }
+
+        internal Color? BackgroundColourOverride { get; set; } = null;
     }
 }

@@ -243,7 +243,7 @@ namespace SphereOS.Gui.Apps
 
             mouse.DrawString("Mouse sensitivity", Color.Gray, 12, 40);
 
-            RangeSlider mouseSensitivity = new RangeSlider(mouse, 12, 40, 244, 16, min: 0.5f, value: settingsService.MouseSensitivity, max: 1.5f);
+            RangeSlider mouseSensitivity = new RangeSlider(mouse, 12, 68, 244, 30, min: 0.25f, value: settingsService.MouseSensitivity, max: 2f);
             mouseSensitivity.Changed = MouseSensitivityChanged;
             wm.AddWindow(mouseSensitivity);
 

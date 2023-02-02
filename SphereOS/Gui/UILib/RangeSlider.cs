@@ -21,6 +21,8 @@ namespace SphereOS.Gui.UILib
             _minimum = min;
             _value = value;
             _maximum = max;
+
+            Render();
         }
 
         private Color _background = Color.White;
@@ -144,8 +146,9 @@ namespace SphereOS.Gui.UILib
 
             if (held)
             {
-                float relativeX = (float)(MouseManager.X - X);
-                float clamped = Math.Clamp(relativeX, 0, Width);
+                float relativeX = (float)(MouseManager.X - ScreenX);
+                float clamped = Math.Clamp(relativeX, 0, Width - sliderWidth);
+                //DrawString(clamped.ToString(), Color.Red, 0, 0);
                 Value = (float)clamped.Map(0, Width - sliderWidth, (float)_minimum, (float)_maximum);
 
                 WM.UpdateQueue.Enqueue(this);
@@ -153,15 +156,26 @@ namespace SphereOS.Gui.UILib
 
             Clear(Background);
 
-            int slotY = (Height / 2) - (slotHeight / 2);
-            int sliderY = (Height / 2) - (sliderHeight / 2);
+            int slotY;
+            int sliderY;
+
+            if (_rangeLabels)
+            {
+                slotY = (sliderHeight / 2) - (slotHeight / 2);
+                sliderY = 0;
+            }
+            else
+            {
+                slotY = (Height / 2) - (slotHeight / 2);
+                sliderY = (Height / 2) - (sliderHeight / 2);
+            }
 
             // Slot
             DrawFilledRectangle(0, slotY, Width, slotHeight, Color.FromArgb(168, 168, 168));
 
             // Slider
             DrawFilledRectangle(
-                (int)((float)(_value)).Map((float)_minimum, (float)_maximum, 0, Width - sliderWidth),
+                (int)(_value.Map((float)_minimum, (float)_maximum, 0, Width - sliderWidth)),
                 sliderY,
                 sliderWidth,
                 sliderHeight,

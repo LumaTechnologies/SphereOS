@@ -334,12 +334,19 @@ namespace SphereOS.Gui.UILib
                 {
                     continue;
                 }
+                 
+                if (cell.BackgroundColourOverride != null)
+                {
+                    DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, (Color)cell.BackgroundColourOverride);
+                }
+                else
+                {
+                    // Border.
+                    DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, selected ? _selectedBorder : _border);
 
-                // Border.
-                DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, selected ? _selectedBorder : _border);
-
-                // Background.
-                DrawFilledRectangle(cellRect.X + 1, cellRect.Y + 1, cellRect.Width - 2, cellRect.Height - 2, selected ? _selectedBackground : _background);
+                    // Background.
+                    DrawFilledRectangle(cellRect.X + 1, cellRect.Y + 1, cellRect.Width - 2, cellRect.Height - 2, selected ? _selectedBackground : _background);
+                }
 
                 int textX;
                 switch (_textAlignment)

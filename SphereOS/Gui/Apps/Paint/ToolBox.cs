@@ -23,12 +23,20 @@ namespace SphereOS.Gui.Apps.Paint
 
         private void TableClicked(int x, int y)
         {
-            SelectedTool = table.Cells[table.SelectedCellIndex].Tag as Tool;
+            Tool tool = table.Cells[table.SelectedCellIndex].Tag as Tool;
+
+            if (tool != SelectedTool)
+            {
+                SelectedTool.Deselected();
+                SelectedTool = tool;
+            }
         }
 
         internal ToolBox(Paint paint, Window canvas) : base(paint, canvas.X - 128, canvas.Y, 96, canvas.Height)
         {
             paintInstance = paint;
+
+            SelectedTool = Tools[0];
 
             Title = "Toolbox";
 
