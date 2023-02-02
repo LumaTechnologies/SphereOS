@@ -62,11 +62,11 @@ namespace SphereOS.Gui.ShellComponents
             string timeText;
             if (settingsService.TwelveHourClock)
             {
-                timeText = DateTime.Now.ToString("h:mm tt");
+                timeText = DateTime.Now.ToString("ddd h:mm tt");
             }
             else
             {
-                timeText = DateTime.Now.ToString("HH:mm");
+                timeText = DateTime.Now.ToString("ddd HH:mm");
             }
             if (time.Text != timeText)
             {
@@ -106,7 +106,7 @@ namespace SphereOS.Gui.ShellComponents
             window.Clear(Color.Black);
             wm.AddWindow(window);
 
-            time = new TextBlock(window, window.Width - 72, 0, 64, window.Height);
+            time = new TextBlock(window, window.Width - 136, 0, 128, window.Height);
             time.Background = Color.Black;
             time.Foreground = Color.White;
             time.HorizontalAlignment = Alignment.End;

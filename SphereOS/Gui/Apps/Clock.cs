@@ -16,6 +16,8 @@ namespace SphereOS.Gui.Apps
 
         private int lastSecond = DateTime.Now.Second;
 
+        private SettingsService settingsService;
+
         [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Clock.ClockBackground.bmp")]
         private static byte[] clockBackgroundBytes;
         private static Bitmap clockBackgroundBitmap = new Bitmap(clockBackgroundBytes);
@@ -29,15 +31,29 @@ namespace SphereOS.Gui.Apps
 
         private void RenderClock()
         {
+            if (settingsService == null)
+            {
+                settingsService = ProcessManager.GetProcess<SettingsService>();
+            }
+
             DateTime now = DateTime.Now;
 
-            string timeText = now.ToString("h:mm:ss tt");
+            string timeText;
+            if (settingsService.TwelveHourClock)
+            {
+                timeText = DateTime.Now.ToString("h:mm:ss tt");
+            }
+            else
+            {
+                timeText = DateTime.Now.ToString("HH:mm:ss");
+            }
 
             int originX = window.Width / 2;
             int originY = window.Height / 2;
             int diameter = (int)(Math.Min(window.Width, window.Height) * 0.75f);
             int radius = diameter / 2;
 
+            /* Background */
             if (window.Width == 192 && window.Height == 192)
             {
                 window.DrawImage(clockBackgroundBitmap, 0, 0);
@@ -56,8 +72,6 @@ namespace SphereOS.Gui.Apps
             }
 
             window.DrawString(timeText, Color.Black, (window.Width / 2) - ((timeText.Length * 8) / 2), 4);
-
-            /* Background */
 
             /* Second hand */
             double second = now.Second;
