@@ -1,19 +1,17 @@
 ﻿using SphereOS.Core;
+using SphereOS.Gui.SmoothMono;
 using System;
 using System.Drawing;
 
 namespace SphereOS.Gui.UILib
 {
-    internal class MessageBox
+    internal class PromptBox : MessageBox
     {
-        internal MessageBox(Process process, string title, string message)
+        internal PromptBox(Process process, string title, string message, string placeholder, Action<string> submitted) : base(process, title, message)
         {
-            this.Process = process;
-            Title = title;
-            Message = message;
+            Placeholder = placeholder;
+            Submitted = submitted;
         }
-
-        protected const int Padding = 12;
 
         internal void Show()
         {
@@ -25,7 +23,7 @@ namespace SphereOS.Gui.UILib
                 longestLineLength = Math.Max(longestLineLength, line.Length);
             }
 
-            int width = Math.Max(192, (Padding * 2) + (8 * longestLineLength));
+            int width = Math.Max(256, (Padding * 2) + (8 * longestLineLength));
             int height = 128 + ((Message.Split('\n').Length - 1) * 16);
 
             AppWindow window = new AppWindow(Process, (int)((wm.ScreenWidth / 2) - (height / 2)), (int)((wm.ScreenWidth / 2) - (width / 2)), width, height);
@@ -36,11 +34,17 @@ namespace SphereOS.Gui.UILib
             window.DrawFilledRectangle(0, window.Height - (Padding * 2) - 20, window.Width, (Padding * 2) + 20, Color.Gray);
             window.DrawString(Message, Color.Black, Padding, Padding);
 
+            TextBox textBox = new TextBox(window, Padding, Padding + FontData.Height + 8, 192, 20);
+            textBox.PlaceholderText = Placeholder;
+            wm.AddWindow(textBox);
+
             Button ok = new Button(window, window.Width - 80 - Padding, window.Height - 20 - Padding, 80, 20);
             ok.Text = "OK";
             ok.OnClick = (int x, int y) =>
             {
                 wm.RemoveWindow(window);
+
+                Submitted.Invoke(textBox.Text);
             };
             wm.AddWindow(ok);
 
@@ -49,10 +53,8 @@ namespace SphereOS.Gui.UILib
             ProcessManager.GetProcess<Sound.SoundService>().PlaySystemSound(Sound.SystemSound.Alert);
         }
 
-        internal Process Process { get; private set; }
+        internal Action<string> Submitted { get; private set; }
 
-        internal string Title { get; private set; }
-
-        internal string Message { get; private set; }
+        internal string Placeholder { get; private set; }
     }
 }

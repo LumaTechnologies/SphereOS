@@ -1,4 +1,5 @@
-﻿using Cosmos.System.Graphics;
+﻿using Cosmos.System;
+using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.UILib;
 using SphereOS.Users;
@@ -49,6 +50,9 @@ namespace SphereOS.Gui.Apps
                 case 3:
                     ShowUsersCategory();
                     break;
+                case 4:
+                    ShowMouseCategory();
+                    break;
                 default:
                     return;
             }
@@ -62,6 +66,16 @@ namespace SphereOS.Gui.Apps
         private void TwelveHourClockChanged(bool @checked)
         {
             settingsService.TwelveHourClock = @checked;
+        }
+
+        private void ShowFpsChanged(bool @checked)
+        {
+            settingsService.ShowFps = @checked;
+        }
+
+        private void MouseSensitivityChanged(float value)
+        {
+            settingsService.MouseSensitivity = value;
         }
 
         private void ShowAppearanceCategory()
@@ -80,6 +94,12 @@ namespace SphereOS.Gui.Apps
             leftStartButton.Checked = settingsService.LeftHandStartButton;
             leftStartButton.CheckBoxChanged = LeftStartButtonChanged;
             wm.AddWindow(leftStartButton);
+
+            Switch showFps = new Switch(appearance, 12, 68, 244, 16);
+            showFps.Text = "Show frames per second";
+            showFps.Checked = settingsService.ShowFps;
+            showFps.CheckBoxChanged = ShowFpsChanged;
+            wm.AddWindow(showFps);
 
             wm.Update(window);
         }
@@ -210,6 +230,26 @@ namespace SphereOS.Gui.Apps
             wm.Update(window);
         }
 
+        private void ShowMouseCategory()
+        {
+            if (currentCategoryWindow != null)
+            {
+                wm.RemoveWindow(currentCategoryWindow);
+            }
+            Window mouse = new Window(this, window, 128, 0, window.Width - 128, window.Height);
+            currentCategoryWindow = mouse;
+            mouse.DrawString("Mouse Settings", Color.DarkBlue, 12, 12);
+            wm.AddWindow(mouse);
+
+            mouse.DrawString("Mouse sensitivity", Color.Gray, 12, 40);
+
+            RangeSlider mouseSensitivity = new RangeSlider(mouse, 12, 40, 244, 16, min: 0.5f, value: settingsService.MouseSensitivity, max: 1.5f);
+            mouseSensitivity.Changed = MouseSensitivityChanged;
+            wm.AddWindow(mouseSensitivity);
+
+            wm.Update(window);
+        }
+
         #region Process
         internal override void Start()
         {
@@ -237,6 +277,7 @@ namespace SphereOS.Gui.Apps
             categoryTable.Cells.Add(new TableCell("Display"));
             categoryTable.Cells.Add(new TableCell("Date & Time"));
             categoryTable.Cells.Add(new TableCell("Users"));
+            categoryTable.Cells.Add(new TableCell("Mouse"));
 
             categoryTable.Render();
 

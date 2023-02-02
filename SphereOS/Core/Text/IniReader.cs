@@ -109,6 +109,19 @@ namespace SphereOS.Text
             }
         }
 
+        internal float ReadFloat(string key, string? section = null)
+        {
+            string value = ReadString(key, section);
+            if (float.TryParse(value, out float result))
+            {
+                return result;
+            }
+            else
+            {
+                throw new Exception($"Format exception: {value}");
+            }
+        }
+
         internal List<string> GetSections()
         {
             List<string> sections = new List<string>();
@@ -159,6 +172,20 @@ namespace SphereOS.Text
             try
             {
                 value = ReadInt(key, section);
+                return true;
+            }
+            catch
+            {
+                value = default;
+                return false;
+            }
+        }
+
+        internal bool TryReadFloat(string key, out float value, string? section = null)
+        {
+            try
+            {
+                value = ReadFloat(key, section);
                 return true;
             }
             catch

@@ -50,6 +50,8 @@ namespace SphereOS.Gui
         private int framesThisSecond;
         private int lastSecond;
 
+        private bool fpsShown = true;
+
         private MouseState lastMouseState = MouseState.None;
         private uint lastMouseX = 0;
         private uint lastMouseY = 0;
@@ -279,11 +281,28 @@ namespace SphereOS.Gui
             {
                 fps = framesThisSecond;
                 framesThisSecond = 0;
-                fpsCounter.Clear(Color.Black);
-                fpsCounter.DrawString($"{fps.ToString()} FPS", Color.White, 0, 0);
-                Update(fpsCounter);
+
+                if (fpsShown)
+                {
+                    fpsCounter.Clear(Color.Black);
+                    fpsCounter.DrawString($"{fps.ToString()} FPS", Color.White, 0, 0);
+                    Update(fpsCounter);
+                }
             }
             lastSecond = second;
+        }
+
+        internal void HideFps()
+        {
+            fpsShown = false;
+            RemoveWindow(fpsCounter);
+        }
+
+        internal void ShowFps()
+        {
+            fpsShown = true;
+            UpdateFps();
+            AddWindow(fpsCounter);
         }
 
         private void SetupWallpaper()
@@ -340,7 +359,10 @@ namespace SphereOS.Gui
             SetupWallpaper();
 
             fpsCounter = new Window(this, (int)(ScreenWidth) - 64, (int)(ScreenHeight - 16), 64, 16);
-            AddWindow(fpsCounter);
+            if (settingsService.ShowFps)
+            {
+                AddWindow(fpsCounter);
+            }
         }
 
         internal override void Run()

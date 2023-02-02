@@ -28,6 +28,8 @@ namespace SphereOS.Gui.UILib
 
         internal bool AllowDeselection { get; set; } = true;
 
+        internal bool AllowSelection { get; set; } = true;
+
         private double scrollY = 0;
 
         private bool dragging = false;
@@ -200,6 +202,7 @@ namespace SphereOS.Gui.UILib
                 return;
             }
 
+
             int scrollAdjustedY = (int)(y + scrollY);
             if (scrollAdjustedY < 0 || scrollAdjustedY > _cellHeight * Cells.Count)
             {
@@ -210,8 +213,11 @@ namespace SphereOS.Gui.UILib
                 return;
             }
 
-            SelectedCellIndex = scrollAdjustedY / _cellHeight;
-            TableCellSelected?.Invoke(_selectedCellIndex);
+            if (AllowSelection)
+            {
+                SelectedCellIndex = scrollAdjustedY / _cellHeight;
+                TableCellSelected?.Invoke(_selectedCellIndex);
+            }
         }
 
         private bool CanScrollUp

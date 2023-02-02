@@ -35,7 +35,7 @@ namespace SphereOS.Commands.FilesTopic
             if (File.Exists(path))
             {
                 Util.PrintLine(ConsoleColor.Red, "This file already exists.");
-                return ReturnCode.NotFound;
+                return ReturnCode.Failure;
             }
 
             File.Create(path).Close();

@@ -32,9 +32,17 @@ namespace SphereOS.Commands.FilesTopic
             }
 
             var newDir = PathUtil.JoinPaths(Shell.Shell.CurrentShell.WorkingDir, args[1]);
-            if (Directory.Exists(newDir) && FileSecurity.CanAccess(Kernel.CurrentUser, newDir))
+            if (Directory.Exists(newDir))
             {
-                Shell.Shell.CurrentShell.WorkingDir = Path.GetFullPath(newDir);
+                if (FileSecurity.CanAccess(Kernel.CurrentUser, newDir))
+                {
+                    Shell.Shell.CurrentShell.WorkingDir = Path.GetFullPath(newDir);
+                }
+                else
+                {
+                    Util.PrintLine(ConsoleColor.Red, $"You do not have permission to access this directory.");
+                    return ReturnCode.Unauthorised;
+                }
             }
             else
             {

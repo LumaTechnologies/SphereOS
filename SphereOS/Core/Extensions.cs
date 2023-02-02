@@ -15,5 +15,14 @@ namespace SphereOS.Core
 
             list.Insert(newIndex, item);
         }
+
+        // https://stackoverflow.com/questions/14353485/how-do-i-map-numbers-in-c-sharp-like-with-map-in-arduino
+        public static float Map(this float value, float fromSource, float toSource, float fromTarget, float toTarget)
+        {
+            return (value - fromSource)
+                   / (toSource - fromSource)
+                   * (toTarget - fromTarget)
+                   + fromTarget;
+        }
     }
 }

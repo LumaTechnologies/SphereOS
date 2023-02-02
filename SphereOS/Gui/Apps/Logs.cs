@@ -5,6 +5,7 @@ using SphereOS.Logging;
 using System;
 using System.Drawing;
 using Cosmos.System.Graphics;
+using System.Text;
 
 namespace SphereOS.Gui.Apps
 {
@@ -51,7 +52,7 @@ namespace SphereOS.Gui.Apps
                     icon = null;
                     break;
             }
-            table.Cells.Add(new TableCell(icon, $"{log.Date.ToString("HH:mm")} - {log.Source}: {log.Message}"));
+            table.Cells.Add(new TableCell(icon, $"{log.Date.ToString("HH:mm")} - {log.Source}: {log.Message}", log));
         }
 
         private void Update()
@@ -86,6 +87,31 @@ namespace SphereOS.Gui.Apps
             window.Closing = TryStop;
 
             table = new Table(window, 12, 12, window.Width - 24, window.Height - 24 - 16 - 12);
+            table.OnDoubleClick = (int x, int y) =>
+            {
+                if (table.SelectedCellIndex != -1)
+                {
+                    LogEvent log = (LogEvent)table.Cells[table.SelectedCellIndex].Tag;
+
+                    string priority = log.Priority switch {
+                        LogPriority.Info => "Info",
+                        LogPriority.Warning => "Warning",
+                        LogPriority.Error => "Error",
+                        _ => "Unknown"
+                    };
+
+                    StringBuilder builder = new StringBuilder();
+
+                    builder.AppendLine($"Date: {log.Date.ToLongDateString()} {log.Date.ToLongTimeString()}");
+                    builder.AppendLine($"Source: {log.Source}");
+                    builder.AppendLine($"Priority: {priority}");
+                    builder.AppendLine();
+                    builder.Append(log.Message);
+
+                    MessageBox messageBox = new MessageBox(this, $"{log.Source}: Log Event", builder.ToString());
+                    messageBox.Show();
+                }
+            };
             wm.AddWindow(table);
 
             table.Cells.Clear();

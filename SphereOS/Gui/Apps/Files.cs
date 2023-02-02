@@ -189,26 +189,7 @@ namespace SphereOS.Gui.Apps
                 }
                 else if ((string)cell.Tag == "File")
                 {
-                    if (!FileSecurity.CanAccess(Kernel.CurrentUser, path))
-                    {
-                        MessageBox messageBox = new MessageBox(this, "Unauthorised", $"Access to {Path.GetFileName(path)} is unauthorised.");
-                        messageBox.Show();
-
-                        Log.Info("Files", $"{Kernel.CurrentUser.Username}: Unauthorised file blocked.");
-
-                        return;
-                    }
-
-                    switch (Path.GetExtension(path))
-                    {
-                        case ".txt" or ".ini" or ".rs":
-                            ProcessManager.AddProcess(new Notepad(path)).Start();
-                            break;
-                        default:
-                            MessageBox messageBox = new MessageBox(this, "Cannot Open File", "SphereOS cannot open this type of file.");
-                            messageBox.Show();
-                            break;
-                    }
+                    FileOpener.OpenFile(path);
                 }
             }
         }
