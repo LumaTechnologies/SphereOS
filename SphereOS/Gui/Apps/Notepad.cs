@@ -18,6 +18,8 @@ namespace SphereOS.Gui.Apps
         AppWindow window;
 
         WindowManager wm = ProcessManager.GetProcess<WindowManager>();
+        
+        SettingsService settingsService = ProcessManager.GetProcess<SettingsService>();
 
         TextBox textBox;
 
@@ -103,6 +105,20 @@ namespace SphereOS.Gui.Apps
             File.WriteAllText(path, textBox.Text);
         }
 
+        private void ApplyTheme()
+        {
+            if (settingsService.DarkNotepad)
+            {
+                textBox.Background = Color.Black;
+                textBox.Foreground = Color.White;
+            }
+            else
+            {
+                textBox.Background = Color.White;
+                textBox.Foreground = Color.Black;
+            }
+        }
+
         private void OpenViewSettings()
         {
             AppWindow settingsWindow = new AppWindow(this, 320, 264, 144, 36);
@@ -112,18 +128,8 @@ namespace SphereOS.Gui.Apps
             Switch darkSwitch = new Switch(settingsWindow, 8, 8, settingsWindow.Width - 16, settingsWindow.Height - 16);
             darkSwitch.Text = "Dark theme";
             darkSwitch.CheckBoxChanged = (bool @checked) => {
-                SettingsService settingsService = ProcessManager.GetProcess<SettingsService>();
                 settingsService.DarkNotepad = @checked;
-                if (@checked)
-                {
-                    textBox.Background = Color.Black;
-                    textBox.Foreground = Color.White;
-                }
-                else
-                {
-                    textBox.Background = Color.White;
-                    textBox.Foreground = Color.Black;
-                }
+                ApplyTheme();
             };
             wm.AddWindow(darkSwitch);
 
@@ -141,22 +147,10 @@ namespace SphereOS.Gui.Apps
             window.UserResized = WindowResized;
 
             shortcutBar = new ShortcutBar(window, 0, 0, window.Width, 20);
-            shortcutBar.Cells.Add(new ShortcutBarCell("Open", () =>
-            {
-                OpenFilePrompt();
-            }));
-            shortcutBar.Cells.Add(new ShortcutBarCell("Save", () =>
-            {
-                Save();
-            }));
-            shortcutBar.Cells.Add(new ShortcutBarCell("Save As", () =>
-            {
-                SaveAsPrompt();
-            }));
-            shortcutBar.Cells.Add(new ShortcutBarCell("View", () =>
-            {
-                OpenViewSettings();
-            }));
+            shortcutBar.Cells.Add(new ShortcutBarCell("Open", OpenFilePrompt));
+            shortcutBar.Cells.Add(new ShortcutBarCell("Save", Save));
+            shortcutBar.Cells.Add(new ShortcutBarCell("Save As", SaveAsPrompt));
+            shortcutBar.Cells.Add(new ShortcutBarCell("View", OpenViewSettings));
             shortcutBar.Render();
             wm.AddWindow(shortcutBar);
 

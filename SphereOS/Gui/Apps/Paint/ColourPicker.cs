@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SphereOS.Gui.Apps.Paint
 {
-    internal class ColourPicker : AppWindow
+    internal class ColourPicker : Window
     {
         private Paint paintInstance;
 
@@ -32,30 +32,43 @@ namespace SphereOS.Gui.Apps.Paint
             Color.DarkCyan,
             Color.Cyan,
             Color.BlueViolet,
-            Color.AliceBlue
+            Color.AliceBlue,
+            Color.Brown,
+            Color.CornflowerBlue,
+            Color.Azure,
+            Color.Beige,
+            Color.DarkBlue,
+            Color.DarkSlateBlue,
+            Color.SeaGreen
         };
 
         private void TableClicked(int x, int y)
         {
             // Clear 'Selected' text on previously selected colour.
-            table.Cells[table.SelectedCellIndex].Text = string.Empty;
+            foreach (var cell in table.Cells)
+            {
+                cell.Text = string.Empty;
+            }
 
-            var cell = table.Cells[table.SelectedCellIndex];
-            Color color = (Color)cell.Tag;
+            var selectedCell = table.Cells[table.SelectedCellIndex];
+            Color color = (Color)selectedCell.Tag;
 
             paintInstance.SelectedColor = color;
 
-            cell.Text = "Colour";
+            selectedCell.Text = "Selected";
             table.Foreground = color.GetForegroundColour();
 
             table.Render();
         }
 
-        internal ColourPicker(Paint paint, Window canvas) : base(paint, canvas.X + canvas.Width + 16, canvas.Y, 128, 128)
+        internal ColourPicker(Paint paint, int x, int y, int width, int height) : base(paint, x, y, width, height)
         {
             paintInstance = paint;
 
-            Title = "Colours";
+            Clear(Color.FromArgb(107, 107, 107));
+            DrawString("Colours", Color.White, 8, 8);
+
+            table = new Table(this, 0, 32, Width, Height - 32);
             table.AllowDeselection = false;
             table.CellHeight = 20;
             table.TextAlignment = Alignment.Middle;
@@ -70,10 +83,12 @@ namespace SphereOS.Gui.Apps.Paint
                     cell.Text = "Selected";
                     table.Foreground = colour.GetForegroundColour();
                 }
+                table.Cells.Add(cell);
             }
 
             table.Render();
 
+            WM.AddWindow(this);
             WM.AddWindow(table);
         }
     }

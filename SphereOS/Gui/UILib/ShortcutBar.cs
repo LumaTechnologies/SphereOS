@@ -61,9 +61,11 @@ namespace SphereOS.Gui.UILib
 
         private void ShortcutBarClick(int x, int y)
         {
+            int cellEndX = 0;
             foreach (var cell in Cells)
             {
-                if (x < (_cellPadding * 2) + (cell.Text.Length * FontData.Width))
+                cellEndX += (_cellPadding * 2) + (FontData.Width * cell.Text.Length);
+                if (x < cellEndX)
                 {
                     cell.OnClick?.Invoke();
                     return;
@@ -75,18 +77,18 @@ namespace SphereOS.Gui.UILib
         {
             Clear(Background);
 
-            int x = 0;
+            int cellX = 0;
             for (int i = 0; i < Cells.Count; i++)
             {
                 ShortcutBarCell cell = Cells[i];
-                Rectangle cellRect = new Rectangle(x, 0, Width, Height);
+                Rectangle cellRect = new Rectangle(cellX, 0, Width, Height);
 
                 int textX = cellRect.X + _cellPadding;
                 int textY = cellRect.Y + (cellRect.Height / 2) - (FontData.Height / 2);
 
                 DrawString(cell.Text, Foreground, textX, textY);
 
-                x += (_cellPadding * 2) + (FontData.Width * cell.Text.Length);
+                cellX += (_cellPadding * 2) + (FontData.Width * cell.Text.Length);
             }
 
             WM.Update(this);

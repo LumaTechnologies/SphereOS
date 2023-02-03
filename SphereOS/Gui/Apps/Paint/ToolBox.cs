@@ -2,13 +2,14 @@
 using SphereOS.Gui.UILib;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SphereOS.Gui.Apps.Paint
 {
-    internal class ToolBox : AppWindow
+    internal class ToolBox : Window
     {
         private Paint paintInstance;
 
@@ -32,15 +33,16 @@ namespace SphereOS.Gui.Apps.Paint
             }
         }
 
-        internal ToolBox(Paint paint, Window canvas) : base(paint, canvas.X - 128, canvas.Y, 96, canvas.Height)
+        internal ToolBox(Paint paint, int x, int y, int width, int height) : base(paint, x, y, width, height)
         {
             paintInstance = paint;
 
             SelectedTool = Tools[0];
 
-            Title = "Toolbox";
+            Clear(Color.FromArgb(107, 107, 107));
+            DrawString("Toolbox", Color.White, 8, 8);
 
-            table = new Table(this, 0, 0, this.Width, this.Height);
+            table = new Table(this, 0, 32, Width, Height - 32);
             table.AllowDeselection = false;
             table.CellHeight = 24;
             table.TextAlignment = Alignment.Middle;
@@ -52,6 +54,8 @@ namespace SphereOS.Gui.Apps.Paint
             }
 
             table.Render();
+
+            WM.AddWindow(this);
             WM.AddWindow(table);
         }
     }

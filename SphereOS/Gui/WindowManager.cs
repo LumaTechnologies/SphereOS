@@ -330,8 +330,9 @@ namespace SphereOS.Gui
 
         private void Sweep()
         {
-            if (sweepCounter % 10 == 0)
+            if (sweepCounter == 10)
             {
+                sweepCounter = 0;
                 foreach (Window window in windows)
                 {
                     if (window.Process != null && !window.Process.IsRunning)

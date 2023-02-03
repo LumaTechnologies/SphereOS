@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace SphereOS.Gui
 {
-    internal static class FileOpener
+    internal static class ProtocolHandler
     {
-        internal static void OpenFile(string path)
+        internal static void Open(string path)
         {
             WindowManager wm = ProcessManager.GetProcess<WindowManager>();
 
@@ -29,7 +29,12 @@ namespace SphereOS.Gui
 
             switch (Path.GetExtension(path).ToLower())
             {
-                case ".txt" or ".ini" or ".cfg" or ".rs":
+                case "rs":
+                    var script = new RiverScript.Script(File.ReadAllText(path));
+                    var dialogue = new RsDialogue(wm, script, Path.GetFileName(path));
+                    dialogue.Show();
+                    break;
+                case ".txt" or ".ini" or ".cfg":
                     ProcessManager.AddProcess(new Notepad(path)).Start();
                     break;
                 default:

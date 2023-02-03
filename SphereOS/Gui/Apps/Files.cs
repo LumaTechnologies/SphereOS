@@ -189,7 +189,7 @@ namespace SphereOS.Gui.Apps
                 }
                 else if ((string)cell.Tag == "File")
                 {
-                    FileOpener.OpenFile(path);
+                    ProtocolHandler.Open(path);
                 }
             }
         }

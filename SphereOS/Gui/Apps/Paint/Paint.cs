@@ -12,7 +12,9 @@ namespace SphereOS.Gui.Apps.Paint
         {
         }
 
-        AppWindow canvas;
+        AppWindow window;
+
+        Window canvas;
 
         ToolBox toolBox;
 
@@ -40,21 +42,28 @@ namespace SphereOS.Gui.Apps.Paint
         internal override void Start()
         {
             base.Start();
-            canvas = new AppWindow(this, 256, 256, 320, 256);
-            wm.AddWindow(canvas);
-            canvas.Title = "Paint";
-            canvas.Closing = TryStop;
-            canvas.OnDown = CanvasDown;
+            window = new AppWindow(this, 256, 256, 640, 320);
+            window.Title = "Paint";
+            window.Closing = TryStop;
+            window.OnDown = CanvasDown;
+            window.Clear(Color.FromArgb(73, 73, 73));
+            wm.AddWindow(window);
 
+            int canvasWidth = 384;
+            int canvasHeight = 256;
+            canvas = new Window(this, (window.Width / 2) - (canvasWidth / 2), (window.Height / 2) - (canvasHeight / 2), 320, 256);
+            canvas.RelativeTo = window;
             canvas.Clear(Color.White);
+            wm.AddWindow(canvas);
 
-            toolBox = new ToolBox(this, canvas);
+            toolBox = new ToolBox(this, 0, 0, 128, window.Height);
+            toolBox.RelativeTo = window;
+            colourPicker = new ColourPicker(this, window.Width - 128, 0, 128, window.Height);
+            colourPicker.RelativeTo = window;
 
-            colourPicker = new ColourPicker(this, canvas);
-
-            wm.Update(canvas);
+            wm.Update(window);
         }
-
+        
         internal override void Run()
         {
             if (down)
