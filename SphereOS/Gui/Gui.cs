@@ -1,6 +1,7 @@
 ﻿using SphereOS.Core;
 using SphereOS.Gui.UILib;
 using SphereOS.Logging;
+using SphereOS.Users;
 using System;
 
 namespace SphereOS.Gui
@@ -27,6 +28,8 @@ namespace SphereOS.Gui
             ProcessManager.AddProcess(wm, new Sound.SoundService()).Start();
 
             ProcessManager.AddProcess(wm, new ShellComponents.Taskbar()).Start();
+
+            Kernel.CurrentUser = UserManager.Users[0];
 
             if (Cosmos.Core.CPU.GetAmountOfRAM() < 1000)
             {

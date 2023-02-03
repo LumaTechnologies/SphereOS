@@ -230,6 +230,8 @@ namespace SphereOS.Gui.UILib
 
                     MarkLine(caretLine - 1);
                     MarkLine(caretLine);
+
+                    Changed?.Invoke();
                     break;
                 case ConsoleKeyEx.Backspace:
                     if (caretCol == 0)
@@ -244,22 +246,26 @@ namespace SphereOS.Gui.UILib
 
                         MarkLine(caretLine);
                         MarkLine(caretLine + 1);
+
+                        Changed?.Invoke();
                     }
                     else
                     {
                         lines[caretLine] = lines[caretLine].Remove(caretCol - 1, 1);
                         caretCol--;
                         MarkLine(caretLine);
+
+                        Changed?.Invoke();
                     }
                     break;
                 default:
                     lines[caretLine] = lines[caretLine].Insert(caretCol, key.KeyChar.ToString());
                     caretCol++;
                     MarkLine(caretLine);
+
+                    Changed?.Invoke();
                     break;
             }
-
-            Changed?.Invoke();
 
             Render();
         }

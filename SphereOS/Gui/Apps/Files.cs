@@ -34,6 +34,18 @@ namespace SphereOS.Gui.Apps
             private static byte[] _iconBytes_File;
             internal static Bitmap Icon_File = new Bitmap(_iconBytes_File);
 
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Files.File_Config.bmp")]
+            private static byte[] _iconBytes_File_Config;
+            internal static Bitmap Icon_File_Config = new Bitmap(_iconBytes_File_Config);
+
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Files.File_Rs.bmp")]
+            private static byte[] _iconBytes_File_Rs;
+            internal static Bitmap Icon_File_Rs = new Bitmap(_iconBytes_File_Rs);
+
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Files.File_Text.bmp")]
+            private static byte[] _iconBytes_File_Text;
+            internal static Bitmap Icon_File_Text = new Bitmap(_iconBytes_File_Text);
+
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Files.Drive.bmp")]
             private static byte[] _iconBytes_Drive;
             internal static Bitmap Icon_Drive = new Bitmap(_iconBytes_Drive);
@@ -60,12 +72,21 @@ namespace SphereOS.Gui.Apps
         {
             ("SphereOS (0:)", @"0:\"),
             ("My Home", @$"0:\users\{Kernel.CurrentUser.Username}"),
-            ("Users", @"0:\users")
+            ("Users", @"0:\users"),
+            ("etc", @"0:\etc"),
         };
 
         private Bitmap GetFileIcon(string path)
         {
-            return Icons.Icon_File;
+            string extension = Path.GetExtension(path).ToLower();
+
+            return extension switch
+            {
+                ".txt" or ".md" or ".log" => Icons.Icon_File_Text,
+                ".rs" => Icons.Icon_File_Rs,
+                ".ini" or ".cfg" => Icons.Icon_File_Config,
+                _ => Icons.Icon_File
+            };
         }
 
         private Bitmap GetDirectoryIcon(string path)

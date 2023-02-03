@@ -17,9 +17,9 @@ namespace SphereOS.Gui
     /// <summary>
     /// A dialogue that runs a RiverScript script.
     /// </summary>
-    internal class RsDialogue
+    internal class RiverScriptUIConsole
     {
-        internal RsDialogue(Process process, Script script, string title)
+        internal RiverScriptUIConsole(Process process, Script script, string title)
         {
             this.Process = process;
             this.Script = script;
@@ -42,7 +42,11 @@ namespace SphereOS.Gui
             wm.AddWindow(outputWindow);
             wm.Update(outputWindow);
 
-            int outputLine = 0;
+            int line = 0;
+            int col = 0;
+            int width = outputWindow.Width / FontData.Width;
+            int height = outputWindow.Height / FontData.Height;
+            char[] outputBuffer = new char[width * height];
 
             try
             {
@@ -54,16 +58,47 @@ namespace SphereOS.Gui
                 new List<string> { ("object") },
                 (List<VMObject> arguments) =>
                 {
-                    outputWindow.DrawString(arguments[0].ToString(), Color.White, 0, outputLine * FontData.Height);
+                    string str = arguments[0].ToString();
+                    for (int i = 0; i < str.Length; i++)
+                    {
+                        outputWindow.DrawString(str[i].ToString(), Color.White, col * FontData.Width, line * FontData.Height);
+
+                        outputBuffer[(line * width) + col] = str[i];
+
+                        col++;
+                        if (col >= width)
+                        {
+                            line++;
+                            col = 0;
+                        }
+                    }
                     wm.Update(outputWindow);
 
-                    outputLine++;
+                    line++;
+                    col = 0;
 
-                    /*if (outputLine > outputWindow.Height / FontData.Height)
+                    if (line > outputWindow.Height / FontData.Height)
                     {
+                        // Scroll up.
+                        char[] newBuffer = new char[width * height];
+                        for (int y = 1; y < height; y++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                newBuffer[((y - 1) * width) + x] = outputBuffer[(y * width) + x];
+                            }
+                        }
+                        outputBuffer = newBuffer;
+
                         outputWindow.Clear(Color.Black);
-                        outputLine = 0;
-                    }*/
+                        for (int y = 0; y < height; y++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                outputWindow.DrawString(outputBuffer[(y * width) + x].ToString(), Color.White, x * FontData.Width, y * FontData.Height);
+                            }
+                        }
+                    }
 
                     return new VMNull();
                 }), scope: null);

@@ -372,7 +372,15 @@ namespace SphereOS.Gui.UILib
                     textX += (int)cell.Image.Width;
                     DrawImageAlpha(cell.Image, cellRect.X, (int)(cellRect.Y + (cellRect.Height / 2) - (cell.Image.Height / 2)));
                 }
-                DrawString(cell.Text, selected ? SelectedForeground : Foreground, textX, textY);
+
+                if (cell.ForegroundColourOverride != null)
+                {
+                    DrawString(cell.Text, (Color)cell.ForegroundColourOverride, textX, textY);
+                }
+                else
+                {
+                    DrawString(cell.Text, selected ? SelectedForeground : Foreground, textX, textY);
+                }
             }
 
             //DrawString($"{scrollY.ToString()} {dragging.ToString()} {scrollMax.ToString()}", Color.Red, 0, 0);

@@ -151,7 +151,12 @@ namespace SphereOS.Gui.ShellComponents
                     {
                         if (app.Name.ToLower().StartsWith(searchBox.Text.ToLower()))
                         {
-                            searchResults.Cells.Add(new TableCell(app.Icon.Resize(20, 20), app.Name, tag: app));
+                            string name = app.Name;
+                            if (name.Length > 8)
+                            {
+                                name = name.Substring(0, 8).Trim() + "...";
+                            }
+                            searchResults.Cells.Add(new TableCell(app.Icon.Resize(20, 20), name, tag: app));
                         }
                     }
                 }

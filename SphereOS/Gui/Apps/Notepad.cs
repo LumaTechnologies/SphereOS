@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using SphereOS.Core;
+using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using System.Drawing;
 using System.IO;
@@ -27,13 +28,36 @@ namespace SphereOS.Gui.Apps
 
         private string? path;
 
+        private bool modified = false;
+
+        private void TextChanged()
+        {
+            modified = true;
+
+            UpdateTitle();
+        }
+
         private void WindowResized()
         {
             textBox.Resize(window.Width, window.Height - 20);
             shortcutBar.Resize(window.Width, 20);
 
+            shortcutBar.Render();
+
             textBox.MarkAllLines();
             textBox.Render();
+        }
+
+        private void UpdateTitle()
+        {
+            if (modified)
+            {
+                window.Title = $"{Path.GetFileName(path)}* - Notepad";
+            }
+            else
+            {
+                window.Title = $"{Path.GetFileName(path)} - Notepad";
+            }
         }
 
         internal void Open(string newPath, bool readFile = true)
@@ -46,19 +70,25 @@ namespace SphereOS.Gui.Apps
                 messageBox.Show();
             }
 
-            if (!File.Exists(newPath))
+            if (readFile && !File.Exists(newPath))
             {
                 MessageBox messageBox = new MessageBox(this, "Notepad", $"No such file '{Path.GetFileName(newPath)}'.");
                 messageBox.Show();
             }
 
             path = newPath;
-            window.Title = $"{Path.GetFileName(newPath)} - Notepad";
 
             if (readFile)
             {
                 textBox.Text = File.ReadAllText(path);
+
+                textBox.MarkAllLines();
+                textBox.Render();
+
+                modified = false;
             }
+
+            UpdateTitle();
         }
 
         private void OpenFilePrompt()
@@ -103,30 +133,45 @@ namespace SphereOS.Gui.Apps
             }
             
             File.WriteAllText(path, textBox.Text);
+
+            modified = false;
+            UpdateTitle();
         }
 
         private void ApplyTheme()
         {
             if (settingsService.DarkNotepad)
             {
-                textBox.Background = Color.Black;
+                textBox.Background = Color.FromArgb(24, 24, 30);
                 textBox.Foreground = Color.White;
+
+                shortcutBar.Background = Color.FromArgb(56, 56, 71);
+                shortcutBar.Foreground = Color.White;
             }
             else
             {
                 textBox.Background = Color.White;
                 textBox.Foreground = Color.Black;
+
+                shortcutBar.Background = Color.LightGray;
+                shortcutBar.Foreground = Color.Black;
             }
+
+            textBox.MarkAllLines();
+            textBox.Render();
         }
 
         private void OpenViewSettings()
         {
-            AppWindow settingsWindow = new AppWindow(this, 320, 264, 144, 36);
+            AppWindow settingsWindow = new AppWindow(this, 320, 264, 256, 192);
+            settingsWindow.DrawString("Notepad Settings", Color.DarkBlue, 12, 12);
+            settingsWindow.DrawString($"Notepad v{Kernel.Version}", Color.DarkGray, 12, window.Height - 12 - FontData.Height);
             wm.AddWindow(settingsWindow);
-            settingsWindow.Title = "Settings";
+            settingsWindow.Title = "Notepad";
 
-            Switch darkSwitch = new Switch(settingsWindow, 8, 8, settingsWindow.Width - 16, settingsWindow.Height - 16);
+            Switch darkSwitch = new Switch(settingsWindow, 12, 40, settingsWindow.Width - 16, 20);
             darkSwitch.Text = "Dark theme";
+            darkSwitch.Checked = settingsService.DarkNotepad;
             darkSwitch.CheckBoxChanged = (bool @checked) => {
                 settingsService.DarkNotepad = @checked;
                 ApplyTheme();
@@ -156,7 +201,10 @@ namespace SphereOS.Gui.Apps
 
             textBox = new TextBox(window, 0, 20, window.Width, window.Height - 20);
             textBox.MultiLine = true;
+            textBox.Changed = TextChanged;
             wm.AddWindow(textBox);
+
+            ApplyTheme();
 
             Open(path);
 

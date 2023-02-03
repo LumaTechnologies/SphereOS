@@ -1,4 +1,5 @@
-﻿using SphereOS.Shell;
+﻿using SphereOS.Core.Memory;
+using SphereOS.Shell;
 using System;
 using System.Collections.Generic;
 
@@ -54,11 +55,7 @@ namespace SphereOS.Commands.GeneralTopic
 
         internal override ReturnCode Execute(string[] args)
         {
-            uint memTotal = Cosmos.Core.CPU.GetAmountOfRAM();
-            uint memUnavail = memTotal - (uint)Cosmos.Core.GCImplementation.GetAvailableRAM();
-            uint memUsed = (Cosmos.Core.GCImplementation.GetUsedRAM() / 1024 / 1024) + memUnavail;
-            uint memFree = memTotal - memUsed;
-            uint memPercentUsed = (uint)((float)memUsed / memTotal * 100f);
+            var statistics = MemoryStatisticsProvider.GetMemoryStatistics();
 
             List<(string Title, string Value)> items = new()
             {
@@ -66,10 +63,10 @@ namespace SphereOS.Commands.GeneralTopic
 
                 ("MEM", string.Format(
                     "{0:d1} MB / {1} MB ({2:d1}%) ({3} MB free)",
-                    memUsed,
-                    memTotal,
-                    memPercentUsed,
-                    memFree
+                    statistics.UsedMB,
+                    statistics.TotalMB,
+                    statistics.PercentUsed,
+                    statistics.FreeMB
                 )),
 
                 ("CPU", Cosmos.Core.CPU.GetCPUBrandString())

@@ -56,7 +56,6 @@ namespace SphereOS.Gui.Apps.Paint
             paintInstance.SelectedColor = color;
 
             selectedCell.Text = "Selected";
-            table.Foreground = color.GetForegroundColour();
 
             table.Render();
         }
@@ -78,10 +77,10 @@ namespace SphereOS.Gui.Apps.Paint
             {
                 TableCell cell = new(string.Empty, tag: colour);
                 cell.BackgroundColourOverride = colour;
+                cell.ForegroundColourOverride = colour.GetForegroundColour();
                 if (colour == paint.SelectedColor)
                 {
                     cell.Text = "Selected";
-                    table.Foreground = colour.GetForegroundColour();
                 }
                 table.Cells.Add(cell);
             }

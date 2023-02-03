@@ -107,6 +107,7 @@ namespace SphereOS.Gui
             RegisterApp(new AppMetadata("Demos", () => { return new DemoLauncher(); }, Icons.Icon_DemoLauncher, Color.FromArgb(14, 59, 76)));
             RegisterApp(new AppMetadata("Stopwatch", () => { return new Stopwatch(); }, Icons.Icon_Default, Color.FromArgb(14, 59, 76)));
             RegisterApp(new AppMetadata("Paint", () => { return new Apps.Paint.Paint(); }, Icons.Icon_Default, Color.FromArgb(14, 59, 76)));
+            RegisterApp(new AppMetadata("Memory Statistics", () => { return new Apps.MemoryStatistics(); }, Icons.Icon_Default, Color.FromArgb(14, 59, 76)));
 
             Log.Info("AppManager", $"{AppMetadatas.Count} apps were registered.");
 

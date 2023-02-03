@@ -36,5 +36,7 @@ namespace SphereOS.Gui.UILib
         internal object Tag { get; set; }
 
         internal Color? BackgroundColourOverride { get; set; } = null;
+
+        internal Color? ForegroundColourOverride { get; set; } = null;
     }
 }

@@ -63,6 +63,9 @@
       <None Remove="Gui\Resources\Files\Directory.bmp" />
       <None Remove="Gui\Resources\Files\Drive.bmp" />
       <None Remove="Gui\Resources\Files\File.bmp" />
+      <None Remove="Gui\Resources\Files\File_Config.bmp" />
+      <None Remove="Gui\Resources\Files\File_Rs.bmp" />
+      <None Remove="Gui\Resources\Files\File_Text.bmp" />
       <None Remove="Gui\Resources\Files\Home.bmp" />
       <None Remove="Gui\Resources\Files\Up.bmp" />
       <None Remove="Gui\Resources\Lock\Background.bmp" />
@@ -121,6 +124,11 @@
       <EmbeddedResource Include="Gui\Resources\Files\Directory.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Drive.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\File.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Files\File_Config.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Files\File_Rs.bmp">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Gui\Resources\Files\File_Text.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Home.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Up.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\Background.bmp" />

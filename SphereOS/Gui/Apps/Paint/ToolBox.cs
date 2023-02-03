@@ -37,7 +37,6 @@ namespace SphereOS.Gui.Apps.Paint
         {
             paintInstance = paint;
 
-            SelectedTool = Tools[0];
 
             Clear(Color.FromArgb(107, 107, 107));
             DrawString("Toolbox", Color.White, 8, 8);
@@ -52,6 +51,9 @@ namespace SphereOS.Gui.Apps.Paint
             {
                 table.Cells.Add(new TableCell(tool.Name, tool));
             }
+
+            SelectedTool = Tools[0];
+            table.SelectedCellIndex = 0;
 
             table.Render();
 
