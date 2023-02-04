@@ -27,9 +27,9 @@ namespace SphereOS.Gui
 
             ProcessManager.AddProcess(wm, new Sound.SoundService()).Start();
 
-            ProcessManager.AddProcess(wm, new ShellComponents.Taskbar()).Start();
+            ProcessManager.AddProcess(wm, new ShellComponents.Lock()).Start();
 
-            Kernel.CurrentUser = UserManager.Users[0];
+            //Kernel.CurrentUser = UserManager.Users[0];
 
             if (Cosmos.Core.CPU.GetAmountOfRAM() < 1000)
             {

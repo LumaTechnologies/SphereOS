@@ -169,7 +169,7 @@ namespace SphereOS.Gui.Apps
         {
             AppWindow settingsWindow = new AppWindow(this, 320, 264, 256, 192);
             settingsWindow.DrawString("Notepad Settings", Color.DarkBlue, 12, 12);
-            settingsWindow.DrawString($"Notepad v{Kernel.Version}", Color.DarkGray, 12, window.Height - 12 - FontData.Height);
+            settingsWindow.DrawString($"Notepad v{Kernel.Version}", Color.DarkGray, 12, settingsWindow.Height - 12 - FontData.Height);
             wm.AddWindow(settingsWindow);
             settingsWindow.Title = "Notepad";
 

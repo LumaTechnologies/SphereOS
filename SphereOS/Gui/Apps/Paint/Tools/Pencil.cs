@@ -28,19 +28,17 @@ namespace SphereOS.Gui.Apps.Paint.Tools
 
             if (mouseState == MouseState.Left)
             {
-                int x = mouseX;
-                int y = mouseY;
                 if (joinLine)
                 {
-                    canvas.DrawLine(joinX - x, joinY - y, x, y, paint.SelectedColor);
+                    canvas.DrawLine(joinX, joinY, mouseX, mouseY, paint.SelectedColor);
                 }
                 else
                 {
-                    canvas.DrawPoint(x, y, paint.SelectedColor);
+                    canvas.DrawPoint(mouseX, mouseY, paint.SelectedColor);
                 }
                 joinLine = true;
-                joinX = x;
-                joinY = y;
+                joinX = mouseX;
+                joinY = mouseY;
             }
             else
             {

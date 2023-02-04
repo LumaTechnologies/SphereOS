@@ -69,6 +69,18 @@ namespace SphereOS.Gui
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.DemoLauncher.bmp")]
             private static byte[] _iconBytes_DemoLauncher;
             internal static Bitmap Icon_DemoLauncher = new Bitmap(_iconBytes_DemoLauncher);
+
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Stopwatch.bmp")]
+            private static byte[] _iconBytes_Stopwatch;
+            internal static Bitmap Icon_Stopwatch = new Bitmap(_iconBytes_Stopwatch);
+
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Paint.bmp")]
+            private static byte[] _iconBytes_Paint;
+            internal static Bitmap Icon_Paint = new Bitmap(_iconBytes_Paint);
+
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.MemoryStatistics.bmp")]
+            private static byte[] _iconBytes_MemoryStatistics;
+            internal static Bitmap Icon_MemoryStatistics = new Bitmap(_iconBytes_MemoryStatistics);
         }
 
         internal static void RegisterApp(AppMetadata app)
@@ -104,10 +116,10 @@ namespace SphereOS.Gui
             //RegisterApp(new App("CodeStudio", () => { return new Apps.CodeStudio.CodeStudio(); }, Icons.Icon_CodeStudio, Color.FromArgb(127, 0, 255)));
             RegisterApp(new AppMetadata("Calendar", () => { return new Calendar(); }, Icons.Icon_Calendar, Color.FromArgb(168, 55, 47)));
             RegisterApp(new AppMetadata("Event Log", () => { return new Logs(); }, Icons.Icon_Logs, Color.FromArgb(14, 59, 76)));
-            RegisterApp(new AppMetadata("Demos", () => { return new DemoLauncher(); }, Icons.Icon_DemoLauncher, Color.FromArgb(14, 59, 76)));
-            RegisterApp(new AppMetadata("Stopwatch", () => { return new Stopwatch(); }, Icons.Icon_Default, Color.FromArgb(14, 59, 76)));
-            RegisterApp(new AppMetadata("Paint", () => { return new Apps.Paint.Paint(); }, Icons.Icon_Default, Color.FromArgb(14, 59, 76)));
-            RegisterApp(new AppMetadata("Memory Statistics", () => { return new Apps.MemoryStatistics(); }, Icons.Icon_Default, Color.FromArgb(14, 59, 76)));
+            RegisterApp(new AppMetadata("Demos", () => { return new DemoLauncher(); }, Icons.Icon_DemoLauncher, Color.FromArgb(25, 25, 25)));
+            RegisterApp(new AppMetadata("Stopwatch", () => { return new Stopwatch(); }, Icons.Icon_Stopwatch, Color.FromArgb(168, 55, 47)));
+            RegisterApp(new AppMetadata("Paint", () => { return new Apps.Paint.Paint(); }, Icons.Icon_Paint, Color.FromArgb(0, 115, 186)));
+            RegisterApp(new AppMetadata("Memory Statistics", () => { return new Apps.MemoryStatistics(); }, Icons.Icon_MemoryStatistics, Color.FromArgb(25, 25, 25)));
 
             Log.Info("AppManager", $"{AppMetadatas.Count} apps were registered.");
 

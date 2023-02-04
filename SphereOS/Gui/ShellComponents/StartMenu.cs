@@ -216,15 +216,17 @@ namespace SphereOS.Gui.ShellComponents
         {
             Table allAppsTable = new Table(window, 0, 0, window.Width, window.Height);
 
-            allAppsTable.CellHeight = 24;
+            allAppsTable.CellHeight = 32;
 
             allAppsTable.Background = Color.FromArgb(56, 56, 71);
             allAppsTable.Border = Color.FromArgb(36, 36, 51);
-            allAppsTable.Foreground = Color.White;
 
             foreach (AppMetadata app in AppManager.AppMetadatas)
             {
-                allAppsTable.Cells.Add(new TableCell(app.Icon.Resize(20, 20), app.Name));
+                TableCell cell = new TableCell(app.Icon.Resize(20, 20), app.Name);
+                cell.BackgroundColourOverride = app.ThemeColor;
+                cell.ForegroundColourOverride = app.ThemeColor.GetForegroundColour();
+                allAppsTable.Cells.Add(cell);
             }
             allAppsTable.Render();
 
@@ -238,6 +240,14 @@ namespace SphereOS.Gui.ShellComponents
             };
 
             wm.AddWindow(allAppsTable);
+
+            MovementAnimation animation = new MovementAnimation(allAppsTable)
+            {
+                From = new Rectangle(allAppsTable.X, allAppsTable.Y, allAppsTable.Width, allAppsTable.Height),
+                To = new Rectangle(allAppsTable.X, allAppsTable.Y, allAppsTable.Width, allAppsTable.Height + 64),
+                Duration = 10
+            };
+            animation.Start();
 
             wm.Update(allAppsTable);
         }

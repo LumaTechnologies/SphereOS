@@ -19,7 +19,7 @@
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
         <VMWareEdition>Workstation</VMWareEdition>
-        <DebugEnabled>False</DebugEnabled>
+        <DebugEnabled>True</DebugEnabled>
         <CompileVBEMultiboot>False</CompileVBEMultiboot>
         <CompressionType>Gzip</CompressionType>
         <TraceMode>All</TraceMode>
@@ -48,8 +48,11 @@
       <None Remove="Gui\Resources\AppIcons\Files.bmp" />
       <None Remove="Gui\Resources\AppIcons\Info.bmp" />
       <None Remove="Gui\Resources\AppIcons\Logs.bmp" />
+      <None Remove="Gui\Resources\AppIcons\MemoryStatistics.bmp" />
       <None Remove="Gui\Resources\AppIcons\Notepad.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Paint.bmp" />
       <None Remove="Gui\Resources\AppIcons\Settings.bmp" />
+      <None Remove="Gui\Resources\AppIcons\Stopwatch.bmp" />
       <None Remove="Gui\Resources\AppIcons\Tasks.bmp" />
       <None Remove="Gui\Resources\ButtonBackground.bmp" />
       <None Remove="Gui\Resources\Calculator\Display.bmp" />
@@ -109,8 +112,11 @@
       <EmbeddedResource Include="Gui\Resources\AppIcons\Files.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Info.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Logs.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\MemoryStatistics.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Notepad.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Paint.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Settings.bmp" />
+      <EmbeddedResource Include="Gui\Resources\AppIcons\Stopwatch.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Tasks.bmp" />
       <EmbeddedResource Include="Gui\Resources\ButtonBackground.bmp" />
       <EmbeddedResource Include="Gui\Resources\Calculator\Display.bmp" />

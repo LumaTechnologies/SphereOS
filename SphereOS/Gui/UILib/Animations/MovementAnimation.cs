@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using SphereOS.Gui;
+using SphereOS.Gui.UILib;
 
 namespace SphereOS.UILib.Animations
 {
@@ -37,6 +38,10 @@ namespace SphereOS.UILib.Animations
             if (Position == Duration)
             {
                 Window.MoveAndResize(To.X, To.Y, To.Width, To.Height);
+                if (Window is Control control)
+                {
+                    control.Render();
+                }
             }
             else
             {
@@ -48,6 +53,10 @@ namespace SphereOS.UILib.Animations
                     (int)Easing.Lerp(From.Height, To.Height, t)
                 );
                 Window.MoveAndResize(current.X, current.Y, current.Width, current.Height);
+                if (Window is Control control)
+                {
+                    control.Render();
+                }
             }
             return Finished;
         }

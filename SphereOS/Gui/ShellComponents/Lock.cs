@@ -148,7 +148,7 @@ namespace SphereOS.Gui.ShellComponents
             usersTable.Render();
             wm.AddWindow(usersTable);
 
-            Button shutdownButton = new Button(window, 48, window.Height - (borderHeight / 2) - (48 / 2), 160, 32);
+            /*Button shutdownButton = new Button(window, 48, window.Height - (borderHeight / 2) - (48 / 2), 160, 32);
             shutdownButton.ImageLocation = Button.ButtonImageLocation.Left;
             shutdownButton.Image = Images.Icon_ShutDown;
             shutdownButton.Background = borderColor;
@@ -159,7 +159,7 @@ namespace SphereOS.Gui.ShellComponents
             {
                 Power.Shutdown(reboot: false);
             };
-            wm.AddWindow(shutdownButton);
+            wm.AddWindow(shutdownButton);*/
 
             wm.Update(window);
         }

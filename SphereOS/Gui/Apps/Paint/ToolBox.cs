@@ -19,7 +19,8 @@ namespace SphereOS.Gui.Apps.Paint
 
         internal readonly List<Tool> Tools = new List<Tool>()
         {
-            new Tools.Pencil()
+            new Tools.Pencil(),
+            new Tools.CircleBrush()
         };
 
         private void TableClicked(int x, int y)

@@ -368,6 +368,7 @@ namespace SphereOS.Gui
 
         internal override void Run()
         {
+            Kernel.PrintDebug(windows.Count.ToString());
             UpdateFps();
 
             Sweep();

@@ -14,7 +14,7 @@ namespace SphereOS.Core.Memory
             uint memUnavail = memTotal - (uint)Cosmos.Core.GCImplementation.GetAvailableRAM();
             uint memUsed = (Cosmos.Core.GCImplementation.GetUsedRAM() / 1024 / 1024) + memUnavail;
             uint memFree = memTotal - memUsed;
-            uint memPercentUsed = (uint)((float)memUsed / memTotal * 100f);
+            uint memPercentUsed = (uint)(((float)memUsed / (float)memTotal) * 100f);
 
             return new MemoryStatistics(
                 memTotal,
