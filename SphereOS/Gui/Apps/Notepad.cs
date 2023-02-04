@@ -50,6 +50,10 @@ namespace SphereOS.Gui.Apps
 
         private void UpdateTitle()
         {
+            if (path == null)
+            {
+                window.Title = "Untitled - Notepad";
+            }
             if (modified)
             {
                 window.Title = $"{Path.GetFileName(path)}* - Notepad";
@@ -186,7 +190,7 @@ namespace SphereOS.Gui.Apps
             base.Start();
             window = new AppWindow(this, 320, 264, 384, 240);
             wm.AddWindow(window);
-            window.Title = "Notepad";
+            UpdateTitle();
             window.Closing = TryStop;
             window.CanResize = true;
             window.UserResized = WindowResized;
