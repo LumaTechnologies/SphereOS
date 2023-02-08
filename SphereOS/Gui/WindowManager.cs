@@ -2,6 +2,7 @@
 using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.ShellComponents;
+using SphereOS.Gui.UILib;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -107,14 +108,32 @@ namespace SphereOS.Gui
         };
 
         private void RenderWindow(Window window)
-        {
+        {/*
+                bufferModified = true;
+                int screenX = window.ScreenX;
+                int screenY = window.ScreenY;
+                //int maxY = (int)Math.Min(((window.Y + window.Height) - ScreenHeight), window.Height);
+                int copyCount = (int)Math.Min(ScreenWidth - window.X, window.Width);
+                for (int y = 0; y < window.Height; y++)
+                {
+                    uint index = (uint)(((y + screenY) * ScreenWidth) + screenX);
+                    driver.VideoMemory.Copy((int)((index * bytesPerPixel) + driver.FrameSize), window.Buffer, y * window.Width, copyCount);
+                }*/
             bufferModified = true;
+
             int screenX = window.ScreenX;
             int screenY = window.ScreenY;
-            for (int y = 0; y < window.Height; y++)
+            int height = (int)Math.Min(window.Height, ScreenHeight - screenY);
+            int width = (int)Math.Min(window.Width, ScreenWidth - screenX);
+
+            uint index = (uint)((screenY * ScreenWidth) + screenX);
+            int byteOffset = (int)((index * bytesPerPixel) + driver.FrameSize);
+
+            for (int y = 0; y < height; y++)
             {
-                int index = (int)(((y + screenY) * ScreenWidth) + screenX);
-                driver.VideoMemory.Copy((int)((index * bytesPerPixel) + driver.FrameSize), window.Buffer, y * window.Width, window.Width);
+                int sourceIndex = y * window.Width;
+                driver.VideoMemory.Copy(aByteOffset: byteOffset, aData: window.Buffer, aIndex: sourceIndex, aCount: width);
+                byteOffset += (int)(ScreenWidth * bytesPerPixel);
             }
         }
 
@@ -368,7 +387,6 @@ namespace SphereOS.Gui
 
         internal override void Run()
         {
-            Kernel.PrintDebug(windows.Count.ToString());
             UpdateFps();
 
             Sweep();
