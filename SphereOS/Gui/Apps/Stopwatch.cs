@@ -96,6 +96,7 @@ namespace SphereOS.Gui.Apps
             window = new AppWindow(this, 256, 256, 160, 160);
             wm.AddWindow(window);
             window.Title = "Stopwatch";
+            window.Icon = AppManager.GetAppMetadata("Stopwatch").Icon;
             window.Closing = TryStop;
 
             startStopButton = new Button(window, window.Width / 2, window.Height - 24, window.Width / 2, 24);

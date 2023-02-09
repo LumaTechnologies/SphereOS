@@ -5,6 +5,7 @@ using SphereOS.Logging;
 using SphereOS.Users;
 using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace SphereOS.Gui.ShellComponents
 {
@@ -12,7 +13,11 @@ namespace SphereOS.Gui.ShellComponents
     {
         internal Lock() : base("Lock", ProcessType.Application) { }
 
-        Window window;
+        AppWindow window;
+
+        TextBox usernameBox;
+
+        TextBox passwordBox;
 
         WindowManager wm = ProcessManager.GetProcess<WindowManager>();
 
@@ -20,153 +25,129 @@ namespace SphereOS.Gui.ShellComponents
 
         private static class Images
         {
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.User.bmp")]
-            private static byte[] _iconBytes_User;
-            internal static Bitmap Icon_User = new Bitmap(_iconBytes_User);
-
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.UserArrow.bmp")]
-            private static byte[] _iconBytes_UserArrow;
-            internal static Bitmap Icon_UserArrow = new Bitmap(_iconBytes_UserArrow);
-
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.Gradient.bmp")]
-            private static byte[] _imageBytes_Gradient;
-            internal static Bitmap Image_Gradient = new Bitmap(_imageBytes_Gradient);
-
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.Background.bmp")]
-            private static byte[] _imageBytes_Background;
-            internal static Bitmap Image_Background = new Bitmap(_imageBytes_Background);
-
-            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.ShutDown.bmp")]
-            private static byte[] _iconBytes_ShutDown;
-            internal static Bitmap Icon_ShutDown = new Bitmap(_iconBytes_ShutDown);
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.Lock.Key.bmp")]
+            private static byte[] _iconBytes_Key;
+            internal static Bitmap Icon_Key = new Bitmap(_iconBytes_Key);
         }
 
-        private Color borderColor = Color.FromArgb(0, 0, 0);
-        private int borderHeight = 128;
+        private const int width = 352;
+        private const int height = 128;
+        private const int padding = 12;
 
-        private int gradientHeight = 4;
+        private double shakiness = 0;
 
-        private User user = UserManager.Users[0];
-
-        private void RenderBackground(string errorMessage = null)
+        private void RenderBackground()
         {
-            window.Clear(Color.FromArgb(38, 38, 38));
+            window.Clear(Color.LightGray);
 
-            window.DrawImage(Images.Image_Background.ResizeWidthKeepRatio((uint)(window.Width / 2)), 0, borderHeight + gradientHeight);
+            window.DrawImageAlpha(Images.Icon_Key, padding, padding);
 
-            window.DrawFilledRectangle(0, 0, window.Width, borderHeight, borderColor);
-            window.DrawFilledRectangle(0, window.Height - borderHeight, window.Width, borderHeight, borderColor);
+            window.DrawString("Enter your username and password,\nthen press Enter to log on", Color.Black, (int)(padding + Images.Icon_Key.Width + padding), padding);
+        }
 
-            Bitmap gradientResized = Images.Image_Gradient.Resize((uint)window.Width, (uint)gradientHeight);
-            window.DrawImage(gradientResized, 0, borderHeight);
-            window.DrawImage(gradientResized, 0, window.Height - borderHeight - gradientHeight);
+        private void ShowError(string text)
+        {
+            MessageBox messageBox = new MessageBox(this, "Logon Failed", text);
+            messageBox.Show();
+        }
 
-            window.DrawImageAlpha(Images.Icon_User, (int)(window.Width / 2 - Images.Icon_User.Width / 2) + (window.Width / 4), (int)(window.Height / 2 - Images.Icon_User.Height / 2));
-            window.DrawString(user.Username, Color.White, (window.Width / 2 - user.Username.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 12));
+        private void Shake()
+        {
+            shakiness = 24;
+        }
 
-            if (errorMessage != null)
+        private void LogOn()
+        {
+            if (usernameBox.Text.Trim() == string.Empty || passwordBox.Text.Trim() == string.Empty)
             {
-                window.DrawString(errorMessage, Color.FromArgb(255, 209, 243), (window.Width / 2 - errorMessage.Length * 8 / 2) + (window.Width / 4), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 72));
+                return;
             }
+
+            User user = UserManager.GetUser(usernameBox.Text.Trim());
+
+            if (user == null)
+            {
+                Shake();
+
+                return;
+            }
+
+            if (user.Authenticate(passwordBox.Text.Trim()))
+            {
+                TryStop();
+                Kernel.CurrentUser = user;
+                ProcessManager.AddProcess(wm, new ShellComponents.Taskbar()).Start();
+                ProcessManager.AddProcess(wm, new ShellComponents.Dock.Dock()).Start();
+                soundService.PlaySystemSound(Sound.SystemSound.Login);
+
+                Log.Info("Lock", $"{user.Username} logged on to the GUI.");
+            }
+            else
+            {
+                passwordBox.Text = string.Empty;
+
+                if (user.LockedOut)
+                {
+                    TimeSpan remaining = user.LockoutEnd - DateTime.Now;
+                    if (remaining.Minutes > 0)
+                    {
+                        ShowError($"Try again in {remaining.Minutes}m, {remaining.Seconds}s.");
+                    }
+                    else
+                    {
+                        ShowError($"Try again in {remaining.Seconds}s.");
+                    }
+                }
+                wm.Update(window);
+
+                soundService.PlaySystemSound(Sound.SystemSound.Alert);
+                Shake();
+            }
+        }
+
+        private void LogOnClick(int x, int y)
+        {
+            LogOn();
         }
 
         #region Process
         internal override void Start()
         {
             base.Start();
-            window = new Window(this, 0, 0, (int)wm.ScreenWidth, (int)wm.ScreenHeight);
+            window = new AppWindow(this, (int)(wm.ScreenWidth / 2 - width / 2), (int)(wm.ScreenHeight / 2 - height / 2), width, height);;
+            window.Title = "SphereOS Logon";
+            window.Icon = Images.Icon_Key;
+            window.CanMove = false;
+            window.CanClose = false;
             wm.AddWindow(window);
 
             RenderBackground();
 
-            TextBox passwordBox = new TextBox(window, (window.Width / 4) + (window.Width / 2) - (128 / 2), (int)(window.Height / 2 + Images.Icon_User.Height / 2 + 48), 128, 20);
+            int boxesStartY = (int)(padding + Images.Icon_Key.Height + padding);
+
+            usernameBox = new TextBox(window, padding, boxesStartY, 160, 20);
+            usernameBox.PlaceholderText = "Username";
+            usernameBox.Submitted = LogOn;
+            wm.AddWindow(usernameBox);
+
+            passwordBox = new TextBox(window, padding, boxesStartY + padding + 20, 160, 20);
             passwordBox.Shield = true;
             passwordBox.PlaceholderText = "Password";
-            passwordBox.Submitted = () =>
-            {
-                if (passwordBox.Text == string.Empty)
-                {
-                    return;
-                }
-
-                if (user.Authenticate(passwordBox.Text))
-                {
-                    TryStop();
-                    Kernel.CurrentUser = user;
-                    ProcessManager.AddProcess(wm, new ShellComponents.Taskbar()).Start();
-                    soundService.PlaySystemSound(Sound.SystemSound.Login);
-
-                    Log.Info("Lock", $"{user.Username} logged on to the GUI.");
-                }
-                else
-                {
-                    passwordBox.Text = string.Empty;
-                    if (user.LockedOut)
-                    {
-                        TimeSpan remaining = user.LockoutEnd - DateTime.Now;
-                        if (remaining.Minutes > 0)
-                        {
-                            RenderBackground(errorMessage: $"Try again in {remaining.Minutes}m, {remaining.Seconds}s.");
-                        }
-                        else
-                        {
-                            RenderBackground(errorMessage: $"Try again in {remaining.Seconds}s.");
-                        }
-                    }
-                    else
-                    {
-                        RenderBackground(errorMessage: "Incorrect password.");
-                    }
-                    wm.Update(window);
-
-                    soundService.PlaySystemSound(Sound.SystemSound.Alert);
-                }
-            };
+            passwordBox.Submitted = LogOn;
             wm.AddWindow(passwordBox);
-
-            Table usersTable = new Table(window, (int)((window.Width / 4) - (160 / 2)), borderHeight + (window.Width / 4), 160, 28 * Math.Min(4, UserManager.Users.Count));
-            usersTable.Background = Color.FromArgb(38, 38, 38);
-            usersTable.Border = Color.FromArgb(38, 38, 38);
-            usersTable.Foreground = Color.White;
-            usersTable.CellHeight = 28;
-            usersTable.SelectedBackground = Color.FromArgb(90, 90, 90);
-            usersTable.SelectedBorder = Color.White;
-            usersTable.SelectedForeground = Color.White;
-            foreach (User user in UserManager.Users)
-            {
-                usersTable.Cells.Add(new TableCell(Images.Icon_UserArrow, user.Username));
-            }
-            usersTable.TableCellSelected = (int index) =>
-            {
-                user = UserManager.Users[usersTable.SelectedCellIndex];
-                RenderBackground();
-                passwordBox.Text = string.Empty;
-                wm.Update(window);
-            };
-            usersTable.SelectedCellIndex = 0;
-            usersTable.AllowDeselection = false;
-            usersTable.Render();
-            wm.AddWindow(usersTable);
-
-            /*Button shutdownButton = new Button(window, 48, window.Height - (borderHeight / 2) - (48 / 2), 160, 32);
-            shutdownButton.ImageLocation = Button.ButtonImageLocation.Left;
-            shutdownButton.Image = Images.Icon_ShutDown;
-            shutdownButton.Background = borderColor;
-            shutdownButton.Border = borderColor;
-            shutdownButton.Text = "Shut down";
-            shutdownButton.Foreground = Color.White;
-            shutdownButton.OnClick = (int x, int y) =>
-            {
-                Power.Shutdown(reboot: false);
-            };
-            wm.AddWindow(shutdownButton);*/
 
             wm.Update(window);
         }
 
         internal override void Run()
         {
-
+            int oldX = window.X;
+            int newX = (int)((wm.ScreenWidth / 2) - (width / 2) + (Math.Sin(shakiness) * 8));
+            if (oldX != newX)
+            {
+                window.Move(newX, window.Y);
+            }
+            shakiness /= 1.1;
         }
 
         internal override void Stop()

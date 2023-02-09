@@ -60,7 +60,6 @@ namespace SphereOS.Gui
         internal Action OnFocused;
         internal Action OnUnfocused;
         internal Action UserResized;
-        internal Action WM_RefreshAll;
         #endregion
 
         private void ResizeBuffer()
@@ -77,7 +76,7 @@ namespace SphereOS.Gui
                 this.y = y;
                 if (sendWMEvent)
                 {
-                    WM_RefreshAll?.Invoke();
+                    ProcessManager.GetProcess<WindowManager>().RerenderAll();
                 }
             }
         }
@@ -91,7 +90,7 @@ namespace SphereOS.Gui
                 ResizeBuffer();
                 if (sendWMEvent)
                 {
-                    WM_RefreshAll?.Invoke();
+                    ProcessManager.GetProcess<WindowManager>().RerenderAll();
                 }
             }
         }
@@ -102,7 +101,7 @@ namespace SphereOS.Gui
             Resize(width, height, sendWMEvent: false);
             if (sendWMEvent)
             {
-                WM_RefreshAll?.Invoke();
+                ProcessManager.GetProcess<WindowManager>().RerenderAll();
             }
         }
 
@@ -451,7 +450,7 @@ namespace SphereOS.Gui
                 if (value != x)
                 {
                     x = value;
-                    WM_RefreshAll?.Invoke();
+                    ProcessManager.GetProcess<WindowManager>().RerenderAll();
                 }
             }
         }
@@ -467,7 +466,7 @@ namespace SphereOS.Gui
                 if (value != y)
                 {
                     y = value;
-                    WM_RefreshAll?.Invoke();
+                    ProcessManager.GetProcess<WindowManager>().RerenderAll();
                 }
             }
         }
@@ -484,7 +483,7 @@ namespace SphereOS.Gui
                 {
                     if (value < width)
                     {
-                        WM_RefreshAll?.Invoke();
+                        ProcessManager.GetProcess<WindowManager>().RerenderAll();
                     }
                     width = value;
                     ResizeBuffer();
@@ -503,7 +502,7 @@ namespace SphereOS.Gui
                 {
                     if (value < height)
                     {
-                        WM_RefreshAll?.Invoke();
+                        ProcessManager.GetProcess<WindowManager>().RerenderAll();
                     }
                     height = value;
                     ResizeBuffer();

@@ -5,6 +5,7 @@ using SphereOS.Gui.ShellComponents;
 using SphereOS.Gui.UILib;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 
 namespace SphereOS.Gui
@@ -18,7 +19,7 @@ namespace SphereOS.Gui
 
         private Cosmos.HAL.Drivers.PCI.Video.VMWareSVGAII driver;
 
-        private List<Window> windows = new List<Window>();
+        internal List<Window> Windows = new List<Window>();
 
         internal Queue<Window> UpdateQueue = new Queue<Window>();
 
@@ -59,7 +60,7 @@ namespace SphereOS.Gui
 
         private int sweepCounter = 0;
 
-        private Window wallpaperWindow;
+        private Bitmap wallpaperResized;
 
         internal int Fps
         {
@@ -108,17 +109,7 @@ namespace SphereOS.Gui
         };
 
         private void RenderWindow(Window window)
-        {/*
-                bufferModified = true;
-                int screenX = window.ScreenX;
-                int screenY = window.ScreenY;
-                //int maxY = (int)Math.Min(((window.Y + window.Height) - ScreenHeight), window.Height);
-                int copyCount = (int)Math.Min(ScreenWidth - window.X, window.Width);
-                for (int y = 0; y < window.Height; y++)
-                {
-                    uint index = (uint)(((y + screenY) * ScreenWidth) + screenX);
-                    driver.VideoMemory.Copy((int)((index * bytesPerPixel) + driver.FrameSize), window.Buffer, y * window.Width, copyCount);
-                }*/
+        {
             bufferModified = true;
 
             int screenX = window.ScreenX;
@@ -140,10 +131,10 @@ namespace SphereOS.Gui
         private void UpdateAbove(Window window)
         {
             Rectangle aRect = new Rectangle(window.ScreenX, window.ScreenY, window.Width, window.Height);
-            int aboveIndex = windows.IndexOf(window) + 1;
-            for (int i = aboveIndex; i < windows.Count; i++)
+            int aboveIndex = Windows.IndexOf(window) + 1;
+            for (int i = aboveIndex; i < Windows.Count; i++)
             {
-                Window bWindow = windows[i];
+                Window bWindow = Windows[i];
                 Rectangle bRect = new Rectangle(bWindow.ScreenX, bWindow.ScreenY, bWindow.Width, bWindow.Height);
                 if (aRect.IntersectsWith(bRect))
                 {
@@ -155,14 +146,16 @@ namespace SphereOS.Gui
 
         internal void Update(Window window)
         {
-            if (!windows.Contains(window)) return;
+            if (!Windows.Contains(window)) return;
             RenderWindow(window);
             UpdateAbove(window);
         }
 
         internal void RerenderAll()
         {
-            foreach (Window window in windows)
+            RenderWallpaper();
+
+            foreach (Window window in Windows)
             {
                 RenderWindow(window);
             }
@@ -170,46 +163,57 @@ namespace SphereOS.Gui
 
         internal void AddWindow(Window window)
         {
-            if (windows.Contains(window)) return;
-            windows.Add(window);
-            window.WM_RefreshAll = RerenderAll;
+            if (Windows.Contains(window)) return;
+
+            Windows.Add(window);
+
+            UpdateDock();
         }
 
         internal void RemoveWindow(Window window, bool rerender = true)
         {
-            windows.Remove(window);
-            for (int i = windows.Count - 1; i >= 0; i--)
+            Windows.Remove(window);
+            for (int i = Windows.Count - 1; i >= 0; i--)
             {
-                if (i >= windows.Count) continue;
-                if (windows[i].RelativeTo == window)
+                if (i >= Windows.Count) continue;
+                if (Windows[i].RelativeTo == window)
                 {
-                    RemoveWindow(windows[i], rerender: false);
+                    RemoveWindow(Windows[i], rerender: false);
                 }
             }
             if (rerender)
             {
-                foreach (Window window1 in windows)
-                {
-                    RenderWindow(window1);
-                }
+                RerenderAll();
             }
+
+            UpdateDock();
         }
 
-        internal void Clear()
+        internal void ClearAllWindows()
         {
-            for (int i = windows.Count - 1; i >= 0; i--)
+            for (int i = Windows.Count - 1; i >= 0; i--)
             {
-                if (i >= windows.Count) continue;
-                if (windows[i].Process != this)
+                if (i >= Windows.Count) continue;
+                if (Windows[i].Process != this)
                 {
-                    if (windows[i] is UILib.AppWindow appWindow)
+                    if (Windows[i] is UILib.AppWindow appWindow)
                     {
                         appWindow.Closing?.Invoke();
                     }
-                    RemoveWindow(windows[i], rerender: false);
+                    RemoveWindow(Windows[i], rerender: false);
                 }
             }
             RerenderAll();
+        }
+
+        private void UpdateDock()
+        {
+            var dock = ShellComponents.Dock.Dock.CurrentDock;
+
+            if (dock != null)
+            {
+                dock.UpdateWindows();
+            }
         }
 
         private void SetupDriver()
@@ -231,9 +235,9 @@ namespace SphereOS.Gui
 
         private Window GetWindowAtPos(uint x, uint y)
         {
-            for (int i = windows.Count - 1; i >= 0; i--)
+            for (int i = Windows.Count - 1; i >= 0; i--)
             {
-                Window window = windows[i];
+                Window window = Windows[i];
                 if (MouseManager.X >= window.ScreenX
                     && MouseManager.Y >= window.ScreenY
                     && MouseManager.X < window.ScreenX + window.Width
@@ -321,18 +325,17 @@ namespace SphereOS.Gui
         {
             fpsShown = true;
             AddWindow(fpsCounter);
-            UpdateFps();
+            Update(fpsCounter);
+        }
+
+        private void RenderWallpaper()
+        {
+            driver.VideoMemory.Copy((int)driver.FrameSize, wallpaperResized.rawData, 0, wallpaperResized.rawData.Length);
         }
 
         private void SetupWallpaper()
         {
-            Window wallpaperWindow = new Window(this, 0, 0, (int)ScreenWidth, (int)ScreenHeight);
-            AddWindow(wallpaperWindow);
-
-            Bitmap resized = wallpaperBitmap.Resize(ScreenWidth, ScreenHeight);
-
-            resized.rawData.CopyTo(wallpaperWindow.Buffer, 0);
-            Update(wallpaperWindow);
+            wallpaperResized = wallpaperBitmap.Resize(ScreenWidth, ScreenHeight);
         }
 
         private void UpdateCursor()
@@ -352,7 +355,7 @@ namespace SphereOS.Gui
             if (sweepCounter == 10)
             {
                 sweepCounter = 0;
-                foreach (Window window in windows)
+                foreach (Window window in Windows)
                 {
                     if (window.Process != null && !window.Process.IsRunning)
                     {
@@ -377,6 +380,7 @@ namespace SphereOS.Gui
             SetupDriver();
             SetupMouse();
             SetupWallpaper();
+            RenderWallpaper();
 
             fpsCounter = new Window(this, (int)(ScreenWidth) - 64, (int)(ScreenHeight - 16), 64, 16);
             if (settingsService.ShowFps)
@@ -395,7 +399,7 @@ namespace SphereOS.Gui
             {
                 Window toUpdate = UpdateQueue.Dequeue();
 
-                if (windows.Contains(toUpdate))
+                if (Windows.Contains(toUpdate))
                 {
                     if (toUpdate is UILib.Control control)
                     {

@@ -280,6 +280,7 @@ namespace SphereOS.Gui.Apps
             window = new AppWindow(this, 288, 240, 512, 304);
             wm.AddWindow(window);
             window.Title = "Files";
+            window.Icon = AppManager.GetAppMetadata("Files").Icon;
             window.OnClick = WindowClicked;
             window.Closing = TryStop;
 

@@ -70,6 +70,14 @@ namespace SphereOS.Gui
                         {
                             line++;
                             col = 0;
+
+                            if (line > outputWindow.Height / FontData.Height)
+                            {
+                                line = 0;
+                                col = 0;
+
+                                outputWindow.Clear(Color.Black);
+                            }
                         }
                     }
                     wm.Update(outputWindow);
@@ -79,25 +87,10 @@ namespace SphereOS.Gui
 
                     if (line > outputWindow.Height / FontData.Height)
                     {
-                        // Scroll up.
-                        char[] newBuffer = new char[width * height];
-                        for (int y = 1; y < height; y++)
-                        {
-                            for (int x = 0; x < width; x++)
-                            {
-                                newBuffer[((y - 1) * width) + x] = outputBuffer[(y * width) + x];
-                            }
-                        }
-                        outputBuffer = newBuffer;
+                        line = 0;
+                        col = 0;
 
                         outputWindow.Clear(Color.Black);
-                        for (int y = 0; y < height; y++)
-                        {
-                            for (int x = 0; x < width; x++)
-                            {
-                                outputWindow.DrawString(outputBuffer[(y * width) + x].ToString(), Color.White, x * FontData.Width, y * FontData.Height);
-                            }
-                        }
                     }
 
                     return new VMNull();

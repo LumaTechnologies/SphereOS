@@ -18,6 +18,7 @@ namespace SphereOS.Gui.Apps
             window = new AppWindow(this, 256, 256, 320, 256);
             wm.AddWindow(window);
             window.Title = "Info";
+            window.Icon = AppManager.GetAppMetadata("Info").Icon;
             window.Closing = TryStop;
 
             window.Clear(Color.LightGray);

@@ -19,7 +19,7 @@
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
         <VMWareEdition>Workstation</VMWareEdition>
-        <DebugEnabled>True</DebugEnabled>
+        <DebugEnabled>False</DebugEnabled>
         <CompileVBEMultiboot>False</CompileVBEMultiboot>
         <CompressionType>Gzip</CompressionType>
         <TraceMode>All</TraceMode>
@@ -63,6 +63,7 @@
       <None Remove="Gui\Resources\CodeStudio\Run.bmp" />
       <None Remove="Gui\Resources\CodeStudio\Splash.bmp" />
       <None Remove="Gui\Resources\Cursor.bmp" />
+      <None Remove="Gui\Resources\Dock\StartMenu.bmp" />
       <None Remove="Gui\Resources\Files\Directory.bmp" />
       <None Remove="Gui\Resources\Files\Drive.bmp" />
       <None Remove="Gui\Resources\Files\File.bmp" />
@@ -73,6 +74,7 @@
       <None Remove="Gui\Resources\Files\Up.bmp" />
       <None Remove="Gui\Resources\Lock\Background.bmp" />
       <None Remove="Gui\Resources\Lock\Gradient.bmp" />
+      <None Remove="Gui\Resources\Lock\Key.bmp" />
       <None Remove="Gui\Resources\Lock\ShutDown.bmp" />
       <None Remove="Gui\Resources\Lock\User.bmp" />
       <None Remove="Gui\Resources\Lock\UserArrow.bmp" />
@@ -127,6 +129,7 @@
       <EmbeddedResource Include="Gui\Resources\CodeStudio\Run.bmp" />
       <EmbeddedResource Include="Gui\Resources\CodeStudio\Splash.bmp" />
       <EmbeddedResource Include="Gui\Resources\Cursor.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Dock\StartMenu.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Directory.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Drive.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\File.bmp" />
@@ -139,6 +142,7 @@
       <EmbeddedResource Include="Gui\Resources\Files\Up.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\Background.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\Gradient.bmp" />
+      <EmbeddedResource Include="Gui\Resources\Lock\Key.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\ShutDown.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\User.bmp" />
       <EmbeddedResource Include="Gui\Resources\Lock\UserArrow.bmp" />

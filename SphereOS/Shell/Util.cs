@@ -34,7 +34,7 @@ namespace SphereOS.Shell
             Print(color, obj.ToString() + "\n");
         }
 
-        internal static void PrintTask(string task)
+        internal static void PrintSystem(string task)
         {
             Print(ConsoleColor.Cyan, "SphereOS - ");
             PrintLine(ConsoleColor.White, task);

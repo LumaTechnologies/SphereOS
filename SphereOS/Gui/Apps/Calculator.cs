@@ -260,6 +260,7 @@ namespace SphereOS.Gui.Apps
 
             window.Title = "Calculator";
             window.Clear(Color.Gray);
+            window.Icon = AppManager.GetAppMetadata("Calculator").Icon;
             window.OnClick = WindowClick;
             window.Closing = TryStop;
 

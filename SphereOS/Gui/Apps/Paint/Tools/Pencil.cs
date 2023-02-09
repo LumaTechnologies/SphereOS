@@ -20,12 +20,6 @@ namespace SphereOS.Gui.Apps.Paint.Tools
 
         internal override void Run(Paint paint, Window canvas, MouseState mouseState, int mouseX, int mouseY)
         {
-            if (!paint.IsInBounds(mouseX, mouseY))
-            {
-                joinLine = false;
-                return;
-            }
-
             if (mouseState == MouseState.Left)
             {
                 if (joinLine)

@@ -1,6 +1,8 @@
 ﻿using Cosmos.System;
 using Cosmos.System.Graphics;
 using SphereOS.Core;
+using SphereOS.Gui.ShellComponents.Dock;
+using SphereOS.Gui.SmoothMono;
 using System;
 using System.Drawing;
 
@@ -19,6 +21,8 @@ namespace SphereOS.Gui.UILib
 
             decorationWindow.OnClick = DecorationClicked;
             decorationWindow.OnDown = DecorationDown;
+
+            Icon = defaultAppIconBitmap;
 
             RenderDecoration();
         }
@@ -39,7 +43,30 @@ namespace SphereOS.Gui.UILib
         private static byte[] restoreBytes;
         private static Bitmap restoreBitmap = new Bitmap(restoreBytes);
 
+        [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Default.bmp")]
+        private static byte[] defaultAppIconBytes;
+        private static Bitmap defaultAppIconBitmap = new Bitmap(defaultAppIconBytes);
+
         internal Action Closing;
+
+        private Bitmap _icon;
+        private Bitmap _smallIcon;
+        internal Bitmap Icon
+        {
+            get
+            {
+                return _icon;
+            }
+            set
+            {
+                _icon = value;
+                _smallIcon = _icon.Resize(20, 20);
+
+                RenderDecoration();
+                
+                ProcessManager.GetProcess<Dock>()?.UpdateWindows();
+            }
+        }
 
         private string _title = "Window";
         internal string Title
@@ -69,6 +96,34 @@ namespace SphereOS.Gui.UILib
             }
         }
 
+        private bool _canClose = true;
+        internal bool CanClose
+        {
+            get
+            {
+                return _canClose;
+            }
+            set
+            {
+                _canClose = value;
+                RenderDecoration();
+            }
+        }
+
+        private bool _canMove = true;
+        internal bool CanMove
+        {
+            get
+            {
+                return _canMove;
+            }
+            set
+            {
+                _canMove = value;
+                RenderDecoration();
+            }
+        }
+
         private const int titlebarHeight = 24;
 
         private Window decorationWindow;
@@ -83,13 +138,13 @@ namespace SphereOS.Gui.UILib
 
         private void DecorationClicked(int x, int y)
         {
-            if (x >= Width - titlebarHeight)
+            if (x >= Width - titlebarHeight && _canClose)
             {
                 // Close.
                 Closing?.Invoke();
                 wm.RemoveWindow(this);
             }
-            else if (x >= Width - (titlebarHeight * 2) && _canResize)
+            else if (x >= Width - (titlebarHeight * (_canClose ? 2 : 1)) && _canResize)
             {
                 // Maximise / restore.
                 if (maximised)
@@ -101,7 +156,7 @@ namespace SphereOS.Gui.UILib
                     decorationWindow.Resize(originalWidth, titlebarHeight, sendWMEvent: false);
 
                     UserResized?.Invoke();
-                    WM_RefreshAll?.Invoke();
+                    ProcessManager.GetProcess<WindowManager>().RerenderAll();
                 }
                 else
                 {
@@ -110,17 +165,26 @@ namespace SphereOS.Gui.UILib
                     var taskbar = ProcessManager.GetProcess<ShellComponents.Taskbar>();
                     int taskbarHeight = taskbar.GetTaskbarHeight();
 
+                    var dock = ProcessManager.GetProcess<ShellComponents.Dock.Dock>();
+                    int dockHeight = dock.GetDockHeight();
+
                     originalX = X;
                     originalY = Y;
                     originalWidth = Width;
                     originalHeight = Height;
 
-                    MoveAndResize(0, taskbarHeight + titlebarHeight, (int)wm.ScreenWidth, (int)wm.ScreenHeight - titlebarHeight - taskbarHeight, sendWMEvent: false);
+                    MoveAndResize(
+                        0,
+                        taskbarHeight + titlebarHeight,
+                        (int)wm.ScreenWidth,
+                        (int)wm.ScreenHeight - titlebarHeight - taskbarHeight - dockHeight,
+                        sendWMEvent: false
+                    );
 
                     decorationWindow.Resize((int)wm.ScreenWidth, titlebarHeight, sendWMEvent: false);
 
                     UserResized?.Invoke();
-                    WM_RefreshAll?.Invoke();
+                    ProcessManager.GetProcess<WindowManager>().RerenderAll();
                 }
                 RenderDecoration();
             }
@@ -128,7 +192,16 @@ namespace SphereOS.Gui.UILib
 
         private void DecorationDown(int x, int y)
         {
-            if (x >= Width - (titlebarHeight * (_canResize ? 2 : 1)) || maximised) return;
+            int buttonSpace = 0;
+            if (_canClose)
+            {
+                buttonSpace += titlebarHeight;
+            }
+            if (_canResize)
+            {
+                buttonSpace += titlebarHeight;
+            }
+            if (x >= Width - buttonSpace || maximised || !_canMove) return;
 
             uint startMouseX = MouseManager.X;
             uint startMouseY = MouseManager.Y;
@@ -148,11 +221,21 @@ namespace SphereOS.Gui.UILib
         private void RenderDecoration()
         {
             decorationWindow.Clear(Color.FromArgb(56, 56, 71));
-            decorationWindow.DrawString(Title, Color.White, 4, 4);
-            decorationWindow.DrawImageAlpha(closeBitmap, Width - titlebarHeight, 0);
-            if (CanResize)
+
+            if (_smallIcon != null)
             {
-                decorationWindow.DrawImageAlpha(maximised ? restoreBitmap : maximiseBitmap, Width - (titlebarHeight * 2), 0);
+                decorationWindow.DrawImageAlpha(_smallIcon, 2, 2);
+            }
+
+            decorationWindow.DrawString(Title, Color.White, (Width / 2) - ((FontData.Width * Title.Length) / 2), 4);
+
+            if (_canClose)
+            {
+                decorationWindow.DrawImageAlpha(closeBitmap, Width - titlebarHeight, 0);
+            }
+            if (_canResize)
+            {
+                decorationWindow.DrawImageAlpha(maximised ? restoreBitmap : maximiseBitmap, Width - (titlebarHeight * (_canClose ? 2 : 1)), 0);
             }
             wm.Update(decorationWindow);
         }

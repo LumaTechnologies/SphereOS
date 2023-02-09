@@ -78,7 +78,7 @@ namespace SphereOS.Users
             else
             {
                 Log.Info("UserManager", $"Default user 'admin' was created.");
-                Util.PrintTask("Default user 'admin' was created.");
+                Util.PrintSystem("Default user 'admin' was created.");
                 User user = AddUser("admin", "password", admin: true, flush: false);
                 user.PasswordExpired = true;
             }

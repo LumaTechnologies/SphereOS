@@ -2,6 +2,7 @@
 using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.UILib;
+using SphereOS.UILib.Animations;
 using System;
 using System.Drawing;
 
@@ -84,7 +85,7 @@ namespace SphereOS.Gui.ShellComponents
             miniCalendarOpen = !miniCalendarOpen;
             if (miniCalendarOpen)
             {
-                miniCalendar = new Calendar(window, window.Width - 256, window.Height, 256, 288);
+                miniCalendar = new Calendar(window, window.Width - 256, window.Height, 256, 256);
                 miniCalendar.Background = Color.FromArgb(56, 56, 71);
                 miniCalendar.TodayBackground = Color.FromArgb(77, 77, 91);
                 miniCalendar.Foreground = Color.White;
@@ -102,7 +103,7 @@ namespace SphereOS.Gui.ShellComponents
         internal override void Start()
         {
             base.Start();
-            window = new Window(this, 0, 0, (int)wm.ScreenWidth, 24);
+            window = new Window(this, 0, -24, (int)wm.ScreenWidth, 24);
             window.Clear(Color.Black);
             wm.AddWindow(window);
 
@@ -120,6 +121,14 @@ namespace SphereOS.Gui.ShellComponents
             wm.AddWindow(start);
 
             UpdateTime();
+
+            MovementAnimation animation = new MovementAnimation(window)
+            {
+                From = new Rectangle(window.X, window.Y, window.Width, window.Height),
+                To = new Rectangle(window.X, 0, window.Width, window.Height),
+                Duration = 10
+            };
+            animation.Start();
 
             wm.Update(window);
         }

@@ -28,7 +28,7 @@ namespace SphereOS.Commands.NetworkTopic
 
             var domain = args[1];
 
-            Util.PrintTask($"Resolving {domain}...");
+            Util.PrintSystem($"Resolving {domain}...");
 
             using (var dns = new DnsClient())
             {

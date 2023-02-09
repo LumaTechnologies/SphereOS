@@ -121,7 +121,7 @@ namespace SphereOS.Gui.Apps
             twelveHourClock.CheckBoxChanged = TwelveHourClockChanged;
             wm.AddWindow(twelveHourClock);
 
-            AppMetadata calendarApp = AppManager.GetApp("Calendar");
+            AppMetadata calendarApp = AppManager.GetAppMetadata("Calendar");
             Button openCalendar = new Button(dateTime, 12, 68, 160, 20);
             openCalendar.Text = "Open Calendar";
             openCalendar.Image = calendarApp.Icon.Resize(20, 20);
@@ -256,6 +256,7 @@ namespace SphereOS.Gui.Apps
             base.Start();
             window = new AppWindow(this, 256, 256, 448, 272);
             window.Closing = TryStop;
+            window.Icon = AppManager.GetAppMetadata("Settings").Icon;
             wm.AddWindow(window);
 
             window.Title = "Settings";

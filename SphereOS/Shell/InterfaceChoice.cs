@@ -5,19 +5,32 @@ namespace SphereOS.Shell
 {
     internal static class InterfaceChoice
     {
-        internal static void ChooseInterface()
+        private static void PrintChoices()
         {
-            Util.PrintTask("Select an interface.");
+            Util.PrintSystem("Select an interface.");
             Util.PrintLine(ConsoleColor.Cyan, "[1] Graphical");
             Util.PrintLine(ConsoleColor.Cyan, "[2] Console");
+        }
+
+        internal static void ChooseInterface()
+        {
+            PrintChoices();
 
             while (true)
             {
                 switch (Console.ReadKey(true).KeyChar)
                 {
                     case '1':
-                        Gui.Gui.StartGui();
-                        return;
+                        bool result = Gui.Gui.StartGui();
+                        if (result)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            PrintChoices();
+                            continue;
+                        }
                     case '2':
                         ProcessManager.AddProcess(new Shell()).Start();
                         return;

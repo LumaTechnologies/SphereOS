@@ -88,7 +88,7 @@ namespace SphereOS.Gui
             AppMetadatas.Add(app);
         }
 
-        internal static AppMetadata GetApp(string name)
+        internal static AppMetadata GetAppMetadata(string name)
         {
             foreach (AppMetadata app in AppMetadatas)
             {
@@ -117,6 +117,7 @@ namespace SphereOS.Gui
             RegisterApp(new AppMetadata("Calendar", () => { return new Calendar(); }, Icons.Icon_Calendar, Color.FromArgb(168, 55, 47)));
             RegisterApp(new AppMetadata("Event Log", () => { return new Logs(); }, Icons.Icon_Logs, Color.FromArgb(14, 59, 76)));
             RegisterApp(new AppMetadata("Demos", () => { return new DemoLauncher(); }, Icons.Icon_DemoLauncher, Color.FromArgb(25, 25, 25)));
+            RegisterApp(new AppMetadata("Info", () => { return new Info(); }, Icons.Icon_Info, Color.FromArgb(0, 115, 186)));
             RegisterApp(new AppMetadata("Stopwatch", () => { return new Stopwatch(); }, Icons.Icon_Stopwatch, Color.FromArgb(168, 55, 47)));
             RegisterApp(new AppMetadata("Paint", () => { return new Apps.Paint.Paint(); }, Icons.Icon_Paint, Color.FromArgb(0, 115, 186)));
             RegisterApp(new AppMetadata("Memory Statistics", () => { return new Apps.MemoryStatistics(); }, Icons.Icon_MemoryStatistics, Color.FromArgb(25, 25, 25)));

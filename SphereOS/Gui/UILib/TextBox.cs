@@ -13,6 +13,7 @@ namespace SphereOS.Gui.UILib
         {
             OnDown = TextBoxDown;
             OnKeyPressed = TextBoxKeyPressed;
+            OnUnfocused = TextBoxUnfocused;
         }
 
         internal Action Submitted;
@@ -123,6 +124,16 @@ namespace SphereOS.Gui.UILib
         private void TextBoxDown(int x, int y)
         {
             MoveCaret((y + scrollY) / fontHeight, ((x + scrollX) + (fontWidth / 2)) / fontWidth);
+        }
+
+        private void TextBoxUnfocused()
+        {
+            MarkLine(caretLine);
+
+            caretLine = -1;
+            caretCol = 0;
+
+            Render();
         }
 
         private void AutoScroll()

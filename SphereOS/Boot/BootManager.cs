@@ -16,7 +16,7 @@ namespace SphereOS.Boot
         {
             Log.Info("BootManager", $"Boot failed: {reason}");
 
-            Util.PrintTask("Error: Boot failed!");
+            Util.PrintSystem("Error: Boot failed!");
             Util.PrintLine(ConsoleColor.Red, reason);
             Util.PrintLine(ConsoleColor.Cyan, "SphereOS has failed to boot. Press any key to reboot.");
 
@@ -36,7 +36,7 @@ namespace SphereOS.Boot
 
         private static void SysInit()
         {
-            Util.PrintTask("Initialising system...");
+            Util.PrintSystem("Initialising system...");
             ProcessManager.AddProcess(new Core.MemService()).TryStart();
 
             CommandManager.RegisterCommands();
@@ -56,7 +56,7 @@ namespace SphereOS.Boot
 
         private static void Net()
         {
-            Util.PrintTask("Starting network...");
+            Util.PrintSystem("Starting network...");
             try
             {
                 if (Cosmos.HAL.NetworkDevice.Devices.Count == 0)
@@ -69,7 +69,7 @@ namespace SphereOS.Boot
             catch (Exception e)
             {
                 Log.Warning("BootManager", $"Could not start network: {e.ToString()}");
-                Util.PrintTask($"Could not start network: {e.ToString()}");
+                Util.PrintSystem($"Could not start network: {e.ToString()}");
             }
         }
 

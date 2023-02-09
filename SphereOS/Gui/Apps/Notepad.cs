@@ -26,7 +26,7 @@ namespace SphereOS.Gui.Apps
 
         ShortcutBar shortcutBar;
 
-        private string? path;
+        private string? path = null;
 
         private bool modified = false;
 
@@ -53,7 +53,9 @@ namespace SphereOS.Gui.Apps
             if (path == null)
             {
                 window.Title = "Untitled - Notepad";
+                return;
             }
+
             if (modified)
             {
                 window.Title = $"{Path.GetFileName(path)}* - Notepad";
@@ -192,6 +194,7 @@ namespace SphereOS.Gui.Apps
             wm.AddWindow(window);
             UpdateTitle();
             window.Closing = TryStop;
+            window.Icon = AppManager.GetAppMetadata("Notepad").Icon;
             window.CanResize = true;
             window.UserResized = WindowResized;
 

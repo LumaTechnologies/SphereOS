@@ -83,6 +83,7 @@ namespace SphereOS.Gui.Apps
 
             window = new AppWindow(this, 256, 256, 512, 352);
             wm.AddWindow(window);
+            window.Icon = AppManager.GetAppMetadata("Event Log").Icon;
             window.Title = "Event Log";
             window.Closing = TryStop;
 

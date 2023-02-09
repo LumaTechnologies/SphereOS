@@ -32,7 +32,7 @@ namespace SphereOS.Gui
             wm.AddWindow(window);
 
             Table table = new Table(window, padding, padding + FontData.Height + padding, window.Width - (padding * 2), window.Height - (padding * 5) - 20 - FontData.Height);
-            table.Cells.Add(new TableCell(AppManager.GetApp("Notepad").Icon.Resize(20, 20), "Notepad"));
+            table.Cells.Add(new TableCell(AppManager.GetAppMetadata("Notepad").Icon.Resize(20, 20), "Notepad"));
             table.Cells.Add(new TableCell("RiverScript Interpreter"));
             table.CellHeight = 20;
             table.AllowDeselection = false;

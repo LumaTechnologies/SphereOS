@@ -96,6 +96,7 @@ namespace SphereOS.Gui.Apps
         {
             base.Start();
             window = new AppWindow(this, 256, 256, 192, 192);
+            window.Icon = AppManager.GetAppMetadata("Clock").Icon;
             window.CanResize = true;
             window.UserResized = RenderClock;
             window.Closing = TryStop;

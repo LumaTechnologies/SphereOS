@@ -52,6 +52,7 @@ namespace SphereOS.Gui.Apps
             window = new AppWindow(this, 256, 256, 384, 256);
             wm.AddWindow(window);
             window.Title = "Tasks";
+            window.Icon = AppManager.GetAppMetadata("Tasks").Icon;
             window.Closing = TryStop;
 
             window.Clear(Color.Gray);

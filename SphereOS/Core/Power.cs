@@ -12,7 +12,7 @@ namespace SphereOS.Core
             string message = reboot ? "Rebooting..." : "Shutting down...";
 
             Log.Info("Power", message);
-            Util.PrintTask(message);
+            Util.PrintSystem(message);
 
             if (SysCfg.BootLock)
             {

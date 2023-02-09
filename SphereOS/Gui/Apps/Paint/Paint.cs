@@ -44,8 +44,8 @@ namespace SphereOS.Gui.Apps.Paint
             base.Start();
             window = new AppWindow(this, 256, 256, 768, 448);
             window.Title = "Paint";
+            window.Icon = AppManager.GetAppMetadata("Paint").Icon;
             window.Closing = TryStop;
-            window.OnDown = CanvasDown;
             window.Clear(Color.FromArgb(73, 73, 73));
             wm.AddWindow(window);
 
@@ -53,6 +53,7 @@ namespace SphereOS.Gui.Apps.Paint
             int canvasHeight = 256;
             canvas = new Window(this, (window.Width / 2) - (canvasWidth / 2), (window.Height / 2) - (canvasHeight / 2), canvasWidth, canvasHeight);
             canvas.RelativeTo = window;
+            canvas.OnDown = CanvasDown;
             canvas.Clear(Color.White);
             wm.AddWindow(canvas);
 

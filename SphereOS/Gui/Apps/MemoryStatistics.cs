@@ -52,6 +52,7 @@ Percentage Used: {4:d1}%",
             window = new AppWindow(this, 256, 256, 256, 192);
             wm.AddWindow(window);
             window.Title = "Memory Statistics";
+            window.Icon = AppManager.GetAppMetadata("Memory Statistics").Icon;
             window.Closing = TryStop;
 
             Update();

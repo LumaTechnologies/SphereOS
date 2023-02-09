@@ -56,6 +56,7 @@ namespace SphereOS.Gui.Apps
             window = new AppWindow(this, 320, 256, 384, 288);
             wm.AddWindow(window);
             window.Title = "Calendar";
+            window.Icon = AppManager.GetAppMetadata("Calendar").Icon;
             window.CanResize = true;
             window.UserResized = WindowResized;
             window.Closing = TryStop;

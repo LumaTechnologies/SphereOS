@@ -27,7 +27,7 @@ namespace SphereOS.Core
         /// </summary>
         internal static bool Initialise()
         {
-            Util.PrintTask("Registering file system...");
+            Util.PrintSystem("Registering file system...");
             Fs = new Sys.FileSystem.CosmosVFS();
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(Fs);
             try
@@ -55,7 +55,7 @@ namespace SphereOS.Core
             }
             catch (System.Exception e)
             {
-                Util.PrintTask($"Failed to initialise filesystem. Ensure you have a valid FAT32 filesystem on the disk. {e.ToString()}");
+                Util.PrintSystem($"Failed to initialise filesystem. Ensure you have a valid FAT32 filesystem on the disk. {e.ToString()}");
                 Logging.Log.Error("FsManager", $"Failed to initialise filesystem: {e.ToString()}");
                 return false;
             }
