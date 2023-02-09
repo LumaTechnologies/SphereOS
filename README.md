@@ -14,7 +14,6 @@ The default login credentials are:
 - Password: password
 ## Features
 - 💻 Both GUI and console support
-- 🚀 GUI system with up to 1400 FPS
 - ⚙ Advanced shell with a custom parser
 - 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, and Settings
 - 🌐 Networking capabilities
@@ -35,7 +34,7 @@ And more!
 > Share + Download scripts!
 ## Screenshots
 ### GUI
-![Screenshot 1](/Art/screenshot_7.png)
+![Screenshot 1](/Art/screenshot_10.png)
 ### Console
 ![Screenshot 1](/Art/screenshot_8.png)
 ### Text Editor
