@@ -61,3 +61,10 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Auto detect text files and perform LF normalization
+*.cs       text diff=csharp
+*.cshtml   text diff=html
+*.csx      text diff=csharp
+*.sln      text eol=crlf
+*.csproj   text eol=crlf

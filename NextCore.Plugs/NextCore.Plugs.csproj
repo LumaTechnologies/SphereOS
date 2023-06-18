@@ -12,8 +12,4 @@
     <PackageReference Include="Cosmos.System2" Version="0.1.0-localbuild20230102084851" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NextCore.Graphics\NextCore.Graphics.csproj" />
-  </ItemGroup>
-
 </Project>
