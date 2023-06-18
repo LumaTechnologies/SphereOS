@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using IL2CPU.API.Attribs;
+﻿using IL2CPU.API.Attribs;
 using NextCore.Graphics.VideoConsole;
 
 namespace NextCore.Plugs.System

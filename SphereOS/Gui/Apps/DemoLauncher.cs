@@ -1,9 +1,9 @@
-﻿using SphereOS.Core;
+﻿using Cosmos.System.Graphics;
+using SphereOS.Core;
+using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using System.Collections.Generic;
 using System.Drawing;
-using Cosmos.System.Graphics;
-using SphereOS.Gui.SmoothMono;
 
 namespace SphereOS.Gui.Apps
 {

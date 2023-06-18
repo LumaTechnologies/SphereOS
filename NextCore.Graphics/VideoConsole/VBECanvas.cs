@@ -30,11 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using Cosmos.Core;
-using Cosmos.HAL.Drivers;
+using System.Drawing;
 
 namespace Cosmos.System.Graphics
 {

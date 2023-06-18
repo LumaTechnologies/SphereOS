@@ -63,7 +63,7 @@ namespace SphereOS.Gui.UILib
                 _smallIcon = _icon.Resize(20, 20);
 
                 RenderDecoration();
-                
+
                 ProcessManager.GetProcess<Dock>()?.UpdateWindows();
             }
         }

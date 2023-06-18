@@ -1,10 +1,5 @@
-﻿using Cosmos.System;
-using Cosmos.System.Network.IPv4;
-using SphereOS.Shell;
-using System;
+﻿using Cosmos.System.Network.Config;
 using Console = System.Console;
-using EndPoint = Cosmos.System.Network.IPv4.EndPoint;
-using Cosmos.System.Network.Config;
 
 namespace SphereOS.Commands.NetworkTopic
 {

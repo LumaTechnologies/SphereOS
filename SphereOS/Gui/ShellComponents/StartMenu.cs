@@ -1,10 +1,7 @@
 ﻿using Cosmos.System.Graphics;
 using SphereOS.Core;
-using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using SphereOS.UILib.Animations;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace SphereOS.Gui.ShellComponents

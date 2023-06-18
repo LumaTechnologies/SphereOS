@@ -1,16 +1,12 @@
-﻿using RiverScript.StandardLibrary;
+﻿using RiverScript;
+using RiverScript.StandardLibrary;
 using RiverScript.VM;
-using RiverScript;
-using SphereOS.Commands.FilesTopic;
+using SphereOS.Core;
+using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SphereOS.Core;
-using SphereOS.Gui.SmoothMono;
 
 namespace SphereOS.Gui
 {

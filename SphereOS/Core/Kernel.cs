@@ -3,14 +3,13 @@ using SphereOS.Logging;
 using SphereOS.Shell;
 using SphereOS.Users;
 using System;
-using System.Collections.Generic;
 using Sys = Cosmos.System;
 
 namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.2.1";
+        public const string Version = "0.2.2";
 
         internal static User CurrentUser = null;
 

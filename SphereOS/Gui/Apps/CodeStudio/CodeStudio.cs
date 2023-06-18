@@ -24,12 +24,11 @@ namespace SphereOS.Gui.Apps.CodeStudio
         internal override void Start()
         {
             base.Start();
-            splash = new Window(this, 320, 272, 384, 224);
+            splash = new Window(this, 372, 250, 535, 300);
             wm.AddWindow(splash);
 
-            splash.Clear(Color.FromArgb(127, 0, 255));
-            splash.DrawImage(splashBitmap, 20, 20);
-            splash.DrawString("Starting...", Color.White, 20, splash.Height - 16 - 20);
+            splash.DrawImage(splashBitmap, 0, 0);
+            //splash.DrawString("Starting...", Color.White, 20, splash.Height - 16 - 20);
 
             wm.Update(splash);
         }

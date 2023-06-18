@@ -49,7 +49,7 @@ namespace SphereOS.Shell
                         Util.PrintLine(ConsoleColor.White, "Your password has expired. Please set a new password:");
                         user.ResetPasswordConsole(result.Input);
                     }
-                    Util.PrintLine(ConsoleColor.Cyan, $"Welcome to SphereOS.");
+                    Util.PrintLine(ConsoleColor.Cyan, $"Welcome to SphereOS!");
                     Util.Print(ConsoleColor.Gray, "[i] Type");
                     Util.Print(ConsoleColor.White, " 'help' ");
                     Util.PrintLine(ConsoleColor.Gray, "for help.");

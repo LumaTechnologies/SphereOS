@@ -406,7 +406,7 @@ namespace SphereOS.Gui
             {
                 for (int j = 0; j < bitmap.Width; j++)
                 {
-                    DrawPoint(x + j, y + i, Color.FromArgb(bitmap.rawData[(i * bitmap.Width) + j]));
+                    DrawPoint(x + j, y + i, Color.FromArgb(bitmap.RawData[(i * bitmap.Width) + j]));
                 }
             }
         }
@@ -432,7 +432,7 @@ namespace SphereOS.Gui
                 for (int j = 0; j < bitmap.Width; j++)
                 {
                     Color from = GetPixel(x + j, y + i);
-                    Color to = Color.FromArgb(bitmap.rawData[(i * bitmap.Width) + j]);
+                    Color to = Color.FromArgb(bitmap.RawData[(i * bitmap.Width) + j]);
                     DrawPoint(x + j, y + i, AlphaBlend(to, from, to.A));
                 }
             }

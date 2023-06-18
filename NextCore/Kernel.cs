@@ -1,7 +1,5 @@
 ﻿using NextCore.Graphics.VideoConsole;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Sys = Cosmos.System;
 
 namespace NextCore

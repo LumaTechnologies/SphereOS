@@ -2,7 +2,6 @@
 using SphereOS.Core;
 using SphereOS.Shell;
 using System;
-using System.IO;
 
 namespace SphereOS.Commands.FilesTopic
 {

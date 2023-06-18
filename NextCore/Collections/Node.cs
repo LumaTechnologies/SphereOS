@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NextCore.Collections
 {
@@ -35,7 +32,7 @@ namespace NextCore.Collections
         public TreeNode<T> AddChild(T value)
         {
             var node = new TreeNode<T>(value) { Parent = this };
-            _children.Add(node);    
+            _children.Add(node);
             return node;
         }
 

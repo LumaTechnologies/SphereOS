@@ -1,5 +1,4 @@
-﻿using Cosmos.System.FileSystem.VFS;
-using SphereOS.Logging;
+﻿using SphereOS.Logging;
 using SphereOS.Shell;
 using System.IO;
 using Sys = Cosmos.System;

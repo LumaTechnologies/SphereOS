@@ -1,5 +1,4 @@
 ﻿using SphereOS.Gui;
-using System;
 
 namespace SphereOS.UILib.Animations
 {

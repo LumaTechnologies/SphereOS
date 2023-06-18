@@ -1,15 +1,7 @@
-﻿using Cosmos.Core;
-using Cosmos.HAL.Drivers;
-using Cosmos.System;
+﻿using Cosmos.System;
 using Cosmos.System.Graphics;
 using Cosmos.System.Graphics.Fonts;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NextCore.Graphics.VideoConsole
 {
@@ -57,7 +49,7 @@ namespace NextCore.Graphics.VideoConsole
         private const bool verticalCaret = false;
 
         public static int Column { get; set; } = 0;
-        public static int Row { get; set; }  = 0;
+        public static int Row { get; set; } = 0;
 
         // todo: update when changed
         public static bool CursorVisible = true;

@@ -46,9 +46,9 @@ namespace SphereOS.Gui
             private static byte[] _iconBytes_Calculator;
             internal static Bitmap Icon_Calculator = new Bitmap(_iconBytes_Calculator);
 
-            /*[IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.CodeStudio.bmp")]
+            [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.CodeStudio.bmp")]
             private static byte[] _iconBytes_CodeStudio;
-            internal static Bitmap Icon_CodeStudio = new Bitmap(_iconBytes_CodeStudio);*/
+            internal static Bitmap Icon_CodeStudio = new Bitmap(_iconBytes_CodeStudio);
 
             [IL2CPU.API.Attribs.ManifestResourceStream(ResourceName = "SphereOS.Gui.Resources.AppIcons.Notepad.bmp")]
             private static byte[] _iconBytes_Notepad;
@@ -113,7 +113,7 @@ namespace SphereOS.Gui
             RegisterApp(new AppMetadata("Settings", () => { return new Settings(); }, Icons.Icon_Settings, Color.FromArgb(0, 115, 186)));
             RegisterApp(new AppMetadata("Tasks", () => { return new Tasks(); }, Icons.Icon_Tasks, Color.FromArgb(204, 241, 255)));
             RegisterApp(new AppMetadata("Calculator", () => { return new Calculator(); }, Icons.Icon_Calculator, Color.FromArgb(0, 115, 186)));
-            //RegisterApp(new App("CodeStudio", () => { return new Apps.CodeStudio.CodeStudio(); }, Icons.Icon_CodeStudio, Color.FromArgb(127, 0, 255)));
+            RegisterApp(new AppMetadata("CodeStudio", () => { return new Apps.CodeStudio.CodeStudio(); }, Icons.Icon_CodeStudio, Color.FromArgb(21, 29, 58)));
             RegisterApp(new AppMetadata("Calendar", () => { return new Calendar(); }, Icons.Icon_Calendar, Color.FromArgb(168, 55, 47)));
             RegisterApp(new AppMetadata("Event Log", () => { return new Logs(); }, Icons.Icon_Logs, Color.FromArgb(14, 59, 76)));
             RegisterApp(new AppMetadata("Demos", () => { return new DemoLauncher(); }, Icons.Icon_DemoLauncher, Color.FromArgb(25, 25, 25)));

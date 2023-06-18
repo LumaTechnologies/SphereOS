@@ -797,8 +797,8 @@ namespace SphereOS.Core.Drivers
             WriteToFifo(0); // Hotspot Y
             WriteToFifo(bitmap.Width); // Width
             WriteToFifo(bitmap.Height); // Height
-            for (int i = 0; i < bitmap.rawData.Length; i++)
-                WriteToFifo((uint)bitmap.rawData[i]);
+            for (int i = 0; i < bitmap.RawData.Length; i++)
+                WriteToFifo((uint)bitmap.RawData[i]);
             WaitForFifo();
         }
 

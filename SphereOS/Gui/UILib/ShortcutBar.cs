@@ -1,8 +1,4 @@
-﻿using Cosmos.System;
-using Cosmos.System.Graphics;
-using SphereOS.Commands.GeneralTopic;
-using SphereOS.Gui.SmoothMono;
-using System;
+﻿using SphereOS.Gui.SmoothMono;
 using System.Collections.Generic;
 using System.Drawing;
 

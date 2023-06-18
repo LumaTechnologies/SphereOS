@@ -1,5 +1,4 @@
-﻿using Cosmos.System;
-using Cosmos.System.Graphics;
+﻿using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.UILib;
 using SphereOS.Users;

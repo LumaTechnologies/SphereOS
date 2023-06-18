@@ -1,6 +1,5 @@
 ﻿using Cosmos.HAL;
-using Cosmos.HAL.Audio;
-using Cosmos.HAL.Drivers.PCI.Audio;
+using Cosmos.HAL.Drivers.Audio;
 using Cosmos.System;
 using Cosmos.System.Audio;
 using Cosmos.System.Audio.IO;

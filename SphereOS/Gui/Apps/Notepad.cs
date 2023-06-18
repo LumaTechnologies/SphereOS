@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using SphereOS.Core;
+﻿using SphereOS.Core;
 using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using System.Drawing;
@@ -19,7 +18,7 @@ namespace SphereOS.Gui.Apps
         AppWindow window;
 
         WindowManager wm = ProcessManager.GetProcess<WindowManager>();
-        
+
         SettingsService settingsService = ProcessManager.GetProcess<SettingsService>();
 
         TextBox textBox;
@@ -137,7 +136,7 @@ namespace SphereOS.Gui.Apps
                 SaveAsPrompt();
                 return;
             }
-            
+
             File.WriteAllText(path, textBox.Text);
 
             modified = false;
@@ -178,7 +177,8 @@ namespace SphereOS.Gui.Apps
             Switch darkSwitch = new Switch(settingsWindow, 12, 40, settingsWindow.Width - 16, 20);
             darkSwitch.Text = "Dark theme";
             darkSwitch.Checked = settingsService.DarkNotepad;
-            darkSwitch.CheckBoxChanged = (bool @checked) => {
+            darkSwitch.CheckBoxChanged = (bool @checked) =>
+            {
                 settingsService.DarkNotepad = @checked;
                 ApplyTheme();
             };

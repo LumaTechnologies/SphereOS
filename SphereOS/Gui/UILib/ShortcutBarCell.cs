@@ -1,5 +1,4 @@
-﻿using Cosmos.System.Graphics;
-using System;
+﻿using System;
 
 namespace SphereOS.Gui.UILib
 {

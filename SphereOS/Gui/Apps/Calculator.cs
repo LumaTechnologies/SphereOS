@@ -219,6 +219,12 @@ namespace SphereOS.Gui.Apps
                     num1 = num1 * num2;
                     break;
                 case Operator.Divide:
+                    if (num2 == 0)
+                    {
+                        MessageBox messageBox = new MessageBox(this, "Calculator", "Cannot divide by zero.");
+                        messageBox.Show();
+                        return;
+                    }
                     num1 = num1 / num2;
                     break;
                 default:

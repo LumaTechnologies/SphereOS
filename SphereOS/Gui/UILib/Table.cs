@@ -334,7 +334,7 @@ namespace SphereOS.Gui.UILib
                 {
                     continue;
                 }
-                 
+
                 if (cell.BackgroundColourOverride != null)
                 {
                     DrawFilledRectangle(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height, (Color)cell.BackgroundColourOverride);

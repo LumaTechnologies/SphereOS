@@ -1,7 +1,6 @@
 ﻿using Cosmos.System;
 using Cosmos.System.Graphics;
 using System;
-using System.Drawing;
 
 namespace SphereOS.Gui.UILib
 {

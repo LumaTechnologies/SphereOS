@@ -2,10 +2,8 @@
 using Cosmos.System.Graphics;
 using SphereOS.Core;
 using SphereOS.Gui.ShellComponents;
-using SphereOS.Gui.UILib;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 
 namespace SphereOS.Gui
@@ -17,7 +15,7 @@ namespace SphereOS.Gui
             Critical = true;
         }
 
-        private Cosmos.HAL.Drivers.PCI.Video.VMWareSVGAII driver;
+        private Cosmos.HAL.Drivers.Video.SVGAII.VMWareSVGAII driver;
 
         internal List<Window> Windows = new List<Window>();
 
@@ -123,7 +121,7 @@ namespace SphereOS.Gui
             for (int y = 0; y < height; y++)
             {
                 int sourceIndex = y * window.Width;
-                driver.VideoMemory.Copy(aByteOffset: byteOffset, aData: window.Buffer, aIndex: sourceIndex, aCount: width);
+                driver.videoMemory.Copy(aByteOffset: byteOffset, aData: window.Buffer, aIndex: sourceIndex, aCount: width);
                 byteOffset += (int)(ScreenWidth * bytesPerPixel);
             }
         }
@@ -218,7 +216,7 @@ namespace SphereOS.Gui
 
         private void SetupDriver()
         {
-            driver = new Cosmos.HAL.Drivers.PCI.Video.VMWareSVGAII();
+            driver = new Cosmos.HAL.Drivers.Video.SVGAII.VMWareSVGAII();
             driver.SetMode(ScreenWidth, ScreenHeight, depth: bytesPerPixel * 8);
         }
 
@@ -230,7 +228,7 @@ namespace SphereOS.Gui
             MouseManager.X = ScreenWidth / 2;
             MouseManager.Y = ScreenHeight / 2;
 
-            driver.DefineAlphaCursor(cursorBitmap.Width, cursorBitmap.Height, cursorBitmap.rawData);
+            driver.DefineAlphaCursor(cursorBitmap.Width, cursorBitmap.Height, cursorBitmap.RawData);
         }
 
         private Window GetWindowAtPos(uint x, uint y)
@@ -330,7 +328,7 @@ namespace SphereOS.Gui
 
         private void RenderWallpaper()
         {
-            driver.VideoMemory.Copy((int)driver.FrameSize, wallpaperResized.rawData, 0, wallpaperResized.rawData.Length);
+            driver.videoMemory.Copy((int)driver.FrameSize, wallpaperResized.RawData, 0, wallpaperResized.RawData.Length);
         }
 
         private void SetupWallpaper()

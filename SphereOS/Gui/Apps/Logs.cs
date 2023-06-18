@@ -1,10 +1,9 @@
-﻿using SphereOS.Core;
+﻿using Cosmos.System.Graphics;
+using SphereOS.Core;
 using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using SphereOS.Logging;
-using System;
 using System.Drawing;
-using Cosmos.System.Graphics;
 using System.Text;
 
 namespace SphereOS.Gui.Apps
@@ -94,7 +93,8 @@ namespace SphereOS.Gui.Apps
                 {
                     LogEvent log = (LogEvent)table.Cells[table.SelectedCellIndex].Tag;
 
-                    string priority = log.Priority switch {
+                    string priority = log.Priority switch
+                    {
                         LogPriority.Info => "Info",
                         LogPriority.Warning => "Warning",
                         LogPriority.Error => "Error",

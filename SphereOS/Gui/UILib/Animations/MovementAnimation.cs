@@ -1,7 +1,7 @@
-﻿using System;
-using System.Drawing;
-using SphereOS.Gui;
+﻿using SphereOS.Gui;
 using SphereOS.Gui.UILib;
+using System;
+using System.Drawing;
 
 namespace SphereOS.UILib.Animations
 {

@@ -1,7 +1,6 @@
 ﻿using Cosmos.System;
 using SphereOS.Core;
 using SphereOS.Gui.UILib;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace SphereOS.Gui.Apps.Paint
@@ -64,7 +63,7 @@ namespace SphereOS.Gui.Apps.Paint
 
             wm.Update(window);
         }
-        
+
         internal override void Run()
         {
             if (down)

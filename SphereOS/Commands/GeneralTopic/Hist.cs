@@ -1,6 +1,4 @@
 ﻿using SphereOS.ConsoleApps;
-using SphereOS.Shell;
-using System;
 using System.Text;
 
 namespace SphereOS.Commands.GeneralTopic

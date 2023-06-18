@@ -1,9 +1,8 @@
 ﻿using Cosmos.System;
-using Cosmos.System.Graphics;
-using System;
-using System.Drawing;
 using SphereOS.Core;
 using SphereOS.Gui.SmoothMono;
+using System;
+using System.Drawing;
 
 namespace SphereOS.Gui.UILib
 {

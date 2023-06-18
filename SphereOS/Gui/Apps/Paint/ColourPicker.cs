@@ -1,11 +1,6 @@
-﻿using SphereOS.Core;
-using SphereOS.Gui.UILib;
-using System;
+﻿using SphereOS.Gui.UILib;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Gui.Apps.Paint
 {

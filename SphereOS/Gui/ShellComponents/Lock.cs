@@ -5,7 +5,6 @@ using SphereOS.Logging;
 using SphereOS.Users;
 using System;
 using System.Drawing;
-using System.Runtime.CompilerServices;
 
 namespace SphereOS.Gui.ShellComponents
 {
@@ -114,7 +113,7 @@ namespace SphereOS.Gui.ShellComponents
         internal override void Start()
         {
             base.Start();
-            window = new AppWindow(this, (int)(wm.ScreenWidth / 2 - width / 2), (int)(wm.ScreenHeight / 2 - height / 2), width, height);;
+            window = new AppWindow(this, (int)(wm.ScreenWidth / 2 - width / 2), (int)(wm.ScreenHeight / 2 - height / 2), width, height); ;
             window.Title = "SphereOS Logon";
             window.Icon = Images.Icon_Key;
             window.CanMove = false;

@@ -29,7 +29,7 @@ namespace SphereOS.Gui
                     uint origX = (uint)((double)bmp.Width * xDouble);
                     uint origY = (uint)((double)bmp.Height * yDouble);
 
-                    res.rawData[y * width + x] = bmp.rawData[(origY * bmp.Width) + origX];
+                    res.RawData[y * width + x] = bmp.RawData[(origY * bmp.Width) + origX];
                 }
             }
 

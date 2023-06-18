@@ -2,7 +2,6 @@
 using SphereOS.Shell;
 using SphereOS.Users;
 using System;
-using System.IO;
 
 namespace SphereOS.Commands.UsersTopic
 {

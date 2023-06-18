@@ -20,7 +20,7 @@ namespace SphereOS.Gui.Apps
         private static int padding = 12;
         private static int barHeight = 12;
         private static Color barColour = Color.FromArgb(0, 155, 254);
-        
+
         private void Update()
         {
             window.Clear(Color.LightGray);

@@ -1,7 +1,5 @@
 ﻿using Cosmos.System.Graphics;
-using Cosmos.System.Graphics.Fonts;
 using SphereOS.Core;
-using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using SphereOS.UILib.Animations;
 using System;

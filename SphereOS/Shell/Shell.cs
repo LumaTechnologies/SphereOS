@@ -4,7 +4,6 @@ using SphereOS.Users;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using ConsoleKeyEx = Cosmos.System.ConsoleKeyEx;
 
 namespace SphereOS.Shell
@@ -244,7 +243,7 @@ namespace SphereOS.Shell
                         // as the initial value of the ReadLineEx.
                         initialValue: historyIndex < Kernel.CurrentUser.CommandHistory.Count
                                       ? Kernel.CurrentUser.CommandHistory[historyIndex] : null
-                    ); 
+                    );
 
                     if (result.CancelKey == ConsoleKeyEx.UpArrow)
                     {

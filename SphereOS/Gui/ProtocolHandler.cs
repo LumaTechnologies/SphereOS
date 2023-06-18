@@ -3,14 +3,9 @@ using SphereOS.Gui.Apps;
 using SphereOS.Gui.SmoothMono;
 using SphereOS.Gui.UILib;
 using SphereOS.Logging;
-using SphereOS.Users;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SphereOS.Gui
 {

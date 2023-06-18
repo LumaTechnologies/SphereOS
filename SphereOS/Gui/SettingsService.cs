@@ -162,7 +162,7 @@ namespace SphereOS.Gui
                 {
                     if (reader.TryReadInt("ScreenHeight", out int height, section: "Appearance"))
                     {
-                        _mode = new Mode(width, height, ColorDepth.ColorDepth32);
+                        _mode = new Mode((uint)width, (uint)height, ColorDepth.ColorDepth32);
                     }
                 }
                 if (reader.TryReadBool("ShowFps", out bool showFps, section: "ShowFps"))

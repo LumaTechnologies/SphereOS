@@ -32,11 +32,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Gui\Apps\CodeStudio\CodeStudio.cs" />
-      <Compile Remove="Gui\Apps\CodeStudio\Ide.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="Gui\Resources\AppIcons\Calculator.bmp" />
       <None Remove="Gui\Resources\AppIcons\Calendar.bmp" />
       <None Remove="Gui\Resources\AppIcons\Clock.bmp" />
@@ -174,14 +169,19 @@
       <None Include="Core\Drivers\VMWareSVGAII.cs" />
       <None Include="Core\VideoConsole\FontData.cs" />
       <None Include="Core\VideoConsole\VideoConsole.cs" />
-      <None Include="Gui\Apps\CodeStudio\CodeStudio.cs" />
-      <None Include="Gui\Apps\CodeStudio\Ide.cs" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
+        <PackageReference Include="Cosmos.Build" Version="0.1.0-localbuild20230617112142">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
 
     <!--<ItemGroup>

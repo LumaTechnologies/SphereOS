@@ -1,8 +1,6 @@
 ﻿using SphereOS.Core;
-using SphereOS.Gui.UILib;
 using SphereOS.Logging;
 using SphereOS.Shell;
-using SphereOS.Users;
 using System;
 
 namespace SphereOS.Gui
@@ -20,7 +18,7 @@ namespace SphereOS.Gui
 
             if (Cosmos.Core.CPU.GetAmountOfRAM() < 1000)
             {
-                Util.PrintWarning("Not enough system memory is available to run the GUI. At least 1 GB should be allocated.");
+                Util.PrintWarning("Not enough system memory is available to run the GUI.\nAt least 1 GB should be allocated.");
                 Util.PrintSystem("Continue anyway? [y/N]");
 
                 if (Console.ReadKey(true).Key != ConsoleKey.Y)

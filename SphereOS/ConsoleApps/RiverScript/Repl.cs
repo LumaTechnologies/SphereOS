@@ -14,7 +14,7 @@ namespace RiverScript
             StandardLibrary.StandardLibrary.LoadStandardLibrary(Interpreter);
 
             Console.Clear();
-            Console.WriteLine("RiverScript v0.1.1. Copyright (c) 2023. All rights reserved.");
+            Console.WriteLine("RiverScript v0.1.1. Copyright (c) 2023 Sphere Systems. All rights reserved.");
             Console.WriteLine("Type exit() to exit.");
 
             bool exit = false;

@@ -20,7 +20,7 @@ namespace SphereOS.Commands.GeneralTopic
             {
                 text += args[i];
                 if (i != args.Length - 1)
-                {   
+                {
                     text += " ";
                 }
             }

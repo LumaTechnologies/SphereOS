@@ -1,8 +1,6 @@
 ﻿using Cosmos.HAL;
-using SphereOS.Core;
 using SphereOS.ConsoleApps;
-using SphereOS.Logging;
-using System;
+using SphereOS.Core;
 
 namespace SphereOS.Commands.GeneralTopic
 {
