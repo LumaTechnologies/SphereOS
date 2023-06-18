@@ -20,7 +20,7 @@ The default login credentials are:
 - 💬 CloudChat
 - ✨ [RiverScript language](https://sphere.jsph.dev/developer/riverscript/)
 - 📁 Filesystem
-- 📝 Powerful text editor
+- 📝 Powerful text editor and IDE
 - 🔒 User management tools
 - 🛑 Shutdown and reboot commands
 - ⏳ Process management
@@ -34,8 +34,10 @@ And more!
 > Share + Download scripts!
 ## Screenshots
 ### GUI
-![Screenshot 1](/Art/screenshot_10.png)
+![Screenshot of the GUI](/Art/screenshot_10.png)
+### IDE
+![Screenshot of the IDE](/Art/screenshot_11.png)
 ### Console
-![Screenshot 1](/Art/screenshot_8.png)
+![Screenshot of the console](/Art/screenshot_8.png)
 ### Text Editor
-![Screenshot 2](/Art/screenshot_9.png)
+![Screenshot of the Text Editor](/Art/screenshot_9.png)
