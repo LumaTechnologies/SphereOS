@@ -15,12 +15,11 @@ The default login credentials are:
 ## Features
 - 💻 Both GUI and console support
 - ⚙ Advanced shell with a custom parser
-- 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, and Settings
+- 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, Tasks, CodeStudio (IDE), Logs, Demos, Stopwatch, Paint, and Settings
 - 🌐 Networking capabilities
-- 💬 CloudChat
 - ✨ [RiverScript language](https://sphere.jsph.dev/developer/riverscript/)
 - 📁 Filesystem
-- 📝 Powerful text editor and IDE
+- 📝 Powerful text editor
 - 🔒 User management tools
 - 🛑 Shutdown and reboot commands
 - ⏳ Process management
