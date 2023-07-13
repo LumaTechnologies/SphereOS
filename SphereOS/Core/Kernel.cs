@@ -9,7 +9,7 @@ namespace SphereOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string Version = "0.2.2";
+        public const string Version = "0.2.3";
 
         internal static User CurrentUser = null;
 
@@ -19,13 +19,26 @@ namespace SphereOS
         {
             try
             {
+                BootMode bootMode = BootMenu.ChooseBootMode();
+
                 Log.Info("Kernel", "Starting SphereOS.");
 
                 Boot.BootManager.StartAll();
 
                 Log.Info("Kernel", "SphereOS started.");
 
-                InterfaceChoice.ChooseInterface();
+                switch (bootMode)
+                {
+                    case BootMode.Gui:
+                        Gui.Gui.StartGui();
+                        break;
+                    case BootMode.Console:
+                        ProcessManager.AddProcess(new Shell.Shell()).Start();
+                        break;
+                    default:
+                        CrashScreen.ShowCrashScreen(new Exception("Unexpected boot mode."));
+                        break;
+                }
             }
             catch (Exception e)
             {

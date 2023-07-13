@@ -50,6 +50,7 @@ namespace SphereOS.Commands
             RegisterCommand(new GeneralTopic.Clear());
             RegisterCommand(new GeneralTopic.Crash());
             RegisterCommand(new GeneralTopic.Echo());
+            RegisterCommand(new GeneralTopic.Gui());
             RegisterCommand(new GeneralTopic.Help());
             RegisterCommand(new GeneralTopic.Hist());
             RegisterCommand(new GeneralTopic.Histc());
