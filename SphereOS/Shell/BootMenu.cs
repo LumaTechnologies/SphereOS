@@ -30,7 +30,7 @@ namespace SphereOS.Shell
             Console.CursorTop = 0;
 
             uint mem = Cosmos.Core.CPU.GetAmountOfRAM();
-            Console.WriteLine($"Sphere Systems SphereOS Version {Kernel.Version} Boot Manager [{mem} MB memory]\n\nPlease select an option:\n");
+            Console.WriteLine($"Luma Technologies (LT) SphereOS Version {Kernel.Version} Boot Manager [{mem} MB memory]\n\nPlease select an option:\n");
 
             PrintOption("SphereOS (VMware GUI)", selIdx == 0);
             PrintOption("SphereOS (Console)", selIdx == 1);

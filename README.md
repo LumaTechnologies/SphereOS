@@ -2,7 +2,7 @@
 ![SphereOS logo](/Art/logo_dark_small.png#gh-light-mode-only)
 
 # SphereOS
-![Top language](https://img.shields.io/github/languages/top/sphere-systems/sphereos?color=purple&label=%20&logo=csharp&style=flat-square) ![Release](https://img.shields.io/github/v/release/sphere-systems/sphereos?style=flat-square) ![Downloads](https://img.shields.io/github/downloads/sphere-systems/sphereos/total?style=flat-square&color=forestgreen) ![Lines of code](https://www.aschey.tech/tokei/github/sphere-systems/sphereos?style=flat-square)
+![Top language](https://img.shields.io/github/languages/top/lumatechnologies/sphereos?color=purple&label=%20&logo=csharp&style=flat-square) ![Release](https://img.shields.io/github/v/release/lumatechnologies/sphereos?style=flat-square) ![Downloads](https://img.shields.io/github/downloads/lumatechnologies/sphereos/total?style=flat-square&color=forestgreen) ![Lines of code](https://www.aschey.tech/tokei/github/lumatechnologies/sphereos?style=flat-square)
 
 SphereOS - A powerful & secure Cosmos-based operating system.
 ### Installation
@@ -17,7 +17,7 @@ The default login credentials are:
 - ⚙ Advanced shell with a custom parser
 - 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, Tasks, CodeStudio (IDE), Logs, Demos, Stopwatch, Paint, and Settings
 - 🌐 Networking capabilities
-- ✨ [RiverScript language](https://sphere.jsph.dev/developer/riverscript/)
+- ✨ [RiverScript language](https://github.com/LumaTechnologies/SphereOS/wiki/RiverScript)
 - 📁 Filesystem
 - 📝 Powerful text editor
 - 🔒 User management tools
@@ -28,7 +28,7 @@ The default login credentials are:
 And more!
 ## Roadmap
 - [x] Scripting language (RiverScript)
-> [Read the RiverScript Documentation!](https://sphere.jsph.dev/developer/docs/riverscript/)
+> [Read the RiverScript Documentation!](https://github.com/LumaTechnologies/SphereOS/wiki/RiverScript)
 - [ ] Package manager (sphereget)
 > Share + Download scripts!
 ## Screenshots
