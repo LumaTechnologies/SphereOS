@@ -1,6 +1,4 @@
-﻿using Cosmos.HAL;
-using SphereOS.Core;
-using System;
+﻿using System;
 
 namespace SphereOS.Shell
 {
@@ -13,27 +11,43 @@ namespace SphereOS.Shell
 
     internal static class BootMenu
     {
+        private static string[] asciiArt = new[] { "    ____", "  .XXXxxx.", ".XXXxx+++--.", "XXxx++--..  ", "XXx++-..   .", "`Xx+-.      ", "  `X+.   .", "     \"\"" };
+
         private static void PrintOption(string text, bool selected)
         {
-            Console.BackgroundColor = selected ? ConsoleColor.White : ConsoleColor.Blue;
-            Console.ForegroundColor = selected ? ConsoleColor.Blue  : ConsoleColor.White;
+            Console.SetCursorPosition(1, Console.GetCursorPosition().Top);
+
+            Console.BackgroundColor = selected ? ConsoleColor.White : ConsoleColor.Black;
+            Console.ForegroundColor = selected ? ConsoleColor.Black : ConsoleColor.White;
 
             Console.WriteLine(text);
         }
 
+        private static void PrintArt()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            for (int i = 0; i < asciiArt.Length; i++)
+            {
+                Console.SetCursorPosition(Console.WindowWidth - 12, i);
+
+                Console.Write(asciiArt[i]);
+            }
+        }
+
         private static void Render(int selIdx)
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Cyan;
 
-            Console.CursorLeft = 0;
-            Console.CursorTop = 0;
+            Console.SetCursorPosition(0, 0);
 
             uint mem = Cosmos.Core.CPU.GetAmountOfRAM();
-            Console.WriteLine($"Sphere Systems SphereOS Version {Kernel.Version} Boot Manager [{mem} MB memory]\n\nPlease select an option:\n");
+            Console.WriteLine($"SphereOS Version {Kernel.Version} [{mem} MB memory]\nSelect an option:\n");
 
-            PrintOption("SphereOS (VMware GUI)", selIdx == 0);
-            PrintOption("SphereOS (Console)", selIdx == 1);
+            PrintOption("SphereOS (GUI)", selIdx == 0);
+            PrintOption("SphereOS (CLI)", selIdx == 1);
             PrintOption("Shut Down", selIdx == 2);
             PrintOption("Restart", selIdx == 3);
         }
@@ -45,8 +59,7 @@ namespace SphereOS.Shell
 
             Console.Clear();
 
-            Console.CursorLeft = 0;
-            Console.CursorTop = 0;
+            Console.SetCursorPosition(0, 0);
 
             Console.CursorVisible = true;
 
@@ -69,10 +82,12 @@ namespace SphereOS.Shell
 
         internal static BootMode ChooseBootMode()
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.Clear();
+
+            PrintArt();
 
             Console.CursorVisible = false;
 

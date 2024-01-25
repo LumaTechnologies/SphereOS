@@ -6,7 +6,8 @@ Supported SphereOS versions:
 
 | Version          | Supported          | End Of Support                       |
 | ---------------- | ------------------ | ------------------------------------ |
-| v0.2.2           | :white_check_mark: | 1 week after next release            |
+| v0.2.3           | :white_check_mark: | 1 week after next release            |
+| v0.2.2           | ⚠️                 | Support ends 01/02/2024            |
 | v0.2.1           | ❌                 | Support ended 25/06/2023             |
 | v0.2.0           | ❌                 | Support ended 16/02/2023             |
 | v0.1.9-preview   | ❌                 | Support ended 08/02/2023             |
@@ -26,4 +27,4 @@ If a security vulnerability is found, a bulletin will be added here.
 **No current bulletins.**
 
 ## Report Vulnerability
-Please go to the [Security Advisories](https://github.com/Jspa2/SphereOS/security/advisories) page and click 'Report a vulnerability'.
+Please go to the [Security Advisories](https://github.com/LumaTechnologies/SphereOS/security/advisories) page and click 'Report a vulnerability'.

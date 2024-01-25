@@ -236,10 +236,10 @@ namespace SphereOS.Gui
             for (int i = Windows.Count - 1; i >= 0; i--)
             {
                 Window window = Windows[i];
-                if (MouseManager.X >= window.ScreenX
-                    && MouseManager.Y >= window.ScreenY
-                    && MouseManager.X < window.ScreenX + window.Width
-                    && MouseManager.Y < window.ScreenY + window.Height)
+                if (x >= window.ScreenX
+                    && y >= window.ScreenY
+                    && x < window.ScreenX + window.Width
+                    && y < window.ScreenY + window.Height)
                 {
                     return window;
                 }

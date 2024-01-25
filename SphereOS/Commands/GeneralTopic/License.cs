@@ -11,8 +11,8 @@ namespace SphereOS.Commands.GeneralTopic
             Topic = "general";
         }
 
-        private string licenseText = @"Sphere-Systems/SphereOS - https://github.com/Sphere-Systems/SphereOS
-Copyright (c) 2022-2023 Jspa2.
+        private string licenseText = @"LumaTechnologies/SphereOS - https://github.com/LumaTechnologies/SphereOS
+Copyright (c) 2022-2023 Sphere Systems, 2023-2024 Luma Technologies.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the ""Software""), to deal in
@@ -38,7 +38,7 @@ CosmosOS/Cosmos - https://github.com/CosmosOS/Cosmos
 BEGIN LICENSE
 BSD 3-Clause License
 
-Copyright (c) 2023, CosmosOS, COSMOS Project
+Copyright (c) 2024, CosmosOS, COSMOS Project
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

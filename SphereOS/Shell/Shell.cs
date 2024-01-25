@@ -53,10 +53,10 @@ namespace SphereOS.Shell
             Util.Print(ConsoleColor.Cyan, "Welcome to ");
             Util.Print(ConsoleColor.Magenta, "SphereOS");
             Util.PrintLine(ConsoleColor.Gray, $" - {Kernel.Version}");
-            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2023 Sphere Systems. All rights reserved.");
+            Util.PrintLine(ConsoleColor.White, "Copyright (c) 2024 LT. All rights reserved.");
 
-            /*Util.Print(ConsoleColor.Yellow, "New in this version: ");
-            Util.PrintLine(ConsoleColor.White, "New GUI!");*/
+            Util.Print(ConsoleColor.Yellow, "New in this version: ");
+            Util.PrintLine(ConsoleColor.White, "Upgraded kernel!");
         }
 
         internal void WorkingDirHistoryBack()

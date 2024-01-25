@@ -32,71 +32,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="Gui\Resources\AppIcons\Calculator.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Calendar.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Clock.bmp" />
-      <None Remove="Gui\Resources\AppIcons\CodeStudio.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Default.bmp" />
-      <None Remove="Gui\Resources\AppIcons\DemoLauncher.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Demos\Mandelbrot.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Demos\Starfield.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Files.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Info.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Logs.bmp" />
-      <None Remove="Gui\Resources\AppIcons\MemoryStatistics.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Notepad.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Paint.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Settings.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Stopwatch.bmp" />
-      <None Remove="Gui\Resources\AppIcons\Tasks.bmp" />
-      <None Remove="Gui\Resources\ButtonBackground.bmp" />
-      <None Remove="Gui\Resources\Calculator\Display.bmp" />
-      <None Remove="Gui\Resources\Calculator\GridButton.bmp" />
-      <None Remove="Gui\Resources\Check.bmp" />
-      <None Remove="Gui\Resources\Clock\ClockBackground.bmp" />
-      <None Remove="Gui\Resources\Close.bmp" />
-      <None Remove="Gui\Resources\CodeStudio\Run.bmp" />
-      <None Remove="Gui\Resources\CodeStudio\Splash.bmp" />
-      <None Remove="Gui\Resources\Cursor.bmp" />
-      <None Remove="Gui\Resources\Dock\StartMenu.bmp" />
-      <None Remove="Gui\Resources\Files\Directory.bmp" />
-      <None Remove="Gui\Resources\Files\Drive.bmp" />
-      <None Remove="Gui\Resources\Files\File.bmp" />
-      <None Remove="Gui\Resources\Files\File_Config.bmp" />
-      <None Remove="Gui\Resources\Files\File_Rs.bmp" />
-      <None Remove="Gui\Resources\Files\File_Text.bmp" />
-      <None Remove="Gui\Resources\Files\Home.bmp" />
-      <None Remove="Gui\Resources\Files\Up.bmp" />
-      <None Remove="Gui\Resources\Lock\Background.bmp" />
-      <None Remove="Gui\Resources\Lock\Gradient.bmp" />
-      <None Remove="Gui\Resources\Lock\Key.bmp" />
-      <None Remove="Gui\Resources\Lock\ShutDown.bmp" />
-      <None Remove="Gui\Resources\Lock\User.bmp" />
-      <None Remove="Gui\Resources\Lock\UserArrow.bmp" />
-      <None Remove="Gui\Resources\Logs\Error.bmp" />
-      <None Remove="Gui\Resources\Logs\Info.bmp" />
-      <None Remove="Gui\Resources\Logs\Warning.bmp" />
-      <None Remove="Gui\Resources\Maximise.bmp" />
-      <None Remove="Gui\Resources\Minimise.bmp" />
-      <None Remove="Gui\Resources\Restore.bmp" />
-      <None Remove="Gui\Resources\ScrollbarDown.bmp" />
-      <None Remove="Gui\Resources\ScrollbarUp.bmp" />
-      <None Remove="Gui\Resources\Settings\Admin.bmp" />
-      <None Remove="Gui\Resources\Settings\Info.bmp" />
-      <None Remove="Gui\Resources\Settings\User.bmp" />
-      <None Remove="Gui\Resources\Sounds\Alert.wav" />
-      <None Remove="Gui\Resources\Sounds\Login.wav" />
-      <None Remove="Gui\Resources\Start.bmp" />
-      <None Remove="Gui\Resources\StartMenu\User.bmp" />
-      <None Remove="Gui\Resources\SwitchKnob.bmp" />
-      <None Remove="Gui\Resources\SwitchOff.bmp" />
-      <None Remove="Gui\Resources\SwitchOn.bmp" />
-      <None Remove="Gui\Resources\TitlebarBackground.bmp" />
-      <None Remove="Gui\Resources\WaitCursor.bmp" />
-      <None Remove="Gui\Resources\Wallpaper_1280_800.bmp" />
-    </ItemGroup>
-
-    <ItemGroup>
       <EmbeddedResource Include="ConsoleApps\Hangman\WordList.txt" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Calculator.bmp" />
       <EmbeddedResource Include="Gui\Resources\AppIcons\Calendar.bmp" />
@@ -129,9 +64,7 @@
       <EmbeddedResource Include="Gui\Resources\Files\Drive.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\File.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\File_Config.bmp" />
-      <EmbeddedResource Include="Gui\Resources\Files\File_Rs.bmp">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
+      <EmbeddedResource Include="Gui\Resources\Files\File_Rs.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\File_Text.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Home.bmp" />
       <EmbeddedResource Include="Gui\Resources\Files\Up.bmp" />
@@ -165,27 +98,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="Core\Shims\ConsoleShim.cs" />
-      <None Include="Core\Drivers\VMWareSVGAII.cs" />
-      <None Include="Core\VideoConsole\FontData.cs" />
-      <None Include="Core\VideoConsole\VideoConsole.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="Cosmos.Build" Version="0.1.0-localbuild20230617112142">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
-        <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+      <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+      <PackageReference Include="Cosmos.Plugs" Version="0-*" NoWarn="NU1604" />
     </ItemGroup>
 
     <ItemGroup>
       <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
-
-    <!--<ItemGroup>
-      <PlugsReference Condition="" Include="$(MSBuildProjectDirectory)\..\SphereOS.Plugs\bin\Debug\net6.0\SphereOS.Plugs.dll"></PlugsReference>
-    </ItemGroup>-->
 
 </Project>
