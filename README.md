@@ -16,7 +16,7 @@ The default login credentials are:
 
 ![Screenshot of the GUI](/Art/screenshot_10.png)
 ## Features
-- 💻 Both GUI and console support
+- 💻 Both GUI and CLI support
 - ⚙ Advanced shell with a custom parser
 - 📱 Built-in apps including Notepad, Clock, Calculator, Files, Calendar, Tasks, CodeStudio (IDE), Logs, Demos, Stopwatch, Paint, and Settings
 - ✨ [RiverScript language](https://github.com/LumaTechnologies/SphereOS/wiki/RiverScript)
@@ -28,11 +28,6 @@ The default login credentials are:
 - 🔐 SHA-256 security
 
 And more!
-## Roadmap
-- [x] Scripting language (RiverScript)
-> [Read the RiverScript Documentation!](https://github.com/LumaTechnologies/SphereOS/wiki/RiverScript)
-- [ ] Package manager (sphereget)
-> Share + Download scripts!
 ## More Screenshots
 ### IDE
 ![Screenshot of the IDE](/Art/screenshot_11.png)
